@@ -14,6 +14,8 @@
 		E1884CB4245439E400D08EA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */; };
 		E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CA7245439C700D08EA6 /* AppDelegate.swift */; };
 		E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CBE2454C12800D08EA6 /* Cell.swift */; };
+		E1884CC12454DA5B00D08EA6 /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */; };
+		E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC22454DB2400D08EA6 /* GameSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		E1884CB3245439E400D08EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1884CB5245439E400D08EA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1884CBE2454C12800D08EA6 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
+		E1884CC22454DB2400D08EA6 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +64,14 @@
 			children = (
 				E1884CA7245439C700D08EA6 /* AppDelegate.swift */,
 				E1884CA9245439C700D08EA6 /* SceneDelegate.swift */,
+				E1884CBE2454C12800D08EA6 /* Cell.swift */,
+				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
+				E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */,
 				E1884CAB245439C700D08EA6 /* ViewController.swift */,
 				E1884CAD245439C700D08EA6 /* Main.storyboard */,
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
-				E1884CBE2454C12800D08EA6 /* Cell.swift */,
 			);
 			path = CheckersOnlineSwiftV2.1;
 			sourceTree = "<group>";
@@ -142,6 +148,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
+				E1884CC12454DA5B00D08EA6 /* GameSettingsViewController.swift in Sources */,
+				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* ViewController.swift in Sources */,
 				E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */,
