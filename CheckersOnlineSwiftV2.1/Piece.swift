@@ -14,10 +14,11 @@ class Piece: NSObject {
         case black_pawn
         case white_queen
         case black_queen
+        case empty
     }
-    var pieceImage:UIImage?
-    var pieceView:UIImageView?
-    var pieceType:PieceType?
+    var pieceImage:UIImage!
+    var pieceView:UIImageView!
+    var pieceType:PieceType!
     var isOnPath:Bool!
     var isMyPiece:Bool!
     

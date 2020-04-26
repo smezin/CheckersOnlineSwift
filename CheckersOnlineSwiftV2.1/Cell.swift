@@ -11,7 +11,6 @@ import UIKit
 class Cell: UICollectionViewCell {
     
     static var identifier: String = "Cell"
-    var piece:Piece? = nil
    
     weak var textLabel: UILabel!
 
