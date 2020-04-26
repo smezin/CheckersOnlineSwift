@@ -45,20 +45,6 @@ class ViewController: UIViewController {
     }
 }
 
-func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    if (kind == UICollectionView.elementKindSectionFooter) {
-        let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CartFooterCollectionReusableView", for: indexPath)
-        // Customize footerView here
-        footerView.backgroundColor = .blue
-        return footerView
-    } else if (kind == UICollectionView.elementKindSectionHeader) {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CartHeaderCollectionReusableView", for: indexPath)
-        // Customize headerView here
-        headerView.backgroundColor = .yellow
-        return headerView
-    }
-    fatalError()
-}
 extension ViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -75,6 +61,9 @@ extension ViewController: UICollectionViewDataSource {
         if (((indexPath.row / 8) % 2) == 0) {
             if ((indexPath.row % 2) == 0){
                 cell.backgroundColor = settings.colorOne
+                let piece = Piece(true, .white_pawn)
+                cell.piece = piece
+                cell.backgroundView = piece.pieceView
             } else {
                 cell.backgroundColor = settings.colorTwo
             }
@@ -85,6 +74,7 @@ extension ViewController: UICollectionViewDataSource {
                 cell.backgroundColor = settings.colorTwo
             }
         }
+        
         return cell
     }
 }
