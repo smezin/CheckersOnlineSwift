@@ -25,7 +25,7 @@ class GameSettingsViewController: UIViewController {
             let settings = GameSettings()
             settings.soundOn = soundSwitch.isOn
             settings.playWhites = playWhites.isOn
-            guard let gameVC:ViewController = segue.destination as? ViewController else {
+            guard let gameVC:GameViewController = segue.destination as? GameViewController else {
                 return
             }
             gameVC.settings = settings;

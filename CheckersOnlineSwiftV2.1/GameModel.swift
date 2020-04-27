@@ -14,19 +14,11 @@ protocol GameData
 }
 
 class GameModel: NSObject, GameData {
-    weak var checkersBoardCollectionView: UICollectionView!
+ 
     static var board:[Piece?] = Array(repeating: nil, count: 64)
-    
-    func addPiece(board:[Piece?], indexPath:IndexPath) -> [Piece?] {
-        var board = board
-        let piece = Piece(true, Piece.PieceType.white_pawn, indexPath.row)
-        board[indexPath.row] = piece
-        return board
-    }
     
     func setBoardForNewGame(board:[Piece?]) -> [Piece?] {
         var board = board
-        
         for boardIndex:Int in 0..<64
         {
             if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
@@ -52,4 +44,29 @@ class GameModel: NSObject, GameData {
         }
         return board
     }
+    func processRequest(board:[Piece?], indexPath:IndexPath) -> [Piece?] {
+        GameModel.board = board
+        let index:Int = isPiecePicked()
+        if (index == -1) {
+           //no picked piece on the board, send indexPath to check what next
+        }
+        else {
+            //piece at index is already picked
+        }
+        
+        return GameModel.board
+    }
+    private func isPiecePicked () -> Int {
+        for index in 0..<64 {
+            if (GameModel.board[index] != nil) {
+                if(GameModel.board[index]?.isPicked == true){
+                    return index
+                }
+            }
+        }
+        return -1
+    }
+    
+    
+       
 }
