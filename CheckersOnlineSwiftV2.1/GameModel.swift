@@ -29,16 +29,26 @@ class GameModel: NSObject, GameData {
         
         for boardIndex:Int in 0..<64
         {
-            if (((boardIndex / 8) % 2) <= 3) {
+            if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
                 if ((boardIndex % 2) == 1) {
                     board[boardIndex] = Piece(true, Piece.PieceType.white_pawn, boardIndex)
                 }
             }
-            if (((boardIndex / 8) % 2) >= 6) {
-                if ((boardIndex % 2) == 1) {
+            if ((boardIndex / 8) == 1) {
+                if ((boardIndex % 2) == 0) {
+                    board[boardIndex] = Piece(true, Piece.PieceType.white_pawn, boardIndex)
+                }
+            }
+            if ((boardIndex / 8) == 5 || (boardIndex / 8) == 7) {
+                if ((boardIndex % 2) == 0) {
                     board[boardIndex] = Piece(false, Piece.PieceType.black_pawn, boardIndex)
                 }
             }
+            if ((boardIndex / 8) == 6) {
+               if ((boardIndex % 2) == 1) {
+                   board[boardIndex] = Piece(false, Piece.PieceType.black_pawn, boardIndex)
+               }
+           }
         }
         return board
     }

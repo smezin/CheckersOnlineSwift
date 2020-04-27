@@ -19,14 +19,13 @@ class GameSettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func prepare(for segue: UIStoryboardSegue,
-    sender: Any?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
          if (segue.identifier == "loadGame") {
             let settings = GameSettings()
             settings.soundOn = soundSwitch.isOn
             settings.playWhites = playWhites.isOn
-            guard let gameVC = segue.destination as? ViewController else {
+            guard let gameVC:ViewController = segue.destination as? ViewController else {
                 return
             }
             gameVC.settings = settings;

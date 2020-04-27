@@ -10,14 +10,13 @@ import UIKit
 
 class ViewController: UIViewController, GameData {
 
-    weak var checkersBoardCollectionView: UICollectionView!
-    weak var settings: GameSettings!
+    var checkersBoardCollectionView: UICollectionView!
+    var settings: GameSettings!
     static var board:[Piece?] = Array(repeating: nil, count: 64)
 
     override func loadView() {
         super.loadView()
 
-        //print(settings!.soundOn)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -37,13 +36,23 @@ class ViewController: UIViewController, GameData {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.checkersBoardCollectionView.dataSource = self
         self.checkersBoardCollectionView.delegate = self
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
-        self.checkersBoardCollectionView.backgroundColor = .white
+        self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
-        
+        ViewController.self.board = GameModel().setBoardForNewGame(board: ViewController.self.board)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    @objc func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+        } else {
+            print("Portrait")
+        }
+        self.checkersBoardCollectionView.reloadData()
     }
 }
 
@@ -54,8 +63,7 @@ extension ViewController: UICollectionViewDataSource {
         return 64
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         let settings = GameSettings()
         
@@ -86,9 +94,14 @@ extension ViewController: UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("indexPath=",indexPath.row)
+        print("Picked indexPath=",indexPath.row)
         let gm:GameModel = GameModel.init()
-        ViewController.self.board = gm.addPiece(board: ViewController.board, indexPath: indexPath)
+        if (ViewController.board[indexPath.row] == nil){
+            ViewController.board = gm.addPiece(board: ViewController.board, indexPath: indexPath)
+        } else {
+            print("found piece!")
+          //  var piece:UIView = (ViewController.board[indexPath.row]?.pieceView)!
+        }
         self.checkersBoardCollectionView.reloadData()
     }
 }
@@ -98,7 +111,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width/8, height: collectionView.bounds.width/8)
+        let cellSideSize = min(collectionView.bounds.width, collectionView.bounds.height)/8
+        return CGSize(width: cellSideSize, height: cellSideSize)
+
     }
 
     func collectionView(_ collectionView: UICollectionView,
