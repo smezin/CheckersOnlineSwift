@@ -34,6 +34,7 @@ class Cell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+   //     self.backgroundView = nil
         self.reset()
     }
 

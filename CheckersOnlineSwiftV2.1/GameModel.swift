@@ -8,9 +8,38 @@
 
 import UIKit
 
-class GameModel: NSObject {
+protocol GameData
+{
+    static var board:[Piece?] {get set}
+}
+
+class GameModel: NSObject, GameData {
     weak var checkersBoardCollectionView: UICollectionView!
-    var board:[Piece.PieceType] = Array(repeating: Piece.PieceType.empty, count: 64) //get in a protocol
+    static var board:[Piece?] = Array(repeating: nil, count: 64)
     
+    func addPiece(board:[Piece?], indexPath:IndexPath) -> [Piece?] {
+        var board = board
+        let piece = Piece(true, Piece.PieceType.white_pawn, indexPath.row)
+        board[indexPath.row] = piece
+        return board
+    }
     
+    func setBoardForNewGame(board:[Piece?]) -> [Piece?] {
+        var board = board
+        
+        for boardIndex:Int in 0..<64
+        {
+            if (((boardIndex / 8) % 2) <= 3) {
+                if ((boardIndex % 2) == 1) {
+                    board[boardIndex] = Piece(true, Piece.PieceType.white_pawn, boardIndex)
+                }
+            }
+            if (((boardIndex / 8) % 2) >= 6) {
+                if ((boardIndex % 2) == 1) {
+                    board[boardIndex] = Piece(false, Piece.PieceType.black_pawn, boardIndex)
+                }
+            }
+        }
+        return board
+    }
 }

@@ -8,12 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GameData {
 
     weak var checkersBoardCollectionView: UICollectionView!
     weak var settings: GameSettings!
-
-    var board:[Piece.PieceType] = Array(repeating: Piece.PieceType.empty, count: 64)
+    static var board:[Piece?] = Array(repeating: nil, count: 64)
 
     override func loadView() {
         super.loadView()
@@ -44,6 +43,7 @@ class ViewController: UIViewController {
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = .white
         self.checkersBoardCollectionView.alwaysBounceVertical = true
+        
     }
 }
 
@@ -51,7 +51,7 @@ extension ViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return self.board.count
+        return 64
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -73,22 +73,12 @@ extension ViewController: UICollectionViewDataSource {
                 cell.backgroundColor = settings.colorTwo
             }
         }
-        //handle piece display
-        let imageView = UIImageView()
-        switch self.board[indexPath.row].self {
-        case .empty:
-            cell.textLabel.text = "0"
-        case .white_pawn:
-            imageView.image = UIImage(named: "white_pawn")
-        case .black_pawn:
-            imageView.image = UIImage(named: "black_pawn")
-        case .white_queen:
-            imageView.image = UIImage(named: "white_queen")
-        case .black_queen:
-            imageView.image = UIImage(named: "black_queen")
+        //set piece? image
+        if let piece:Piece = ViewController.self.board[indexPath.row] {
+            let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
+            piece.pieceView.frame = frame
+            cell.addSubview(piece.pieceView)
         }
-        cell.backgroundView = imageView
-        
         return cell
     }
 }
@@ -98,7 +88,7 @@ extension ViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("indexPath=",indexPath.row)
         let gm:GameModel = GameModel.init()
-      
+        ViewController.self.board = gm.addPiece(board: ViewController.board, indexPath: indexPath)
         self.checkersBoardCollectionView.reloadData()
     }
 }
