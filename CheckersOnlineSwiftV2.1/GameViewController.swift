@@ -9,11 +9,12 @@
 import UIKit
 
 class GameViewController: UIViewController, GameData {
-
+    
+    let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
     var settings: GameSettings!
     static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
-
+    
     override func loadView() {
         super.loadView()
 
@@ -60,44 +61,80 @@ extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
+        let cellFrame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
         
-        //let settings = GameSettings()
-        
-        //handle cells color
-        if (((indexPath.row / 8) % 2) == 0) {
-            if ((indexPath.row % 2) == 0) {
-                cell.backgroundColor = settings.colorOne
-            } else {
-                cell.backgroundColor = settings.colorTwo
-            }
+        cell.backgroundColor = getCellBackgroundColor(index: indexPath.row)
+        if getCellImageView(indexPath.row, cellFrame) != nil {
+            cell.addSubview(getCellImageView(indexPath.row, cellFrame)!)
         } else {
-            if ((indexPath.row % 2) == 1) {
-                cell.backgroundColor = settings.colorOne
-            } else {
-                cell.backgroundColor = settings.colorTwo
-            }
-        }
-        //set piece? image
-        if let piece:Piece = GameViewController.self.board[indexPath.row] {
-            if (piece.pieceType != nil) {
-                let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
-                piece.pieceView.frame = frame
-                cell.addSubview(piece.pieceView)
-            }
-            else if piece.isOnPath {
-                if (settings.showPaths)
-                {
-                    let image:UIImage = UIImage(named: "path_mark")!
-                    let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
-                    piece.pieceView.image = image
-                    piece.pieceView.frame = frame
-                    cell.addSubview(piece.pieceView)
+            let subViews = cell.subviews
+            for subview in subViews {
+                if subview.tag == imageViewsTag {
+                    subview.removeFromSuperview()
                 }
-                } else {
-                    piece.pieceView.removeFromSuperview()
-                }
+            }
         }
         return cell
+    }
+   
+    func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
+
+        let piece:Piece = GameViewController.board[index]!
+        var image = UIImage()
+        var imageView = UIImageView()
+        if piece.pieceType != nil {
+            image = getImageByPieceType(piece: piece)
+            imageView = UIImageView(image: image)
+        }
+        else if piece.isOnPath && settings.showPaths {
+            image = UIImage(named: "path_mark")!
+            imageView = UIImageView(image: image)
+        } else {
+            return nil
+        }
+        imageView.frame = cellFrame
+        imageView.tag = imageViewsTag
+        return imageView
+       
+    }
+    func getCellBackgroundColor (index:Int) -> UIColor{
+        
+        var cellColor:UIColor
+        if (((index / 8) % 2) == 0) {
+            if ((index % 2) == 0) {
+                cellColor = settings.colorOne
+            } else {
+                cellColor = settings.colorTwo
+            }
+        } else {
+            if ((index % 2) == 1) {
+                cellColor = settings.colorOne
+            } else {
+                cellColor = settings.colorTwo
+            }
+        }
+        return cellColor
+    }
+    
+    func getImageByPieceType (piece:Piece?) -> UIImage
+    {
+        if piece?.pieceType == nil {
+            //remove from view
+        }
+        var image:UIImage
+        switch piece?.pieceType {
+        case .white_pawn:
+            image = UIImage(named: "white_pawn")!
+        case .black_pawn:
+            image = UIImage(named: "black_pawn")!
+        case .white_queen:
+            image = UIImage(named: "white_Queen")!
+        case .black_queen:
+            image = UIImage(named: "black_queen")!
+        default:
+            image = UIImage()
+        }
+        return image
     }
 }
 
@@ -140,7 +177,3 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
         return 0
     }
 }
-
-
-
-

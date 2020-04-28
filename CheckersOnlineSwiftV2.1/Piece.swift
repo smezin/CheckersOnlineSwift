@@ -16,8 +16,8 @@ class Piece: NSObject {
         case black_queen
     }
     
-    var pieceImage:UIImage!
-    var pieceView:UIImageView!
+//    var pieceImage:UIImage!
+//    var pieceView:UIImageView!
     var pieceType:PieceType!
     var isOnPath:Bool = false
     var isMyPiece:Bool!
@@ -30,15 +30,15 @@ class Piece: NSObject {
         self.pieceType = pieceType
         self.isPicked = false
         self.isOnPath = false
-        switch pieceType {
-           case .white_pawn:
-               self.pieceImage = UIImage(named: "white_pawn")
-           case .black_pawn:
-               self.pieceImage = UIImage(named: "black_pawn")
-           default:
-               self.pieceView = UIImageView()
-           }
-        self.pieceView = UIImageView(image: self.pieceImage)
+//        switch pieceType {
+//           case .white_pawn:
+//               self.pieceImage = UIImage(named: "white_pawn")
+//           case .black_pawn:
+//               self.pieceImage = UIImage(named: "black_pawn")
+//           default:
+//               self.pieceView = UIImageView()
+//           }
+//        self.pieceView = UIImageView(image: self.pieceImage)
     }
     
 }
