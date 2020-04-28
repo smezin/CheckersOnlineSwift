@@ -12,6 +12,7 @@ class GameSettingsViewController: UIViewController {
     
     @IBOutlet weak var soundSwitch: UISwitch!
     @IBOutlet weak var playWhites: UISwitch!
+    @IBOutlet weak var showPathsSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class GameSettingsViewController: UIViewController {
             let settings = GameSettings()
             settings.soundOn = soundSwitch.isOn
             settings.playWhites = playWhites.isOn
+            settings.showPaths = showPathsSwitch.isOn
             guard let gameVC:GameViewController = segue.destination as? GameViewController else {
                 return
             }

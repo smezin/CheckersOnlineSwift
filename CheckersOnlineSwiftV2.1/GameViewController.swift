@@ -12,7 +12,7 @@ class GameViewController: UIViewController, GameData {
 
     var checkersBoardCollectionView: UICollectionView!
     var settings: GameSettings!
-    static var board:[Piece?] = Array(repeating: nil, count: 64)
+    static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
 
     override func loadView() {
         super.loadView()
@@ -61,7 +61,7 @@ extension GameViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         
-        let settings = GameSettings()
+        //let settings = GameSettings()
         
         //handle cells color
         if (((indexPath.row / 8) % 2) == 0) {
@@ -79,9 +79,23 @@ extension GameViewController: UICollectionViewDataSource {
         }
         //set piece? image
         if let piece:Piece = GameViewController.self.board[indexPath.row] {
-            let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
-            piece.pieceView.frame = frame
-            cell.addSubview(piece.pieceView)
+            if (piece.pieceType != nil) {
+                let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
+                piece.pieceView.frame = frame
+                cell.addSubview(piece.pieceView)
+            }
+            else if piece.isOnPath {
+                if (settings.showPaths)
+                {
+                    let image:UIImage = UIImage(named: "path_mark")!
+                    let frame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
+                    piece.pieceView.image = image
+                    piece.pieceView.frame = frame
+                    cell.addSubview(piece.pieceView)
+                }
+                } else {
+                    piece.pieceView.removeFromSuperview()
+                }
         }
         return cell
     }

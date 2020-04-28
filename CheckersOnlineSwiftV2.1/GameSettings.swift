@@ -16,6 +16,7 @@ class GameSettings: NSObject {
     var topMarginConstraint: Int
     var soundOn: Bool
     var playWhites: Bool
+    var showPaths: Bool
     
     init (_ colorOne:UIColor, _ colorTwo:UIColor)
     {
@@ -23,6 +24,7 @@ class GameSettings: NSObject {
         self.colorTwo = colorTwo
         self.soundOn = true
         self.playWhites = true
+        self.showPaths = true
         let screenSize: CGRect = UIScreen.main.bounds
         
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)

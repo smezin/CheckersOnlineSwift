@@ -15,17 +15,17 @@ class Piece: NSObject {
         case white_queen
         case black_queen
     }
-    var pieceLocation:Int
+    
     var pieceImage:UIImage!
     var pieceView:UIImageView!
     var pieceType:PieceType!
-    var isOnPath:Bool!
+    var isOnPath:Bool = false
     var isMyPiece:Bool!
     var isPicked:Bool!
     
-    init(_ isMyPiece:Bool, _ pieceType:PieceType, _ pieceLocation:Int)
+    init(isMyPiece:Bool, pieceType:PieceType?)
     {
-        self.pieceLocation = pieceLocation
+     //   super.init()
         self.isMyPiece = isMyPiece
         self.pieceType = pieceType
         self.isPicked = false
@@ -36,8 +36,9 @@ class Piece: NSObject {
            case .black_pawn:
                self.pieceImage = UIImage(named: "black_pawn")
            default:
-               break
+               self.pieceView = UIImageView()
            }
         self.pieceView = UIImageView(image: self.pieceImage)
     }
+    
 }
