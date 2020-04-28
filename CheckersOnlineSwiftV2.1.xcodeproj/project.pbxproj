@@ -18,6 +18,9 @@
 		E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC22454DB2400D08EA6 /* GameSettings.swift */; };
 		E1884CC52456114600D08EA6 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC42456114600D08EA6 /* Piece.swift */; };
 		E1884CC72456190900D08EA6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC62456190900D08EA6 /* GameModel.swift */; };
+		E1DC213C245792200099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213A245792200099F382 /* HeaderView.swift */; };
+		E1DC213D245792200099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC213B245792200099F382 /* HeaderView.xib */; };
+		E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		E1884CC22454DB2400D08EA6 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		E1884CC42456114600D08EA6 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		E1884CC62456190900D08EA6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		E1DC213A245792200099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		E1DC213B245792200099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snippetsAndHalfBaked.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +56,7 @@
 		E1884C9B245439C700D08EA6 = {
 			isa = PBXGroup;
 			children = (
+				E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */,
 				E1884CA6245439C700D08EA6 /* CheckersOnlineSwiftV2.1 */,
 				E1884CA5245439C700D08EA6 /* Products */,
 			);
@@ -78,6 +85,8 @@
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
+				E1DC213A245792200099F382 /* HeaderView.swift */,
+				E1DC213B245792200099F382 /* HeaderView.xib */,
 			);
 			path = CheckersOnlineSwiftV2.1;
 			sourceTree = "<group>";
@@ -143,6 +152,7 @@
 				E1884CB4245439E400D08EA6 /* LaunchScreen.storyboard in Resources */,
 				E1884CB1245439E400D08EA6 /* Assets.xcassets in Resources */,
 				E1884CAF245439C700D08EA6 /* Main.storyboard in Resources */,
+				E1DC213D245792200099F382 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
+				E1DC213C245792200099F382 /* HeaderView.swift in Sources */,
+				E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */,
 				E1884CC52456114600D08EA6 /* Piece.swift in Sources */,
 				E1884CC12454DA5B00D08EA6 /* GameSettingsViewController.swift in Sources */,
 				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,

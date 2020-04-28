@@ -18,6 +18,8 @@ class GameViewController: UIViewController, GameData {
         super.loadView()
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(collectionView)
@@ -43,6 +45,9 @@ class GameViewController: UIViewController, GameData {
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
         GameViewController.self.board = GameModel().setBoardForNewGame(board: GameViewController.self.board)
+       
+        
+        
     }
 } //end of class
 
@@ -79,14 +84,6 @@ extension GameViewController: UICollectionViewDataSource {
             cell.addSubview(piece.pieceView)
         }
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath)
-        
-        headerView.frame.size.height = 100
-        headerView.backgroundColor = .black
-        return headerView
     }
 }
 
@@ -128,13 +125,6 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        let width = collectionView.bounds.width
-//        let height = collectionView.bounds.height * 0.2
-//        return CGSize(width: width, height: height)
-//    }
-   
 }
 
 
