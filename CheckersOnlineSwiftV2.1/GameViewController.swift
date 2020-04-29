@@ -9,7 +9,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
-    static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
+    static var board:[Piece] = Array(repeating: Piece(false, nil), count: 64)
     
     override func loadView() {
         super.loadView()
@@ -72,7 +72,7 @@ extension GameViewController: UICollectionViewDataSource {
    
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
 
-        let piece:Piece = GameViewController.board[index]!
+        let piece:Piece = GameViewController.board[index]
         var image = UIImage()
         var imageView = UIImageView()
         if piece.pieceType != nil {

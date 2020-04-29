@@ -10,7 +10,7 @@ import UIKit
 
 protocol GameData
 {
-    static var board:[Piece?] {get set}
+    static var board:[Piece] {get set}
 }
 enum Direction:Int, CaseIterable
 {
@@ -23,9 +23,9 @@ enum Direction:Int, CaseIterable
 class GameModel: NSObject, GameData {
     
    // static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
-    static var board:[Piece?] = Array()
+    static var board:[Piece] = Array()
     
-    func setBoardForNewGame(_ board:[Piece?], _ settings:GameSettings) -> [Piece?] {
+    func setBoardForNewGame(_ board:[Piece], _ settings:GameSettings) -> [Piece] {
         var board = board
         var topPiecesColor:Piece.PieceType?
         var bottomPiecesColor:Piece.PieceType?
@@ -78,12 +78,12 @@ class GameModel: NSObject, GameData {
         }
         return board
     }
-    func processRequest(board:[Piece?], indexPath:IndexPath) -> [Piece?] {
+    func processRequest(board:[Piece], indexPath:IndexPath) -> [Piece] {
         GameModel.board = board
         let index:Int = isPiecePicked()
         if index == -1 {
             if isMyPiece(index: indexPath.row) {
-                GameModel.board[indexPath.row]?.isPicked = true
+                GameModel.board[indexPath.row].isPicked = true
                 findRegularPathForPieceIn(index: indexPath.row)
                 print("mine")
             }
@@ -99,31 +99,25 @@ class GameModel: NSObject, GameData {
     
     private func clearPaths () {
         for index:Int in 0..<64 {
-            GameModel.board[index]?.isOnPath = false
+            GameModel.board[index].isOnPath = false
         }
     }
     
     private func clearPicks () {
         for index:Int in 0..<64 {
-            GameModel.board[index]?.isPicked = false
+            GameModel.board[index].isPicked = false
         }
     }
     
     private func findRegularPathForPieceIn (index:Int) {
-        if GameModel.board[index]?.pieceType != nil {
-            
+        if GameModel.board[index].pieceType != nil {
             for direction in Direction.allCases {
-            
                 if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
-                if GameModel.board[index + direction.rawValue]?.pieceType == nil {
-                    GameModel.board[index + direction.rawValue]?.isOnPath = true
+                    if GameModel.board[index + direction.rawValue].pieceType == nil {
+                        GameModel.board[index + direction.rawValue].isOnPath = true
                     print("path found to \(index + direction.rawValue)")
+                    }
                 }
-            }
-//            if GameModel.board[index + Direction.downLeft.rawValue]?.pieceType == nil {
-//                GameModel.board[index + Direction.downLeft.rawValue]?.isOnPath = true
-//                print("path found to \(index + Direction.downLeft.rawValue)")
-//            }
             }
         }
     }
@@ -139,32 +133,26 @@ class GameModel: NSObject, GameData {
     
     private func isPiecePicked () -> Int {
         for index in 0..<64 {
-            if (GameModel.board[index] != nil) {
-                if GameModel.board[index]?.isPicked == true {
-                    return index
-                }
+            if GameModel.board[index].isPicked == true {
+                return index
             }
         }
         return -1
     }
     private func isMyPiece (index:Int) -> Bool {
-        if GameModel.board[index] != nil {
-           if GameModel.board[index]?.isMyPiece == true {
-               return true
-           }
+        if GameModel.board[index].isMyPiece == true {
+           return true
        }
         return false
     }
+    
     private func movePiece (from:Int, to:Int) -> Bool
     {
-        if GameModel.board[from]?.isMyPiece != true {
-            return false
-        }
-        if GameModel.board[to] != nil {
+        if GameModel.board[from].isMyPiece != true {
             return false
         }
         print("moving now")
-        GameModel.board[from]?.isPicked = false
+        GameModel.board[from].isPicked = false
         GameModel.board[to] = GameModel.board[from]
         GameModel.board[from] = Piece(false, nil)
         
