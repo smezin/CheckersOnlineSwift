@@ -22,7 +22,7 @@ enum Direction:Int, CaseIterable
 
 class GameModel: NSObject, GameData {
     
-    static var board:[Piece] = Array(repeating: Piece(nil, nil), count: 64)
+    static var board:[Piece] = Array()//repeating: Piece(isMyPiece: nil, pieceType: nil, forwardIs: nil), count: 64)
     
     func setBoardForNewGame(_ settings:GameSettings) -> [Piece] {
         
@@ -56,8 +56,8 @@ class GameModel: NSObject, GameData {
     }
     
     private func setEmptyBoard () {
-        for index in 0..<64 {
-            GameModel.board[index] = Piece(nil, nil)
+        for _ in 0..<64 {
+            GameModel.board.append(Piece())
         }
     }
     
@@ -66,12 +66,12 @@ class GameModel: NSObject, GameData {
         {
             if ((boardIndex / 8) == 5 || (boardIndex / 8) == 7) {
                 if ((boardIndex % 2) == 0) {
-                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .up)
                 }
             }
             if ((boardIndex / 8) == 6) {
                if ((boardIndex % 2) == 1) {
-                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+                GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .up)
                }
            }
         }
@@ -82,12 +82,12 @@ class GameModel: NSObject, GameData {
         {
             if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
                 if ((boardIndex % 2) == 1) {
-                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .down)
                 }
             }
             if ((boardIndex / 8) == 1) {
                if ((boardIndex % 2) == 0) {
-                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+                GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .down)
                }
            }
         }
@@ -106,8 +106,6 @@ class GameModel: NSObject, GameData {
         else {
             clearPaths()
             clearPicks()
-            //piece at index is already picked
-           
         }
         return GameModel.board
     }
@@ -169,7 +167,7 @@ class GameModel: NSObject, GameData {
         print("moving now")
         GameModel.board[from].isPicked = false
         GameModel.board[to] = GameModel.board[from]
-        GameModel.board[from] = Piece(false, nil)
+        GameModel.board[from] = Piece()
         
         return true
     }
