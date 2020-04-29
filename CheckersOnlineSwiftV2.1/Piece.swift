@@ -18,10 +18,10 @@ class Piece: NSObject {
 
     var pieceType:PieceType!
     var isOnPath:Bool = false
-    var isMyPiece:Bool!
+    var isMyPiece:Bool?
     var isPicked:Bool!
     
-    init(_ isMyPiece:Bool, _ pieceType:PieceType?)
+    init(_ isMyPiece:Bool?, _ pieceType:PieceType?)
     {
      //   super.init()
         self.isMyPiece = isMyPiece

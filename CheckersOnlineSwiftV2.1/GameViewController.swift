@@ -9,14 +9,12 @@ class GameViewController: UIViewController, GameData, SettingsData {
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
-    static var board:[Piece] = Array(repeating: Piece(false, nil), count: 64)
+    static var board:[Piece] = Array()//repeating: Piece(false, nil), count: 64)
     
     override func loadView() {
         super.loadView()
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(collectionView)
@@ -41,7 +39,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
-        GameViewController.self.board = GameModel().setBoardForNewGame(GameViewController.self.board, GameViewController.settings)
+        GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
 } //end of class
 

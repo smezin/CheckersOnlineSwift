@@ -22,11 +22,10 @@ enum Direction:Int, CaseIterable
 
 class GameModel: NSObject, GameData {
     
-   // static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
-    static var board:[Piece] = Array()
+    static var board:[Piece] = Array(repeating: Piece(nil, nil), count: 64)
     
-    func setBoardForNewGame(_ board:[Piece], _ settings:GameSettings) -> [Piece] {
-        var board = board
+    func setBoardForNewGame(_ settings:GameSettings) -> [Piece] {
+        
         var topPiecesColor:Piece.PieceType?
         var bottomPiecesColor:Piece.PieceType?
         var myPieceOnTop:Bool
@@ -50,34 +49,50 @@ class GameModel: NSObject, GameData {
                 bottomPiecesColor = .white_pawn
             }
         }
-        for boardIndex:Int in 0..<64
+        setEmptyBoard()
+        setTopPieces(isPieceMine: myPieceOnTop, pieceType: topPiecesColor!)
+        setBottomPieces(isPieceMine: !myPieceOnTop, pieceType: bottomPiecesColor!)
+        return GameModel.board
+    }
+    
+    private func setEmptyBoard () {
+        for index in 0..<64 {
+            GameModel.board[index] = Piece(nil, nil)
+        }
+    }
+    
+    private func setBottomPieces (isPieceMine:Bool, pieceType:Piece.PieceType) {
+        for boardIndex:Int in 40..<64
         {
-            board[boardIndex] = Piece(false, nil)
-            //set bottom
             if ((boardIndex / 8) == 5 || (boardIndex / 8) == 7) {
                 if ((boardIndex % 2) == 0) {
-                    board[boardIndex] = Piece(!myPieceOnTop, bottomPiecesColor)
+                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
                 }
             }
             if ((boardIndex / 8) == 6) {
                if ((boardIndex % 2) == 1) {
-                board[boardIndex] = Piece(!myPieceOnTop, bottomPiecesColor)
-               }
-           }
-            //set top
-           if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
-               if ((boardIndex % 2) == 1) {
-                board[boardIndex] = Piece(myPieceOnTop, topPiecesColor)
-               }
-           }
-           if ((boardIndex / 8) == 1) {
-               if ((boardIndex % 2) == 0) {
-                board[boardIndex] = Piece(myPieceOnTop, topPiecesColor)
+                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
                }
            }
         }
-        return board
     }
+    
+    private func setTopPieces (isPieceMine:Bool, pieceType:Piece.PieceType) {
+        for boardIndex:Int in 0...24
+        {
+            if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
+                if ((boardIndex % 2) == 1) {
+                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+                }
+            }
+            if ((boardIndex / 8) == 1) {
+               if ((boardIndex % 2) == 0) {
+                    GameModel.board[boardIndex] = Piece(isPieceMine, pieceType)
+               }
+           }
+        }
+    }
+        
     func processRequest(board:[Piece], indexPath:IndexPath) -> [Piece] {
         GameModel.board = board
         let index:Int = isPiecePicked()
