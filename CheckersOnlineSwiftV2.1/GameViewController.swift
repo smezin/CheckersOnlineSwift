@@ -1,18 +1,14 @@
 //
 //  ViewController.swift
 //  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 25/04/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
 
 import UIKit
 
-class GameViewController: UIViewController, GameData {
+class GameViewController: UIViewController, GameData, SettingsData {
     
+    static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
-    var settings: GameSettings!
     static var board:[Piece?] = Array(repeating: Piece(isMyPiece: false, pieceType: nil), count: 64)
     
     override func loadView() {
@@ -45,10 +41,7 @@ class GameViewController: UIViewController, GameData {
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
-        GameViewController.self.board = GameModel().setBoardForNewGame(board: GameViewController.self.board)
-       
-        
-        
+        GameViewController.self.board = GameModel().setBoardForNewGame(GameViewController.self.board, GameViewController.settings)
     }
 } //end of class
 
@@ -86,7 +79,7 @@ extension GameViewController: UICollectionViewDataSource {
             image = getImageByPieceType(piece: piece)
             imageView = UIImageView(image: image)
         }
-        else if piece.isOnPath && settings.showPaths {
+        else if piece.isOnPath && GameViewController.settings.showPaths {
             image = UIImage(named: "path_mark")!
             imageView = UIImageView(image: image)
         } else {
@@ -102,15 +95,15 @@ extension GameViewController: UICollectionViewDataSource {
         var cellColor:UIColor
         if (((index / 8) % 2) == 0) {
             if ((index % 2) == 0) {
-                cellColor = settings.colorOne
+                cellColor = GameViewController.settings.colorOne
             } else {
-                cellColor = settings.colorTwo
+                cellColor = GameViewController.settings.colorTwo
             }
         } else {
             if ((index % 2) == 1) {
-                cellColor = settings.colorOne
+                cellColor = GameViewController.settings.colorOne
             } else {
-                cellColor = settings.colorTwo
+                cellColor = GameViewController.settings.colorTwo
             }
         }
         return cellColor

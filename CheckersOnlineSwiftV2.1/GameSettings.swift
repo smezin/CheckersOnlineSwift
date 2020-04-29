@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SettingsData {
+    static var settings:GameSettings {get set}
+}
+
 class GameSettings: NSObject {
 
     var colorOne: UIColor
@@ -16,6 +20,7 @@ class GameSettings: NSObject {
     var topMarginConstraint: Int
     var soundOn: Bool
     var playWhites: Bool
+    var playBottom: Bool
     var showPaths: Bool
     
     init (_ colorOne:UIColor, _ colorTwo:UIColor)
@@ -24,6 +29,7 @@ class GameSettings: NSObject {
         self.colorTwo = colorTwo
         self.soundOn = true
         self.playWhites = true
+        self.playBottom = true
         self.showPaths = true
         let screenSize: CGRect = UIScreen.main.bounds
         
