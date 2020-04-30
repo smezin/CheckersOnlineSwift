@@ -9,7 +9,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
-    static var board:[Piece] = Array()//repeating: Piece(false, nil), count: 64)
+    static var board:[BoardSquare] = Array()
     
     override func loadView() {
         super.loadView()
@@ -43,6 +43,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     }
 } //end of class
 
+//Extentions
 extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -70,14 +71,15 @@ extension GameViewController: UICollectionViewDataSource {
    
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
 
-        let piece:Piece = GameViewController.board[index]
+        let boardSquare:BoardSquare = GameViewController.board[index]
         var image = UIImage()
         var imageView = UIImageView()
-        if piece.pieceType != nil {
+        let piece:Piece? = boardSquare as? Piece
+        if piece != nil {
             image = getImageByPieceType(piece: piece)
             imageView = UIImageView(image: image)
         }
-        else if piece.isOnPath && GameViewController.settings.showPaths {
+        else if boardSquare.isOnPath && GameViewController.settings.showPaths {
             image = UIImage(named: "path_mark")!
             imageView = UIImageView(image: image)
         } else {

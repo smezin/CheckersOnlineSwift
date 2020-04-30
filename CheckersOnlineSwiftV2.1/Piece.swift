@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Piece: NSObject {
+class Piece: BoardSquare {
     enum PieceType {
         case white_pawn
         case black_pawn
@@ -20,24 +20,16 @@ class Piece: NSObject {
         case down
     }
 
-    var pieceType:PieceType!
-    var isOnPath:Bool = false
+    var pieceType:PieceType?
     var isMyPiece:Bool?
-    var isPicked:Bool!
     var forwardIs:ForwardIs?
     
     init(isMyPiece:Bool?, pieceType:PieceType?, forwardIs:ForwardIs?)
     {
-     //   super.init()
+        super.init()
         self.isMyPiece = isMyPiece
         self.pieceType = pieceType
         self.forwardIs = forwardIs
-        self.isPicked = false
-        self.isOnPath = false
-    }
-    override convenience init()
-    {
-        self.init(isMyPiece: nil,pieceType: nil,forwardIs: nil)
     }
     
 }

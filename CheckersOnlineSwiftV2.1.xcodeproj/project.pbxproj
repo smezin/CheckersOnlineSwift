@@ -21,6 +21,7 @@
 		E1DC213C245792200099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213A245792200099F382 /* HeaderView.swift */; };
 		E1DC213D245792200099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC213B245792200099F382 /* HeaderView.xib */; };
 		E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */; };
+		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		E1DC213A245792200099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC213B245792200099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snippetsAndHalfBaked.swift; sourceTree = "<group>"; };
+		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				E1884CA9245439C700D08EA6 /* SceneDelegate.swift */,
 				E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */,
 				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
+				E1DC2142245AE4C20099F382 /* BoardSquare.swift */,
 				E1884CC42456114600D08EA6 /* Piece.swift */,
 				E1884CBE2454C12800D08EA6 /* Cell.swift */,
 				E1884CC62456190900D08EA6 /* GameModel.swift */,
@@ -172,6 +175,7 @@
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
+				E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */,
 				E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
