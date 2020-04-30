@@ -55,7 +55,7 @@ extension GameViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         let cellFrame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
         
-        cell.backgroundColor = getCellBackgroundColor(index: indexPath.row)
+        cell.backgroundView = getCellBackgroundView(index: indexPath.row)
         
         if getCellImageView(indexPath.row, cellFrame) != nil {
             cell.addSubview(getCellImageView(indexPath.row, cellFrame)!)
@@ -91,23 +91,23 @@ extension GameViewController: UICollectionViewDataSource {
         return imageView
        
     }
-    func getCellBackgroundColor (index:Int) -> UIColor{
+    func getCellBackgroundView (index:Int) -> UIImageView{
         
-        var cellColor:UIColor
+        var cellView:UIImageView
         if (((index / 8) % 2) == 0) {
             if ((index % 2) == 0) {
-                cellColor = GameViewController.settings.colorOne
+                cellView = UIImageView(image: UIImage(named: "wood_light"))
             } else {
-                cellColor = GameViewController.settings.colorTwo
+                cellView = UIImageView(image: UIImage(named: "wood_dark"))
             }
         } else {
             if ((index % 2) == 1) {
-                cellColor = GameViewController.settings.colorOne
+                cellView = UIImageView(image: UIImage(named: "wood_light"))
             } else {
-                cellColor = GameViewController.settings.colorTwo
+                cellView = UIImageView(image: UIImage(named: "wood_dark"))
             }
         }
-        return cellColor
+        return cellView
     }
     
     func getImageByPieceType (piece:Piece?) -> UIImage

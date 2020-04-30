@@ -131,24 +131,26 @@ class GameModel: NSObject, GameData {
             return
         }
         if piece?.forwardIs == .up {
-            findPathInDirection(index: index, .upLeft)
-            findPathInDirection(index: index, .upRight)
+            findPathInDirections(index: index, .upLeft, .upRight)
         }
         if piece?.forwardIs == .down {
-            findPathInDirection(index: index, .downLeft)
-            findPathInDirection(index: index, .downRight)
+            findPathInDirections(index: index, .downLeft, .downRight)
+           
         }
     }
     
-    private func findPathInDirection (index:Int, _ direction:Direction) -> Bool{
-        if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
-            if GameModel.board[index + direction.rawValue] as? Piece == nil {
-                GameModel.board[index + direction.rawValue].isOnPath = true
-                print("path found to \(index + direction.rawValue)")
-                return true
+    private func findPathInDirections (index:Int, _ directions:Direction...) {
+        for direction in directions {
+            if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
+                if GameModel.board[index + direction.rawValue] as? Piece == nil {
+                    GameModel.board[index + direction.rawValue].isOnPath = true
+                   // findPathInDirections(index: index+direction.rawValue, direction)
+                    print("path found to \(index + direction.rawValue)")
+                } else {
+                    
+                }
             }
         }
-        return false
     }
     
     private func isOutOfBoardBounds (from:Int, to:Int) -> Bool {

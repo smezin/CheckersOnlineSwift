@@ -14,8 +14,6 @@ protocol SettingsData {
 
 class GameSettings: NSObject {
 
-    var colorOne: UIColor
-    var colorTwo: UIColor
     var sideMarginConstraint: Int
     var topMarginConstraint: Int
     var soundOn: Bool
@@ -23,10 +21,8 @@ class GameSettings: NSObject {
     var playBottom: Bool
     var showPaths: Bool
     
-    init (_ colorOne:UIColor, _ colorTwo:UIColor)
+    override init ()
     {
-        self.colorOne = colorOne
-        self.colorTwo = colorTwo
         self.soundOn = true
         self.playWhites = true
         self.playBottom = true
@@ -35,12 +31,6 @@ class GameSettings: NSObject {
         
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)
         self.topMarginConstraint = Int(screenSize.size.height * 0.1)
-    }
-    convenience override init ()
-    {
-        let colorOne:UIColor = .systemYellow
-        let colorTwo:UIColor = .brown
-        self.init(colorOne, colorTwo)
     }
 }
 
