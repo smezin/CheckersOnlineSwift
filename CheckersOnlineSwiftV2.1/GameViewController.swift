@@ -8,6 +8,13 @@ class GameViewController: UIViewController, GameData, SettingsData {
     
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
+    let darkSquareImageName = "wood_dark"
+    let lightSquareImageName = "wood_light"
+    let pathMarkImageName = "path_mark"
+    let whitePawnImage = "white_pawn"
+    let blackPawnImage = "black_pawn"
+    let whiteQueenImage = "white_queen"
+    let blackQueenImage = "black_queen"
     var checkersBoardCollectionView: UICollectionView!
     static var board:[BoardSquare] = Array()
     
@@ -33,7 +40,6 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.checkersBoardCollectionView.dataSource = self
         self.checkersBoardCollectionView.delegate = self
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
@@ -44,6 +50,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
 } //end of class
 
 //Extentions
+
 extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -81,7 +88,7 @@ extension GameViewController: UICollectionViewDataSource {
             imageView = UIImageView(image: image)
         }
         else if boardSquare.isOnPath && GameViewController.settings.showPaths {
-            image = UIImage(named: "path_mark")!
+            image = UIImage(named: pathMarkImageName)!
             imageView = UIImageView(image: image)
         } else {
             return nil
@@ -96,15 +103,15 @@ extension GameViewController: UICollectionViewDataSource {
         var cellView:UIImageView
         if (((index / 8) % 2) == 0) {
             if ((index % 2) == 0) {
-                cellView = UIImageView(image: UIImage(named: "wood_light"))
+                cellView = UIImageView(image: UIImage(named: lightSquareImageName))
             } else {
-                cellView = UIImageView(image: UIImage(named: "wood_dark"))
+                cellView = UIImageView(image: UIImage(named: darkSquareImageName))
             }
         } else {
             if ((index % 2) == 1) {
-                cellView = UIImageView(image: UIImage(named: "wood_light"))
+                cellView = UIImageView(image: UIImage(named: lightSquareImageName))
             } else {
-                cellView = UIImageView(image: UIImage(named: "wood_dark"))
+                cellView = UIImageView(image: UIImage(named: darkSquareImageName))
             }
         }
         return cellView
@@ -118,25 +125,49 @@ extension GameViewController: UICollectionViewDataSource {
         var image:UIImage
         switch piece?.pieceType {
         case .white_pawn:
-            image = UIImage(named: "white_pawn")!
+            image = UIImage(named: whitePawnImage)!
         case .black_pawn:
-            image = UIImage(named: "black_pawn")!
+            image = UIImage(named: blackPawnImage)!
         case .white_queen:
-            image = UIImage(named: "white_Queen")!
+            image = UIImage(named: whiteQueenImage)!
         case .black_queen:
-            image = UIImage(named: "black_queen")!
+            image = UIImage(named: blackQueenImage)!
         default:
             image = UIImage()
         }
         return image
+    }
+    
+    //
+    func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
+      // 1
+      switch kind {
+      // 2
+      case UICollectionView.elementKindSectionHeader:
+        // 3
+        guard
+          let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "headerView",
+            for: indexPath) as? HeaderView
+          else {
+            fatalError("Invalid view type")
+        }
+        headerView.headerLabel.text = "test"
+        return headerView
+      default:
+        // 4
+        assert(false, "Invalid element type")
+      }
     }
 }
 
 extension GameViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Picked indexPath=",indexPath.row)
-        
+       
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
 
         self.checkersBoardCollectionView.reloadData()

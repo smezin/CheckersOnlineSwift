@@ -19,10 +19,15 @@ class Piece: BoardSquare {
         case up
         case down
     }
+    enum Status {
+        case resting
+        case moving
+    }
 
     var pieceType:PieceType?
     var isMyPiece:Bool?
     var forwardIs:ForwardIs?
+    var status:Status = .resting
     
     init(isMyPiece:Bool?, pieceType:PieceType?, forwardIs:ForwardIs?)
     {

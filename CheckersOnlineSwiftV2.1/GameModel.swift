@@ -51,11 +51,11 @@ class GameModel: NSObject, GameData {
         }
         setEmptyBoard()
         //real
-//        setTopPieces(isPieceMine: myPieceOnTop, pieceType: topPiecesColor!)
-//        setBottomPieces(isPieceMine: !myPieceOnTop, pieceType: bottomPiecesColor!)
+        setTopPieces(isPieceMine: myPieceOnTop, pieceType: topPiecesColor!)
+        setBottomPieces(isPieceMine: !myPieceOnTop, pieceType: bottomPiecesColor!)
         //testing
-        setTopPieces(isPieceMine: true, pieceType: topPiecesColor!)
-        setBottomPieces(isPieceMine: true, pieceType: bottomPiecesColor!)
+//        setTopPieces(isPieceMine: true, pieceType: topPiecesColor!)
+//        setBottomPieces(isPieceMine: true, pieceType: bottomPiecesColor!)
         
         
         return GameModel.board
@@ -86,11 +86,11 @@ class GameModel: NSObject, GameData {
     private func setTopPieces (isPieceMine:Bool, pieceType:Piece.PieceType) {
         for boardIndex:Int in 0...24
         {
-            if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
-                if ((boardIndex % 2) == 1) {
-                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .down)
-                }
-            }
+//            if ((boardIndex / 8) == 0 || (boardIndex / 8) == 2) {
+//                if ((boardIndex % 2) == 1) {
+//                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .down)
+//                }
+//            }
             if ((boardIndex / 8) == 1) {
                if ((boardIndex % 2) == 0) {
                 GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .down)
@@ -101,20 +101,26 @@ class GameModel: NSObject, GameData {
         
     func processRequest(board:[BoardSquare], indexPath:IndexPath) -> [BoardSquare] {
         GameModel.board = board
+            
         let index:Int = isPiecePicked()
         if index == -1 {
             if isMyPiece(index: indexPath.row) {
                 GameModel.board[indexPath.row].isPicked = true
                 findPathForPawnAt(index: indexPath.row)
-                print("mine")
             }
         }
         else {
+            let piece:Piece? = GameModel.board[index] as? Piece
             if GameModel.board[indexPath.row].isOnPath {
                 movePiece(from: index, to: indexPath.row)
+                if piece?.status == .moving {
+                    findConsecutiveKillPathFor(index: indexPath.row)
+                } else {
+                    clearPaths()
+                    clearPicks()
+                }
             }
-            clearPaths()
-            clearPicks()
+            
         }
         return GameModel.board
     }
@@ -148,16 +154,32 @@ class GameModel: NSObject, GameData {
     private func findPathInDirections (index:Int, _ directions:Direction...) {
         for direction in directions {
             if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
-                if GameModel.board[index + direction.rawValue] as? Piece == nil {
-                    GameModel.board[index + direction.rawValue].isOnPath = true
-          //          findPathInDirections(index: index+direction.rawValue, direction)
-                    print("path found to \(index + direction.rawValue)")
-                } else {
-          //          if !(GameModel.board[index + direction.rawValue] as! Piece).isMyPiece! {
+                if let piece = GameModel.board[index + direction.rawValue] as? Piece {
+                    if !piece.isMyPiece! {
                         if !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) {
                                 GameModel.board[index + 2*direction.rawValue].isOnPath = true
                         }
-             //       }
+                    }
+                } else {
+                      GameModel.board[index + direction.rawValue].isOnPath = true
+            //          findPathInDirections(index: index+direction.rawValue, direction)
+                      print("path found to \(index + direction.rawValue)")
+                }
+            }
+        }
+    }
+    
+    private func findConsecutiveKillPathFor (index:Int) {
+        let piece:Piece = GameModel.board[index] as! Piece
+        for direction in Direction.allCases {
+            if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) && !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) {
+                if let piece = GameModel.board[index + direction.rawValue] as? Piece  {
+                    if !piece.isMyPiece! {
+                        if !(GameModel.board[index + 2*direction.rawValue] is Piece) {
+                            print("!!")
+                            GameModel.board[index + 2*direction.rawValue].isOnPath = true
+                        }
+                    }
                 }
             }
         }
@@ -199,15 +221,17 @@ class GameModel: NSObject, GameData {
         if GameModel.board[to] is Piece {
             return false
         }
-        print("moving now")
-        GameModel.board[from].isPicked = false
+        
         GameModel.board[to] = GameModel.board[from]
         GameModel.board[from] = BoardSquare()
         let reverseStep:Direction = getJumpedOverSquareDirection(from: from, to: to)!
         if GameModel.board[to + reverseStep.rawValue] as? Piece != nil {
-            if (GameModel.board[to + reverseStep.rawValue] as! Piece).isMyPiece! {
-                GameModel.board[to + reverseStep.rawValue] = BoardSquare()
-            }
+            piece?.status = .moving
+            GameModel.board[to + reverseStep.rawValue] = BoardSquare()
+            piece?.status = .moving
+        } else {
+            piece?.status = .resting
+            GameModel.board[from].isPicked = false
         }
         
         return true
