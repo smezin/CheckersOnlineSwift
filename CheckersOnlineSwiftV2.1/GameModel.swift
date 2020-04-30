@@ -99,11 +99,14 @@ class GameModel: NSObject, GameData {
         if index == -1 {
             if isMyPiece(index: indexPath.row) {
                 GameModel.board[indexPath.row].isPicked = true
-                findRegularPathForPieceIn(index: indexPath.row)
+                findPathForPawnAt(index: indexPath.row)
                 print("mine")
             }
         }
         else {
+            if GameModel.board[indexPath.row].isOnPath {
+                movePiece(from: index, to: indexPath.row)
+            }
             clearPaths()
             clearPicks()
         }
@@ -122,21 +125,32 @@ class GameModel: NSObject, GameData {
         }
     }
     
-    private func findRegularPathForPieceIn (index:Int) {
+    private func findPathForPawnAt (index:Int) {
         let piece:Piece? = GameModel.board[index] as? Piece
         if piece == nil {
             return
         }
-        for direction in Direction.allCases {
-            if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
-                if GameModel.board[index + direction.rawValue] as? Piece == nil {
-                    GameModel.board[index + direction.rawValue].isOnPath = true
+        if piece?.forwardIs == .up {
+            findPathInDirection(index: index, .upLeft)
+            findPathInDirection(index: index, .upRight)
+        }
+        if piece?.forwardIs == .down {
+            findPathInDirection(index: index, .downLeft)
+            findPathInDirection(index: index, .downRight)
+        }
+    }
+    
+    private func findPathInDirection (index:Int, _ direction:Direction) -> Bool{
+        if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
+            if GameModel.board[index + direction.rawValue] as? Piece == nil {
+                GameModel.board[index + direction.rawValue].isOnPath = true
                 print("path found to \(index + direction.rawValue)")
-                }
+                return true
             }
         }
-        
+        return false
     }
+    
     private func isOutOfBoardBounds (from:Int, to:Int) -> Bool {
         if to < 0 || to > 63 {
             return true
@@ -155,6 +169,7 @@ class GameModel: NSObject, GameData {
         }
         return -1
     }
+    
     private func isMyPiece (index:Int) -> Bool {
         let piece:Piece? = GameModel.board[index] as? Piece
         if piece != nil && piece!.isMyPiece! {
@@ -180,5 +195,4 @@ class GameModel: NSObject, GameData {
         return true
     }
     
-       
 }

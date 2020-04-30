@@ -27,5 +27,11 @@ class Cell: UICollectionViewCell {
 
     func reset() {
         //reset for reuse
+       let subViews = self.subviews
+       for subview in subViews {
+           if subview.tag == 1000 {
+               subview.removeFromSuperview()
+           }
+       }
     }
 }

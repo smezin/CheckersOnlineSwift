@@ -56,6 +56,7 @@ extension GameViewController: UICollectionViewDataSource {
         let cellFrame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
         
         cell.backgroundColor = getCellBackgroundColor(index: indexPath.row)
+        
         if getCellImageView(indexPath.row, cellFrame) != nil {
             cell.addSubview(getCellImageView(indexPath.row, cellFrame)!)
         } else {
