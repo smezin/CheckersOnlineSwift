@@ -50,8 +50,14 @@ class GameModel: NSObject, GameData {
             }
         }
         setEmptyBoard()
-        setTopPieces(isPieceMine: myPieceOnTop, pieceType: topPiecesColor!)
-        setBottomPieces(isPieceMine: !myPieceOnTop, pieceType: bottomPiecesColor!)
+        //real
+//        setTopPieces(isPieceMine: myPieceOnTop, pieceType: topPiecesColor!)
+//        setBottomPieces(isPieceMine: !myPieceOnTop, pieceType: bottomPiecesColor!)
+        //testing
+        setTopPieces(isPieceMine: true, pieceType: topPiecesColor!)
+        setBottomPieces(isPieceMine: true, pieceType: bottomPiecesColor!)
+        
+        
         return GameModel.board
     }
     
@@ -144,10 +150,14 @@ class GameModel: NSObject, GameData {
             if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
                 if GameModel.board[index + direction.rawValue] as? Piece == nil {
                     GameModel.board[index + direction.rawValue].isOnPath = true
-                   // findPathInDirections(index: index+direction.rawValue, direction)
+          //          findPathInDirections(index: index+direction.rawValue, direction)
                     print("path found to \(index + direction.rawValue)")
                 } else {
-                    
+          //          if !(GameModel.board[index + direction.rawValue] as! Piece).isMyPiece! {
+                        if !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) {
+                                GameModel.board[index + 2*direction.rawValue].isOnPath = true
+                        }
+             //       }
                 }
             }
         }
@@ -193,8 +203,31 @@ class GameModel: NSObject, GameData {
         GameModel.board[from].isPicked = false
         GameModel.board[to] = GameModel.board[from]
         GameModel.board[from] = BoardSquare()
+        let reverseStep:Direction = getJumpedOverSquareDirection(from: from, to: to)!
+        if GameModel.board[to + reverseStep.rawValue] as? Piece != nil {
+            if (GameModel.board[to + reverseStep.rawValue] as! Piece).isMyPiece! {
+                GameModel.board[to + reverseStep.rawValue] = BoardSquare()
+            }
+        }
         
         return true
+    }
+    private func getJumpedOverSquareDirection (from:Int, to:Int) ->Direction? {
+        var direction:Direction?
+        if from < to {
+            if (to - from) % 7 == 0 {
+                direction = .upRight
+            } else if (to - from) % 9 == 0{
+                direction = .upLeft
+            }
+        } else {
+            if (to - from) % 7 == 0 {
+                direction = .downLeft
+            } else if (to - from) % 9 == 0{
+                direction = .downRight
+            }
+        }
+        return direction
     }
     
 }
