@@ -100,8 +100,9 @@ class GameModel: NSObject, GameData {
     }
         
     func processRequest(board:[BoardSquare], indexPath:IndexPath) -> [BoardSquare] {
-        GameModel.board = board
-            
+        
+        var didMove:Bool = false
+        var isTurnEnded = false
         let index:Int = isPiecePicked()
         if index == -1 {
             if isMyPiece(index: indexPath.row) {
@@ -112,15 +113,28 @@ class GameModel: NSObject, GameData {
         else {
             let piece:Piece? = GameModel.board[index] as? Piece
             if GameModel.board[indexPath.row].isOnPath {
-                movePiece(from: index, to: indexPath.row)
+                didMove = movePiece(from: index, to: indexPath.row)
                 if piece?.status == .moving {
+                    clearPaths()
                     findConsecutiveKillPathFor(index: indexPath.row)
                 } else {
                     clearPaths()
                     clearPicks()
                 }
+            } else {
+                clearPaths()
+                clearPicks()
+                if piece?.status == .moving {
+                    piece?.status = .resting
+                    isTurnEnded = true
+                }
             }
-            
+            if (didMove && piece?.status == .resting) {
+                isTurnEnded = true
+            }
+        }
+        if isTurnEnded {
+            print ("turn ended")
         }
         return GameModel.board
     }
@@ -163,7 +177,6 @@ class GameModel: NSObject, GameData {
                 } else {
                       GameModel.board[index + direction.rawValue].isOnPath = true
             //          findPathInDirections(index: index+direction.rawValue, direction)
-                      print("path found to \(index + direction.rawValue)")
                 }
             }
         }
@@ -171,17 +184,21 @@ class GameModel: NSObject, GameData {
     
     private func findConsecutiveKillPathFor (index:Int) {
         let piece:Piece = GameModel.board[index] as! Piece
+        var isPathFound:Bool = false;
         for direction in Direction.allCases {
             if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) && !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) {
                 if let piece = GameModel.board[index + direction.rawValue] as? Piece  {
                     if !piece.isMyPiece! {
                         if !(GameModel.board[index + 2*direction.rawValue] is Piece) {
-                            print("!!")
                             GameModel.board[index + 2*direction.rawValue].isOnPath = true
+                            isPathFound = true
                         }
                     }
                 }
             }
+        }
+        if !isPathFound {
+            piece.status = .resting
         }
     }
     
@@ -226,9 +243,9 @@ class GameModel: NSObject, GameData {
         GameModel.board[from] = BoardSquare()
         let reverseStep:Direction = getJumpedOverSquareDirection(from: from, to: to)!
         if GameModel.board[to + reverseStep.rawValue] as? Piece != nil {
+            //if killed a piece
             piece?.status = .moving
             GameModel.board[to + reverseStep.rawValue] = BoardSquare()
-            piece?.status = .moving
         } else {
             piece?.status = .resting
             GameModel.board[from].isPicked = false
