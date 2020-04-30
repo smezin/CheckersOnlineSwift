@@ -17,7 +17,6 @@ class GameViewController: UIViewController, GameData, SettingsData {
     let blackQueenImage = "black_queen"
     var checkersBoardCollectionView: UICollectionView!
     static var board:[BoardSquare] = Array()
-    
     override func loadView() {
         super.loadView()
 
@@ -64,9 +63,17 @@ extension GameViewController: UICollectionViewDataSource {
         
         cell.backgroundView = getCellBackgroundView(index: indexPath.row)
         
-        if getCellImageView(indexPath.row, cellFrame) != nil {
-            cell.addSubview(getCellImageView(indexPath.row, cellFrame)!)
+        if let cellImageView = getCellImageView(indexPath.row, cellFrame) {
+            cell.addSubview(cellImageView)
+            if GameModel.board[indexPath.row].isPicked {
+                UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.15, initialSpringVelocity: 0.2, options: .curveEaseIn, animations: {
+                    cellImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9).inverted()
+                }) { (success:Bool) in
+                   // cellImageView.transform = CGAffineTransform(scaleX: (1/0.9), y: (1/0.9)).inverted()
+                }
+            }
         } else {
+            //remove subview that might have from reusing
             let subViews = cell.subviews
             for subview in subViews {
                 if subview.tag == imageViewsTag {
@@ -100,21 +107,21 @@ extension GameViewController: UICollectionViewDataSource {
     }
     func getCellBackgroundView (index:Int) -> UIImageView{
         
-        var cellView:UIImageView
+        var cellImageView:UIImageView
         if (((index / 8) % 2) == 0) {
             if ((index % 2) == 0) {
-                cellView = UIImageView(image: UIImage(named: lightSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: lightSquareImageName))
             } else {
-                cellView = UIImageView(image: UIImage(named: darkSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: darkSquareImageName))
             }
         } else {
             if ((index % 2) == 1) {
-                cellView = UIImageView(image: UIImage(named: lightSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: lightSquareImageName))
             } else {
-                cellView = UIImageView(image: UIImage(named: darkSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: darkSquareImageName))
             }
         }
-        return cellView
+        return cellImageView
     }
     
     func getImageByPieceType (piece:Piece?) -> UIImage
@@ -138,36 +145,36 @@ extension GameViewController: UICollectionViewDataSource {
         return image
     }
     
-    //
-    func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath) -> UICollectionReusableView {
-      // 1
-      switch kind {
-      // 2
-      case UICollectionView.elementKindSectionHeader:
-        // 3
-        guard
-          let headerView = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: "headerView",
-            for: indexPath) as? HeaderView
-          else {
-            fatalError("Invalid view type")
-        }
-        headerView.headerLabel.text = "test"
-        return headerView
-      default:
-        // 4
-        assert(false, "Invalid element type")
-      }
-    }
+//    //
+//    func collectionView(_ collectionView: UICollectionView,
+//                                 viewForSupplementaryElementOfKind kind: String,
+//                                 at indexPath: IndexPath) -> UICollectionReusableView {
+//      // 1
+//      switch kind {
+//      // 2
+//      case UICollectionView.elementKindSectionHeader:
+//        // 3
+//        guard
+//          let headerView = collectionView.dequeueReusableSupplementaryView(
+//            ofKind: kind,
+//            withReuseIdentifier: "headerView",
+//            for: indexPath) as? HeaderView
+//          else {
+//            fatalError("Invalid view type")
+//        }
+//        headerView.headerLabel.text = "test"
+//        return headerView
+//      default:
+//        // 4
+//        assert(false, "Invalid element type")
+//      }
+//    }
 }
 
 extension GameViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       
+        
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
 
         self.checkersBoardCollectionView.reloadData()
