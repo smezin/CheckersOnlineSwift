@@ -104,16 +104,16 @@ class GameModel: NSObject, GameData {
             return false
         }
         if piece?.forwardIs == .up {
-            isPathFound = findPathInDirections(index: index, markPath: markPath, .upLeft, .upRight)
+            isPathFound = findPathInDirections(index, markPath: markPath, .upLeft, .upRight)
         }
         if piece?.forwardIs == .down {
-            isPathFound = findPathInDirections(index: index, markPath: markPath, .downLeft, .downRight)
+            isPathFound = findPathInDirections(index, markPath: markPath, .downLeft, .downRight)
             
         }
         return isPathFound
     }
     
-    private func findPathInDirections (index:Int, isQueen:Bool = false, markPath:Bool = true, _ directions:Direction...) -> Bool {
+    private func findPathInDirections (_ index:Int, isQueen:Bool = false, markPath:Bool = true, _ directions:Direction...) -> Bool {
         
         var directions = directions
         var isQueen = isQueen
@@ -145,7 +145,7 @@ class GameModel: NSObject, GameData {
                     }
                     isPathFound = true
                     if isQueen { //recursive path find
-                        findPathInDirections(index: index+direction.rawValue, isQueen:true, markPath:markPath ,direction)
+                        findPathInDirections(index+direction.rawValue, isQueen:true, markPath:markPath ,direction)
                     }
                 }
             }

@@ -61,12 +61,13 @@ extension GameViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         let cellFrame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
         cell.backgroundView = getCellBackgroundView(index: indexPath.row)
+        
         //animate pick
         if let cellImageView = getCellImageView(indexPath.row, cellFrame) {
             cell.addSubview(cellImageView)
             if GameModel.board[indexPath.row].isPicked {
                 cellImageView.center.y -= CGFloat(GameViewController.settings.bounceHeight)
-                UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.0, options: [], animations: {
+                UIImageView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.0, options: .allowUserInteraction, animations: {
                     cellImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)
                 }) { (success:Bool) in
                 }
