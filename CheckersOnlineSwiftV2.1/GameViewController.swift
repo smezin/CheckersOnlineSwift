@@ -44,6 +44,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
+        self.checkersBoardCollectionView.register(UINib.init(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
 } //end of class
@@ -83,7 +84,15 @@ extension GameViewController: UICollectionViewDataSource {
         }
         return cell
     }
-   
+    //doesn't work!!!
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+     //   if kind.isEqual(UICollectionView.elementKindSectionHeader) {
+        let cell = self.checkersBoardCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! HeaderView
+            return cell
+//        } else {
+//            return cell
+//        }
+    }
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
         let boardSquare:BoardSquare = GameViewController.board[index]
         var image = UIImage()

@@ -20,6 +20,8 @@
 		E1884CC72456190900D08EA6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC62456190900D08EA6 /* GameModel.swift */; };
 		E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
+		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
+		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		E1884CC62456190900D08EA6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snippetsAndHalfBaked.swift; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
+		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
+				E1DC2148245CDA570099F382 /* HeaderView.swift */,
+				E1DC2149245CDA570099F382 /* HeaderView.xib */,
 			);
 			path = CheckersOnlineSwiftV2.1;
 			sourceTree = "<group>";
@@ -149,6 +155,7 @@
 				E1884CB4245439E400D08EA6 /* LaunchScreen.storyboard in Resources */,
 				E1884CB1245439E400D08EA6 /* Assets.xcassets in Resources */,
 				E1884CAF245439C700D08EA6 /* Main.storyboard in Resources */,
+				E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +173,7 @@
 				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
+				E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
 				E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */,
 				E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */,
