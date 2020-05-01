@@ -1,10 +1,7 @@
 //
 //  GameModel.swift
 //  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 26/04/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
+
 
 import UIKit
 
@@ -64,11 +61,11 @@ class GameModel: NSObject, GameData {
     private func setBottomPieces (isPieceMine:Bool, pieceType:Piece.PieceType) {
         for boardIndex:Int in 40..<64
         {
-            if ((boardIndex / 8) == 5 || (boardIndex / 8) == 7) {
-                if ((boardIndex % 2) == 0) {
-                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .up)
-                }
-            }
+//            if ((boardIndex / 8) == 5 || (boardIndex / 8) == 7) {
+//                if ((boardIndex % 2) == 0) {
+//                    GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .up)
+//                }
+//            }
             if ((boardIndex / 8) == 6) {
                if ((boardIndex % 2) == 1) {
                 GameModel.board[boardIndex] = Piece(isMyPiece: isPieceMine, pieceType: pieceType, forwardIs: .up)
@@ -97,7 +94,7 @@ class GameModel: NSObject, GameData {
         var didMove:Bool = false
         var isTurnEnded:Bool = false
         let index:Int? = indexOfPickedPiece()
-        
+       
         if index == nil {
             if isMyPiece(index: indexPath.row) {
                 GameModel.board[indexPath.row].isPicked = true
@@ -129,10 +126,29 @@ class GameModel: NSObject, GameData {
         }
         if isTurnEnded {
             print ("turn ended")
+            let pieceLocation:Int = (didMove ? indexPath.row:index)!
+            coronate(piece: GameModel.board[pieceLocation] as? Piece)
         }
         return GameModel.board
     }
-    
+    private func coronate (piece:Piece?) {
+        if piece == nil {
+            return
+        }
+        let index:Int = GameModel.board.firstIndex(of: piece!)!
+        if piece?.forwardIs == .up {
+            if index < 8 {
+                GameModel.board[index] = Piece(isMyPiece: true, pieceType: .white_queen, forwardIs: .up)
+            }
+            print(index)
+        }
+        if piece?.forwardIs == .down {
+            if index > 55 {
+                GameModel.board[index] = Piece(isMyPiece: true, pieceType: .white_queen, forwardIs: .up)
+            }
+            print(index)
+        }
+    }
     private func clearPaths () {
         for index:Int in 0..<64 {
             GameModel.board[index].isOnPath = false
@@ -159,8 +175,20 @@ class GameModel: NSObject, GameData {
         }
     }
     
-    private func findPathInDirections (index:Int, _ directions:Direction...) {
-       // let directions = Direction.allCases
+    private func findPathInDirections (index:Int, isQueen:Bool = false, _ directions:Direction...) {
+        
+        var directions = directions
+        var isQueen = isQueen
+        if !isQueen {
+            if let piece:Piece = GameModel.board[index] as? Piece {
+                if piece.pieceType == .white_queen || piece.pieceType == .black_queen {
+                    isQueen = true
+                }
+            }
+        }
+        if isQueen && directions.count > 1 {
+            directions = Direction.allCases
+        }
         for direction in directions {
             if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
                 if let piece = GameModel.board[index + direction.rawValue] as? Piece {
@@ -170,8 +198,10 @@ class GameModel: NSObject, GameData {
                         }
                     }
                 } else {
-                      GameModel.board[index + direction.rawValue].isOnPath = true
-             //         findPathInDirections(index: index+direction.rawValue, direction)
+                    GameModel.board[index + direction.rawValue].isOnPath = true
+                    if isQueen {
+                        findPathInDirections(index: index+direction.rawValue, isQueen:true, direction)
+                    }
                 }
             }
         }

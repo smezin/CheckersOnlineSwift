@@ -16,6 +16,7 @@ class GameSettings: NSObject {
 
     var sideMarginConstraint: Int
     var topMarginConstraint: Int
+    var bounceHeight: Int
     var soundOn: Bool
     var playWhites: Bool
     var playBottom: Bool
@@ -31,6 +32,7 @@ class GameSettings: NSObject {
         
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)
         self.topMarginConstraint = Int(screenSize.size.height * 0.1)
+        self.bounceHeight = Int(screenSize.size.width/8)/5
     }
 }
 
