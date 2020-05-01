@@ -128,8 +128,16 @@ class GameModel: NSObject, GameData {
             print ("turn ended")
             let pieceLocation:Int = (didMove ? indexPath.row:index)!
             coronate(piece: GameModel.board[pieceLocation] as? Piece)
+            switchPlayer()
         }
         return GameModel.board
+    }
+    private func switchPlayer () {
+        for index:Int in 0..<64 {
+            if let piece:Piece = GameModel.board[index] as? Piece {
+                piece.isMyPiece = !piece.isMyPiece!
+            }
+        }
     }
     private func coronate (piece:Piece?) {
         if piece == nil {
