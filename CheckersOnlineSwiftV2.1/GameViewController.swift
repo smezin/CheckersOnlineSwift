@@ -66,10 +66,10 @@ extension GameViewController: UICollectionViewDataSource {
         if let cellImageView = getCellImageView(indexPath.row, cellFrame) {
             cell.addSubview(cellImageView)
             if GameModel.board[indexPath.row].isPicked {
-                UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.15, initialSpringVelocity: 0.2, options: .curveEaseIn, animations: {
-                    cellImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9).inverted()
+                cellImageView.center.y -= cell.bounds.height/5
+                UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.2, options: [], animations: {
+                    cellImageView.center.y += cell.bounds.height/5
                 }) { (success:Bool) in
-                   // cellImageView.transform = CGAffineTransform(scaleX: (1/0.9), y: (1/0.9)).inverted()
                 }
             }
         } else {
