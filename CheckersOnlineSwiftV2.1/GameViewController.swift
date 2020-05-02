@@ -83,11 +83,11 @@ extension GameViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind.isEqual(UICollectionView.elementKindSectionHeader) {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.headerViewId, for: indexPath) as! HeaderView
-        //    header.backgroundColor = self.view.backgroundColor
+            header.backgroundColor = self.view.backgroundColor
             return header
         } else if kind.isEqual(UICollectionView.elementKindSectionFooter) {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.footerViewId, for: indexPath) as! FooterView
-        //    footer.backgroundColor = self.view.backgroundColor
+            footer.backgroundColor = self.view.backgroundColor
             return footer
         }
         else {
@@ -194,11 +194,11 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     }
     //header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-       return CGSize(width: collectionView.frame.size.width, height: 100)
+        return CGSize(width: collectionView.frame.size.width, height: GameViewController.settings.headerHeight)
     }
     //footer
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-       return CGSize(width: collectionView.frame.size.width, height: 100)
+        return CGSize(width: collectionView.frame.size.width, height: GameViewController.settings.footerHeight)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {

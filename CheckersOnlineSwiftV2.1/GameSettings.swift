@@ -29,7 +29,9 @@ class GameSettings: NSObject {
     var whiteQueenImage:String
     var blackQueenImage:String
     var headerViewId:String
+    var headerHeight:CGFloat
     var footerViewId:String
+    var footerHeight:CGFloat
     
     override init ()
     {
@@ -49,6 +51,8 @@ class GameSettings: NSObject {
         let screenSize: CGRect = UIScreen.main.bounds
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)
         self.topMarginConstraint = Int(screenSize.size.height * 0.05)
+        self.headerHeight = CGFloat(screenSize.size.height / 8)
+        self.footerHeight = CGFloat(screenSize.size.height / 6)
         self.bounceHeight = Int(screenSize.size.width/8)/5
     }
 }
