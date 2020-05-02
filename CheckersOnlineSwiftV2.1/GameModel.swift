@@ -110,6 +110,9 @@ class GameModel: NSObject, GameData {
             isPathFound = findPathInDirections(index, markPath: markPath, .downLeft, .downRight)
             
         }
+        if !isPathFound {
+            piece?.isPicked = false
+        }
         return isPathFound
     }
     
@@ -130,9 +133,9 @@ class GameModel: NSObject, GameData {
         }
         for direction in directions {
             if !isOutOfBoardBounds(from: index, to: index + direction.rawValue) {
-                if let piece = GameModel.board[index + direction.rawValue] as? Piece {
-                    if !piece.isMyPiece! {
-                        if !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) {
+                if let pieceOnDirection = GameModel.board[index + direction.rawValue] as? Piece {
+                    if !pieceOnDirection.isMyPiece! {
+                        if !isOutOfBoardBounds(from: index + direction.rawValue, to: index + 2*direction.rawValue) && GameModel.board[index + 2*direction.rawValue] as? Piece == nil {
                             if markPath {
                                 GameModel.board[index + 2*direction.rawValue].isOnPath = true
                             }
@@ -145,7 +148,8 @@ class GameModel: NSObject, GameData {
                     }
                     isPathFound = true
                     if isQueen { //recursive path find
-                        findPathInDirections(index+direction.rawValue, isQueen:true, markPath:markPath ,direction)
+                        if !findPathInDirections(index+direction.rawValue, isQueen:true, markPath:markPath ,direction) {
+                        }
                     }
                 }
             }
@@ -170,6 +174,7 @@ class GameModel: NSObject, GameData {
         }
         if !isPathFound {
             piece.status = .resting
+            piece.isPicked = false
         }
     }
     

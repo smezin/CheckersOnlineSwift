@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameSettingsViewController: UIViewController {
+class GUISettingsViewController: UIViewController {
     
     @IBOutlet weak var soundSwitch: UISwitch!
     @IBOutlet weak var playWhitesSwitch: UISwitch!

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14F9BFD245DA9D000684F9A /* FooterView.swift */; };
+		E14F9C00245DA9D000684F9A /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E14F9BFE245DA9D000684F9A /* FooterView.xib */; };
 		E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CA9245439C700D08EA6 /* SceneDelegate.swift */; };
 		E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CAB245439C700D08EA6 /* GameViewController.swift */; };
 		E1884CAF245439C700D08EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1884CAD245439C700D08EA6 /* Main.storyboard */; };
@@ -14,17 +16,18 @@
 		E1884CB4245439E400D08EA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */; };
 		E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CA7245439C700D08EA6 /* AppDelegate.swift */; };
 		E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CBE2454C12800D08EA6 /* Cell.swift */; };
-		E1884CC12454DA5B00D08EA6 /* GameSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */; };
+		E1884CC12454DA5B00D08EA6 /* GUISettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC02454DA5B00D08EA6 /* GUISettingsViewController.swift */; };
 		E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC22454DB2400D08EA6 /* GameSettings.swift */; };
 		E1884CC52456114600D08EA6 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC42456114600D08EA6 /* Piece.swift */; };
 		E1884CC72456190900D08EA6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC62456190900D08EA6 /* GameModel.swift */; };
-		E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E14F9BFD245DA9D000684F9A /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		E14F9BFE245DA9D000684F9A /* FooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
 		E1884CA4245439C700D08EA6 /* CheckersOnlineSwiftV2.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckersOnlineSwiftV2.1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1884CA7245439C700D08EA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1884CA9245439C700D08EA6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,11 +37,10 @@
 		E1884CB3245439E400D08EA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1884CB5245439E400D08EA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1884CBE2454C12800D08EA6 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
-		E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsViewController.swift; sourceTree = "<group>"; };
+		E1884CC02454DA5B00D08EA6 /* GUISettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GUISettingsViewController.swift; sourceTree = "<group>"; };
 		E1884CC22454DB2400D08EA6 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		E1884CC42456114600D08EA6 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		E1884CC62456190900D08EA6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
-		E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snippetsAndHalfBaked.swift; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -58,7 +60,6 @@
 		E1884C9B245439C700D08EA6 = {
 			isa = PBXGroup;
 			children = (
-				E1DC213E24584E9C0099F382 /* snippetsAndHalfBaked.swift */,
 				E1884CA6245439C700D08EA6 /* CheckersOnlineSwiftV2.1 */,
 				E1884CA5245439C700D08EA6 /* Products */,
 			);
@@ -77,7 +78,7 @@
 			children = (
 				E1884CA7245439C700D08EA6 /* AppDelegate.swift */,
 				E1884CA9245439C700D08EA6 /* SceneDelegate.swift */,
-				E1884CC02454DA5B00D08EA6 /* GameSettingsViewController.swift */,
+				E1884CC02454DA5B00D08EA6 /* GUISettingsViewController.swift */,
 				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
 				E1DC2142245AE4C20099F382 /* BoardSquare.swift */,
 				E1884CC42456114600D08EA6 /* Piece.swift */,
@@ -90,6 +91,8 @@
 				E1884CB5245439E400D08EA6 /* Info.plist */,
 				E1DC2148245CDA570099F382 /* HeaderView.swift */,
 				E1DC2149245CDA570099F382 /* HeaderView.xib */,
+				E14F9BFD245DA9D000684F9A /* FooterView.swift */,
+				E14F9BFE245DA9D000684F9A /* FooterView.xib */,
 			);
 			path = CheckersOnlineSwiftV2.1;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				E1884CB4245439E400D08EA6 /* LaunchScreen.storyboard in Resources */,
 				E1884CB1245439E400D08EA6 /* Assets.xcassets in Resources */,
 				E1884CAF245439C700D08EA6 /* Main.storyboard in Resources */,
+				E14F9C00245DA9D000684F9A /* FooterView.xib in Resources */,
 				E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,14 +171,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
-				E1DC213F24584E9C0099F382 /* snippetsAndHalfBaked.swift in Sources */,
 				E1884CC52456114600D08EA6 /* Piece.swift in Sources */,
-				E1884CC12454DA5B00D08EA6 /* GameSettingsViewController.swift in Sources */,
+				E1884CC12454DA5B00D08EA6 /* GUISettingsViewController.swift in Sources */,
 				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
 				E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
+				E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */,
 				E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */,
 				E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */,
 			);

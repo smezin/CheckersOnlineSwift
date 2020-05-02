@@ -8,13 +8,6 @@ class GameViewController: UIViewController, GameData, SettingsData {
     
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
-    let darkSquareImageName = "wood_dark"
-    let lightSquareImageName = "wood_light"
-    let pathMarkImageName = "path_mark"
-    let whitePawnImage = "white_pawn"
-    let blackPawnImage = "black_pawn"
-    let whiteQueenImage = "white_queen"
-    let blackQueenImage = "black_queen"
     var checkersBoardCollectionView: UICollectionView!
     static var board:[BoardSquare] = Array()
     override func loadView() {
@@ -41,10 +34,12 @@ class GameViewController: UIViewController, GameData, SettingsData {
         super.viewDidLoad()
         self.checkersBoardCollectionView.dataSource = self
         self.checkersBoardCollectionView.delegate = self
+        self.checkersBoardCollectionView.register(UINib.init(nibName: GameViewController.settings.headerViewId, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: GameViewController.settings.headerViewId)
+        self.checkersBoardCollectionView.register(UINib.init(nibName: GameViewController.settings.footerViewId, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: GameViewController.settings.footerViewId)
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
-        self.checkersBoardCollectionView.register(UINib.init(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
+        
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
 } //end of class
@@ -84,14 +79,20 @@ extension GameViewController: UICollectionViewDataSource {
         }
         return cell
     }
-    //doesn't work!!!
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-     //   if kind.isEqual(UICollectionView.elementKindSectionHeader) {
-        let cell = self.checkersBoardCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! HeaderView
-            return cell
-//        } else {
-//            return cell
-//        }
+        if kind.isEqual(UICollectionView.elementKindSectionHeader) {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.headerViewId, for: indexPath) as! HeaderView
+        //    header.backgroundColor = self.view.backgroundColor
+            return header
+        } else if kind.isEqual(UICollectionView.elementKindSectionFooter) {
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.footerViewId, for: indexPath) as! FooterView
+        //    footer.backgroundColor = self.view.backgroundColor
+            return footer
+        }
+        else {
+            return UICollectionReusableView()
+        }
     }
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
         let boardSquare:BoardSquare = GameViewController.board[index]
@@ -103,7 +104,7 @@ extension GameViewController: UICollectionViewDataSource {
             imageView = UIImageView(image: image)
         }
         else if boardSquare.isOnPath && GameViewController.settings.showPaths {
-            image = UIImage(named: pathMarkImageName)!
+            image = UIImage(named: GameViewController.settings.pathMarkImageName)!
             imageView = UIImageView(image: image)
         } else {
             return nil
@@ -118,15 +119,15 @@ extension GameViewController: UICollectionViewDataSource {
         var cellImageView:UIImageView
         if (((index / 8) % 2) == 0) {
             if ((index % 2) == 0) {
-                cellImageView = UIImageView(image: UIImage(named: lightSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: GameViewController.settings.lightSquareImageName))
             } else {
-                cellImageView = UIImageView(image: UIImage(named: darkSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: GameViewController.settings.darkSquareImageName))
             }
         } else {
             if ((index % 2) == 1) {
-                cellImageView = UIImageView(image: UIImage(named: lightSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: GameViewController.settings.lightSquareImageName))
             } else {
-                cellImageView = UIImageView(image: UIImage(named: darkSquareImageName))
+                cellImageView = UIImageView(image: UIImage(named: GameViewController.settings.darkSquareImageName))
             }
         }
         return cellImageView
@@ -140,43 +141,18 @@ extension GameViewController: UICollectionViewDataSource {
         var image:UIImage
         switch piece?.pieceType {
         case .white_pawn:
-            image = UIImage(named: whitePawnImage)!
+            image = UIImage(named: GameViewController.settings.whitePawnImage)!
         case .black_pawn:
-            image = UIImage(named: blackPawnImage)!
+            image = UIImage(named: GameViewController.settings.blackPawnImage)!
         case .white_queen:
-            image = UIImage(named: whiteQueenImage)!
+            image = UIImage(named: GameViewController.settings.whiteQueenImage)!
         case .black_queen:
-            image = UIImage(named: blackQueenImage)!
+            image = UIImage(named: GameViewController.settings.blackQueenImage)!
         default:
             image = UIImage()
         }
         return image
     }
-    
-//    //
-//    func collectionView(_ collectionView: UICollectionView,
-//                                 viewForSupplementaryElementOfKind kind: String,
-//                                 at indexPath: IndexPath) -> UICollectionReusableView {
-//      // 1
-//      switch kind {
-//      // 2
-//      case UICollectionView.elementKindSectionHeader:
-//        // 3
-//        guard
-//          let headerView = collectionView.dequeueReusableSupplementaryView(
-//            ofKind: kind,
-//            withReuseIdentifier: "headerView",
-//            for: indexPath) as? HeaderView
-//          else {
-//            fatalError("Invalid view type")
-//        }
-//        headerView.headerLabel.text = "test"
-//        return headerView
-//      default:
-//        // 4
-//        assert(false, "Invalid element type")
-//      }
-//    }
 }
 
 extension GameViewController: UICollectionViewDelegate
@@ -215,5 +191,17 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    //header
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+       return CGSize(width: collectionView.frame.size.width, height: 100)
+    }
+    //footer
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+       return CGSize(width: collectionView.frame.size.width, height: 100)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10.0, left: 1.0, bottom: 1.0, right: 1.0)
     }
 }

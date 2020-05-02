@@ -1,5 +1,5 @@
 //
-//  HeaderView.swift
+//  FooterView.swift
 //  CheckersOnlineSwiftV2.1
 //
 //  Created by hyperactive on 02/05/2020.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class HeaderView: UICollectionReusableView {
+class FooterView: UICollectionReusableView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
 }
