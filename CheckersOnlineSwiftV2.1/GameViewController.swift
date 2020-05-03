@@ -42,7 +42,8 @@ class GameViewController: UIViewController, GameData, SettingsData {
         
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
-} //end of class
+    
+}
 
 //Extentions
 
@@ -65,8 +66,7 @@ extension GameViewController: UICollectionViewDataSource {
                 cellImageView.center.y -= CGFloat(GameViewController.settings.bounceHeight)
                 UIImageView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.0, options: .allowUserInteraction, animations: {
                     cellImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)
-                }) { (success:Bool) in
-                }
+                }) 
             }
         } else {
             //remove subview that might have from reusing

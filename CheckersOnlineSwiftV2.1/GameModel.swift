@@ -244,10 +244,11 @@ class GameModel: NSObject, GameData {
     
     //Utility func
     private func setEmptyBoard () {
-           for _ in 0..<64 {
-               GameModel.board.append(BoardSquare())
-           }
-       }
+        GameModel.board.removeAll()
+        for _ in 0..<64 {
+           GameModel.board.append(BoardSquare())
+        }
+    }
        
     private func setBottomPieces (isPieceMine:Bool, pieceType:Piece.PieceType) {
        for boardIndex:Int in 40..<64
