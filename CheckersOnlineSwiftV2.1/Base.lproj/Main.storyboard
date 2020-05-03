@@ -14,7 +14,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.87450740819999995" blue="0.41215592719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="yrb-EX-PEQ"/>
@@ -27,46 +27,43 @@
         <scene sceneID="EBb-o3-F9Z">
             <objects>
                 <viewController id="trE-gv-xql" customClass="GUISettingsViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="CJ3-5N-Fr7">
+                    <view key="view" contentMode="scaleToFill" id="CJ3-5N-Fr7" customClass="I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqA-f1-afP">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqA-f1-afP">
                                 <rect key="frame" x="20" y="272" width="374" height="309"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.24107709390862941" green="0.17755548339113833" blue="0.012229704097497383" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDg-tO-SVI">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDg-tO-SVI">
                                 <rect key="frame" x="322" y="305" width="51" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="49" id="JI8-hb-Lkn"/>
                                 </constraints>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vCi-Bm-yaz">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vCi-Bm-yaz">
                                 <rect key="frame" x="322" y="366" width="51" height="31"/>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZbA-GH-dMX">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZbA-GH-dMX">
                                 <rect key="frame" x="322" y="502" width="51" height="31"/>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oY2-DB-yIn">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oY2-DB-yIn">
                                 <rect key="frame" x="322" y="431" width="51" height="31"/>
                             </switch>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="y4C-s1-5qa">
-                                <rect key="frame" x="20" y="111" width="374" height="128"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound_on" translatesAutoresizingMaskIntoConstraints="NO" id="Dbt-2e-RdV">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="sound_on" translatesAutoresizingMaskIntoConstraints="NO" id="Dbt-2e-RdV">
                                 <rect key="frame" x="44" y="294" width="181" height="42"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_whites" translatesAutoresizingMaskIntoConstraints="NO" id="xBC-nq-ExK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="play_whites" translatesAutoresizingMaskIntoConstraints="NO" id="xBC-nq-ExK">
                                 <rect key="frame" x="44" y="355" width="212" height="53"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="play_bottom" translatesAutoresizingMaskIntoConstraints="NO" id="LEa-gx-Rfl">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="play_bottom" translatesAutoresizingMaskIntoConstraints="NO" id="LEa-gx-Rfl">
                                 <rect key="frame" x="44" y="418" width="212" height="56"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="show_path" translatesAutoresizingMaskIntoConstraints="NO" id="nG3-Ed-VRt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="show_path" translatesAutoresizingMaskIntoConstraints="NO" id="nG3-Ed-VRt">
                                 <rect key="frame" x="44" y="482" width="212" height="51"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcM-TE-iyP">
@@ -78,8 +75,11 @@
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="loadGame" id="ryA-bA-wzI"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="y4C-s1-5qa">
+                                <rect key="frame" x="20" y="86" width="374" height="128"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.87450740823149375" blue="0.41215592721914407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="adG-TA-mcI" firstAttribute="bottom" secondItem="ZbA-GH-dMX" secondAttribute="bottom" constant="329" id="3ya-QI-dTM"/>
                             <constraint firstItem="gDg-tO-SVI" firstAttribute="leading" secondItem="vCi-Bm-yaz" secondAttribute="leading" id="40m-IS-S9y"/>
@@ -129,11 +129,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="1027" height="234"/>
-        <image name="play" width="479" height="204"/>
-        <image name="play_bottom" width="1133" height="267"/>
-        <image name="play_whites" width="1104" height="267"/>
-        <image name="show_path" width="1022" height="204"/>
-        <image name="sound_on" width="761" height="176"/>
+        <image name="logo" width="450" height="101"/>
+        <image name="play" width="228" height="101"/>
+        <image name="play_bottom" width="542" height="101"/>
+        <image name="play_whites" width="541" height="101"/>
+        <image name="show_path" width="499" height="101"/>
+        <image name="sound_on" width="439" height="101"/>
     </resources>
 </document>
