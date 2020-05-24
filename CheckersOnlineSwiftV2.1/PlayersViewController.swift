@@ -1,10 +1,6 @@
 //
 //  PlayersViewController.swift
-//  
 //
-//  Created by hyperactive on 24/05/2020.
-//
-
 import UIKit
 import Foundation
 import SocketIO
