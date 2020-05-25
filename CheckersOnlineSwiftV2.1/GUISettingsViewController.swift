@@ -49,6 +49,6 @@ class GUISettingsViewController: UIViewController {
         let password = defaults.string(forKey: "password")
         let user: [String: Any] = ["userName": playerName!,
         "password": password!]
-        PlayersViewController().login(user)
+        PlayersViewController.shared.login(user)
     }
 }

@@ -233,7 +233,8 @@ class GameModel: NSObject, GameData {
             }
         }
         //GameModel.isMyTurn = false
-        PlayersViewController().sendBoard(GameModel.board)
+        //PlayersViewController().sendBoard(GameModel.board)
+        PlayersViewController.shared.sendBoard(GameModel.board)
         
         
     }

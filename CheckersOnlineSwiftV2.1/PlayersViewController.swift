@@ -7,6 +7,8 @@ import SocketIO
 
 class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
+    static let shared = PlayersViewController()
+   
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
     var me:[String: Any] = [:]
@@ -36,7 +38,9 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
    }
    //tempies
     @IBAction func loginB(_ sender: Any) {
-   //     self.login(user)
+        let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
+        "password": defaults.string(forKey: "password")! as String]
+        self.login(user)
     }
     @IBAction func conncetB(_ sender: Any) {
         self.connectRoom()
@@ -69,7 +73,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            }
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                if let responseJSON = responseJSON as? [String: Any] {
-                   self.me = responseJSON
+                   PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
                    DispatchQueue.main.async {
                   //     self.outputText.text = response
@@ -95,7 +99,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            }
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                if let responseJSON = responseJSON as? [String: Any] {
-                   self.me = responseJSON
+                   PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
                    DispatchQueue.main.async {
                   //     self.outputText.text = response
@@ -111,8 +115,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        self.disconnect()
        let url = self.setURLWithPath(path: "/users/logout")
        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
-       let jsonData = try? JSONSerialization.data(withJSONObject: self.me, options: .prettyPrinted)
-       self.me = [:]
+       let jsonData = try? JSONSerialization.data(withJSONObject: PlayersViewController.shared.me, options: .prettyPrinted)
+       PlayersViewController.shared.me = [:]
 
        request.httpBody = jsonData
                
@@ -168,15 +172,15 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     //emit events
     func connectRoom () {
         let socket = manager.defaultSocket
-        socket.emit("enterAsIdlePlayer", self.me)
+        socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
     }
     func sendGameMove () {
         let socket = manager.defaultSocket
-        socket.emit("play",[self.me, "hello from 11pro"])
+        socket.emit("play",[PlayersViewController.shared.me, "hello from 11pro"])
     }
     func getIdleUsers () {
         let socket = manager.defaultSocket
-        socket.emit("getIdlePlayers", self.me)
+        socket.emit("getIdlePlayers", PlayersViewController.shared.me)
     }
     func offerGame (opponent:[String:Any]) {
         let socket = manager.defaultSocket
