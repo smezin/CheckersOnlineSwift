@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,8 @@
 		E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC22454DB2400D08EA6 /* GameSettings.swift */; };
 		E1884CC52456114600D08EA6 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC42456114600D08EA6 /* Piece.swift */; };
 		E1884CC72456190900D08EA6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC62456190900D08EA6 /* GameModel.swift */; };
+		E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */; };
+		E1C7C672247C3AAC007DEA95 /* PlayersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
@@ -47,6 +49,8 @@
 		E1884CC22454DB2400D08EA6 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		E1884CC42456114600D08EA6 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		E1884CC62456190900D08EA6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersTableViewCell.swift; sourceTree = "<group>"; };
+		E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayersTableViewCell.xib; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -78,7 +82,6 @@
 				766A72A1C35CADEB5D13B6A8 /* Pods-CheckersOnlineSwiftV2.1.debug.xcconfig */,
 				10F94FB8AEB00BAFBD35B179 /* Pods-CheckersOnlineSwiftV2.1.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -121,6 +124,8 @@
 				E1DC2149245CDA570099F382 /* HeaderView.xib */,
 				E14F9BFD245DA9D000684F9A /* FooterView.swift */,
 				E14F9BFE245DA9D000684F9A /* FooterView.xib */,
+				E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */,
+				E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */,
 			);
 			path = CheckersOnlineSwiftV2.1;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 				E1884CB1245439E400D08EA6 /* Assets.xcassets in Resources */,
 				E1884CAF245439C700D08EA6 /* Main.storyboard in Resources */,
 				E14F9C00245DA9D000684F9A /* FooterView.xib in Resources */,
+				E1C7C672247C3AAC007DEA95 /* PlayersTableViewCell.xib in Resources */,
 				E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,6 +257,7 @@
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
 				E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
+				E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */,
 				E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */,
 				E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */,
 				E1884CAA245439C700D08EA6 /* SceneDelegate.swift in Sources */,

@@ -35,26 +35,15 @@
                                 <rect key="frame" x="20" y="268" width="374" height="532"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CM-Tr-fcW">
-                                <rect key="frame" x="47" y="90" width="107" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="9kl-S6-oG4"/>
-                                    <constraint firstAttribute="width" constant="107" id="FxC-wu-VDV"/>
-                                </constraints>
-                                <state key="normal" title="login"/>
-                                <connections>
-                                    <action selector="loginB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="yb6-MR-XlV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
-                                <rect key="frame" x="235" y="90" width="107" height="49"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
+                                <rect key="frame" x="235" y="144" width="107" height="49"/>
                                 <state key="normal" title="logout"/>
                                 <connections>
                                     <action selector="logoutB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="XKr-bq-Ve8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stj-mh-Y6h">
-                                <rect key="frame" x="235" y="179" width="107" height="49"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stj-mh-Y6h">
+                                <rect key="frame" x="259" y="803" width="107" height="49"/>
                                 <state key="normal" title="disconnect"/>
                                 <connections>
                                     <action selector="disconnectB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="l0x-pL-uJ4"/>
@@ -71,11 +60,22 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IlB-RN-xJn">
-                                <rect key="frame" x="139" y="147" width="46" height="38"/>
+                                <rect key="frame" x="184" y="808" width="46" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <segue destination="trE-gv-xql" kind="presentation" id="73W-hH-bMa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CM-Tr-fcW">
+                                <rect key="frame" x="47" y="122" width="107" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="9kl-S6-oG4"/>
+                                    <constraint firstAttribute="width" constant="107" id="FxC-wu-VDV"/>
+                                </constraints>
+                                <state key="normal" title="login"/>
+                                <connections>
+                                    <action selector="loginB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="yb6-MR-XlV"/>
                                 </connections>
                             </button>
                         </subviews>

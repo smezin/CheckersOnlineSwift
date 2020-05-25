@@ -8,7 +8,7 @@ import SocketIO
 class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
 
     @IBOutlet weak var playersTableView: UITableView!
-    let cellReuseIdentifier = "cell"
+    let cellReuseIdentifier = "PlayersTableCell"
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
     var idlePlayers:[[String:Any]] = []
@@ -26,7 +26,9 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
        super.viewDidLoad()
        self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-       playersTableView.delegate = self
+       let nib = UINib(nibName: "PlayersTableViewCell",bundle: nil)
+       self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
+        playersTableView.delegate = self
        playersTableView.dataSource = self
        socketConnect()
       //self.createUser(user)
@@ -36,7 +38,7 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.login(user)
     }
     @IBAction func conncetB(_ sender: Any) {
-        self.enterIdleUsersRoom()
+        self.connectRoom()
     }
     @IBAction func logoutB(_ sender: Any) {
         self.logout()
@@ -77,12 +79,12 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
    
     func login (_ user: [String: Any]) {
 
-       let url = self.setURLWithPath(path: "/users/login")
-       var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
-       let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-       request.httpBody = jsonData
+        let url = self.setURLWithPath(path: "/users/login")
+        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
+        let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+        request.httpBody = jsonData
 
-       let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
            if let error = error {
                print("Error took place \(error)")
                return
@@ -96,8 +98,8 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
                        print("from login: ", response)
                    }
                }
-       }
-       task.resume()
+        }
+        task.resume()
     }
    
     func logout () {
@@ -160,7 +162,7 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
        socket.connect()
    }
    //emit events
-   func enterIdleUsersRoom () {
+   func connectRoom () {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer", self.me)
    }
@@ -200,10 +202,9 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
    }
       
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell:UITableViewCell = self.playersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
-      cell.textLabel?.text = self.playersAtDispalyFormat[indexPath.row]
-      
-      return cell
+       let cell:PlayersTableViewCell = self.playersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! PlayersTableViewCell
+       cell.playerName?.text = self.playersAtDispalyFormat[indexPath.row]
+       return cell
    }
    
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
