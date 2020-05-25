@@ -7,31 +7,31 @@ import SocketIO
 
 class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
 
-   @IBOutlet weak var playersTableView: UITableView!
-   let cellReuseIdentifier = "cell"
-   var me:[String: Any] = [:]
-   var myOpponent:[String:Any] = [:]
-   var idlePlayers:[[String:Any]] = []
-   var playersAtDispalyFormat:[String] = []
-   let scheme = "http"
-   let port = 3000
-   let host = "localhost"
+    @IBOutlet weak var playersTableView: UITableView!
+    let cellReuseIdentifier = "cell"
+    var me:[String: Any] = [:]
+    var myOpponent:[String:Any] = [:]
+    var idlePlayers:[[String:Any]] = []
+    var playersAtDispalyFormat:[String] = []
+    let scheme = "http"
+    let port = 3000
+    let host = "localhost"
    
-   let user: [String: Any] = ["userName": "iPhone11pro",
+    let user: [String: Any] = ["userName": "iPhone11pro",
                               "password": "abcd1234"]
    
-   let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
-    
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
    
-   override func viewDidLoad() {
+   
+    override func viewDidLoad() {
        super.viewDidLoad()
        self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
        playersTableView.delegate = self
        playersTableView.dataSource = self
        socketConnect()
- //      self.createUser(user)
+      //self.createUser(user)
    }
-   //
+   //tempies
     @IBAction func loginB(_ sender: Any) {
         self.login(user)
     }
@@ -45,8 +45,7 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.disconnect()
     }
     
-    
-       
+   
    //
    
    func createUser (_ user: [String: Any]) {
@@ -162,33 +161,39 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
    }
    //emit events
    func enterIdleUsersRoom () {
-       let socket = manager.defaultSocket
-       socket.emit("enterAsIdlePlayer", self.me)
+        let socket = manager.defaultSocket
+        socket.emit("enterAsIdlePlayer", self.me)
    }
    func sendGameMove () {
-       let socket = manager.defaultSocket
-       socket.emit("play",[self.me, "hello from 11pro"])
+        let socket = manager.defaultSocket
+        socket.emit("play",[self.me, "hello from 11pro"])
    }
    func getIdleUsers () {
-       let socket = manager.defaultSocket
-       socket.emit("getIdlePlayers", self.me)
+        let socket = manager.defaultSocket
+        socket.emit("getIdlePlayers", self.me)
    }
    func offerGame (opponent:[String:Any]) {
-       let socket = manager.defaultSocket
-       socket.emit("offerGame", opponent)
+        let socket = manager.defaultSocket
+        socket.emit("offerGame", opponent)
    }
    func acceptGame (_ opponent:[String:Any]) {
-       let socket = manager.defaultSocket
-       socket.emit("gameAccepted", opponent)
+        let socket = manager.defaultSocket
+        socket.emit("gameAccepted", opponent)
    }
    func declineGame (_ opponent:[String:Any]) {
-       let socket = manager.defaultSocket
-       socket.emit("gameDeclined", opponent)
+        let socket = manager.defaultSocket
+        socket.emit("gameDeclined", opponent)
    }
    func disconnect () {
-       let socket = manager.defaultSocket
-       socket.emit("disconnect")
+        let socket = manager.defaultSocket
+        print("disconnected")
+        socket.emit("disconnect")
    }
+    func sendBoard (_ board:[Any]) {
+        let socket = manager.defaultSocket
+        print("from sendBoard", socket)
+        socket.emit("boardData")//, self.myOpponent, board)
+    }
                                            //Table funcs//
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return self.idlePlayers.count

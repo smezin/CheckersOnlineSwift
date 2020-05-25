@@ -19,12 +19,13 @@ class GUISettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         playImageView.center.y -= CGFloat(GameViewController.settings.bounceHeight)*2
         UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.2, options: [.repeat, .autoreverse, .allowUserInteraction], animations: {
             self.playImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)*2
         }) { (success:Bool) in
         }
-        // Do any additional setup after loading the view.
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

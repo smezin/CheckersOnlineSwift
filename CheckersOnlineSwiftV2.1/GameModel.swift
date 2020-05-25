@@ -21,6 +21,7 @@ enum Direction:Int, CaseIterable
 class GameModel: NSObject, GameData {
     
     static var board:[BoardSquare] = Array()
+    static var isMyTurn:Bool = true
     
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
         var topPiecesColor:Piece.PieceType?
@@ -54,6 +55,9 @@ class GameModel: NSObject, GameData {
     }
          
     func processRequest(board:[BoardSquare], indexPath:IndexPath) -> [BoardSquare] {
+        if (!GameModel.isMyTurn) {
+            return board
+        }
         var didMove:Bool = false
         var isTurnEnded:Bool = false
         let index:Int? = indexOfPickedPiece()
@@ -228,6 +232,10 @@ class GameModel: NSObject, GameData {
                 piece.isMyPiece = !piece.isMyPiece!
             }
         }
+        //GameModel.isMyTurn = false
+        PlayersViewController().sendBoard(GameModel.board)
+        
+        
     }
     
     private func didIwin () -> Bool {
