@@ -5,7 +5,7 @@ import UIKit
 import Foundation
 import SocketIO
 
-class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
@@ -16,9 +16,10 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
     let scheme = "http"
     let port = 3000
     let host = "localhost"
-   
-    let user: [String: Any] = ["userName": "iPhone11pro",
-                              "password": "abcd1234"]
+    let defaults = UserDefaults.standard
+    
+//    let user: [String: Any] = ["userName": name,
+//                              "password": pass]
    
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
    
@@ -28,14 +29,14 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
        self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
        let nib = UINib(nibName: "PlayersTableViewCell",bundle: nil)
        self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
-        playersTableView.delegate = self
+       playersTableView.delegate = self
        playersTableView.dataSource = self
        socketConnect()
       //self.createUser(user)
    }
    //tempies
     @IBAction func loginB(_ sender: Any) {
-        self.login(user)
+   //     self.login(user)
     }
     @IBAction func conncetB(_ sender: Any) {
         self.connectRoom()
@@ -45,6 +46,8 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     @IBAction func disconnectB(_ sender: Any) {
         self.disconnect()
+    }
+    @IBAction func newPlayerB(_ sender: Any) {
     }
     
    
@@ -78,7 +81,8 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
        }
    
     func login (_ user: [String: Any]) {
-
+        let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
+                                   "password": defaults.string(forKey: "password")! as String]
         let url = self.setURLWithPath(path: "/users/login")
         var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
@@ -129,8 +133,8 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
        task.resume()
     }
    
-   //handle socket events
-   func socketConnect () {
+    //handle socket events
+    func socketConnect () {
        let socket = manager.defaultSocket
         socket.on("connect") {data, ack in
            print("socket connected")
@@ -160,59 +164,43 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
 
        }
        socket.connect()
-   }
-   //emit events
-   func connectRoom () {
+    }
+    //emit events
+    func connectRoom () {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer", self.me)
-   }
-   func sendGameMove () {
+    }
+    func sendGameMove () {
         let socket = manager.defaultSocket
         socket.emit("play",[self.me, "hello from 11pro"])
-   }
-   func getIdleUsers () {
+    }
+    func getIdleUsers () {
         let socket = manager.defaultSocket
         socket.emit("getIdlePlayers", self.me)
-   }
-   func offerGame (opponent:[String:Any]) {
+    }
+    func offerGame (opponent:[String:Any]) {
         let socket = manager.defaultSocket
         socket.emit("offerGame", opponent)
-   }
-   func acceptGame (_ opponent:[String:Any]) {
+    }
+    func acceptGame (_ opponent:[String:Any]) {
         let socket = manager.defaultSocket
         socket.emit("gameAccepted", opponent)
-   }
-   func declineGame (_ opponent:[String:Any]) {
+    }
+    func declineGame (_ opponent:[String:Any]) {
         let socket = manager.defaultSocket
         socket.emit("gameDeclined", opponent)
-   }
-   func disconnect () {
+    }
+    func disconnect () {
         let socket = manager.defaultSocket
         print("disconnected")
         socket.emit("disconnect")
-   }
+    }
     func sendBoard (_ board:[Any]) {
         let socket = manager.defaultSocket
         print("from sendBoard", socket)
         socket.emit("boardData")//, self.myOpponent, board)
     }
-                                           //Table funcs//
-   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return self.idlePlayers.count
-   }
-      
-   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell:PlayersTableViewCell = self.playersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! PlayersTableViewCell
-       cell.playerName?.text = self.playersAtDispalyFormat[indexPath.row]
-       return cell
-   }
-   
-   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       print("row \(indexPath.row) picked")
-       let pickedPlayer = self.idlePlayers[indexPath.row]
-       self.offerGame(opponent: pickedPlayer)
-   }
-      
+
                                            //utility funcs//
    
    func stringify (json:[String: Any]) -> String {
@@ -277,5 +265,27 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
   
 }
 
+extension PlayersViewController:UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.idlePlayers.count
+    }
+       
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:PlayersTableViewCell = self.playersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! PlayersTableViewCell
+        cell.playerName?.text = self.playersAtDispalyFormat[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row \(indexPath.row) picked")
+        let pickedPlayer = self.idlePlayers[indexPath.row]
+        self.offerGame(opponent: pickedPlayer)
+    }
+}
 
+extension PlayersViewController:SettingsData {
+    static var settings: GameSettings = GameSettings()
+    
+   
+}
 
