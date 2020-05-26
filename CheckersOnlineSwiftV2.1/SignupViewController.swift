@@ -20,22 +20,23 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         PlayersViewController.shared.getAllUsers()
         let allPlayersNames = PlayersViewController.shared.allPlayersNames
         let index = allPlayersNames.firstIndex(of: nameTextField.text!)
-        if (index != nil) {
-            print("name in use")
+        if (nameTextField.text!.count < 3 || nameTextField.text!.count > 12) {
+            self.showAlert("Invalid player name", "Please choose a name longer than 3 charecters and up to 12 charecters")
             return
         }
-        if (passwordTextField.text != reEnterPassTextField.text) {
-            print("unmatching passwords")
+        if (index != nil) {
+            self.showAlert("Name already in use", "Please choose another name")
             return
         }
         if (passwordTextField.text!.count < 6) {
-            print("invalid password")
+            self.showAlert("Password too short", "Password must be 6 charcters of more")
             return
         }
-        if (nameTextField.text!.count < 3 || nameTextField.text!.count > 12) {
-            print("invalid name")
+        if (passwordTextField.text != reEnterPassTextField.text) {
+            self.showAlert("Passwords mismatch", "Please make sure you re-enter password correctly")
             return
         }
+       
         defaults.set(nameTextField.text, forKey: "userName")
         defaults.set(passwordTextField.text, forKey: "password")
         let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
@@ -43,9 +44,17 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         PlayersViewController.shared.createUser(user)
         self.dismiss(animated: true, completion: nil)
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+    func showAlert (_ title:String, _ message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
+        self.present(alert, animated: true)
     }
     
 }
