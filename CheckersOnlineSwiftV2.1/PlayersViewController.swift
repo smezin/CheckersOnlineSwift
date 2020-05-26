@@ -11,15 +11,17 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
    
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
+    let scheme = "http"
+    let port = 3000
+    let host = "localhost"
+    let defaults = UserDefaults.standard
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
     var idlePlayers:[[String:Any]] = []
     var allPlayersNames:[String] = []
     var playersAtDispalyFormat:[String] = []
-    let scheme = "http"
-    let port = 3000
-    let host = "localhost"
-    let defaults = UserDefaults.standard
+    var isLoggedIn:Bool = false
+    
     
 //    let user: [String: Any] = ["userName": name,
 //                              "password": pass]
@@ -117,9 +119,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                if let responseJSON = responseJSON as? [String: Any] {
                    PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
-                   DispatchQueue.main.async {
-                       print("from login: ", response)
-                   }
+                    print("from login: ", response)
+                    if (response.count < 10) {
+                        PlayersViewController.shared.isLoggedIn = false
+                    } else {
+                        PlayersViewController.shared.isLoggedIn = true
+                    }
+                   
                }
         }
         task.resume()
@@ -128,6 +134,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     func logout () {
        
        self.disconnect()
+       PlayersViewController.shared.isLoggedIn = false
        let url = self.setURLWithPath(path: "/users/logout")
        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
        let jsonData = try? JSONSerialization.data(withJSONObject: PlayersViewController.shared.me, options: .prettyPrinted)
@@ -162,7 +169,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        socket.on("idlePlayers") {data, ack in
            self.idlePlayers = data[0] as! [[String : Any]]
            self.convertPlayersToDisplayDescription()
-           print("players in the room:", self.idlePlayers)
+        print("players in the room:", self.idlePlayers)
            DispatchQueue.main.async {
                self.playersTableView.reloadData()
            }
@@ -215,7 +222,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         socket.emit("disconnect")
     }
     func sendBoard (_ board:[Any]) {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.shared.manager.defaultSocket
         print("from sendBoard", socket)
         socket.emit("boardData")//, self.myOpponent, board)
     }

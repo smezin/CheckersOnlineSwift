@@ -28,6 +28,7 @@
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
+		E1E6ADB0247D575C00DDC54E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E6ADAF247D575C00DDC54E /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		E1E6ADAF247D575C00DDC54E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				E133BF4B247B0E270048EE61 /* PlayersViewController.swift */,
 				E1884CAD245439C700D08EA6 /* Main.storyboard */,
 				E1C7C673247CEC01007DEA95 /* SignupViewController.swift */,
+				E1E6ADAF247D575C00DDC54E /* LoginViewController.swift */,
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
@@ -254,6 +257,7 @@
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
 				E1884CC52456114600D08EA6 /* Piece.swift in Sources */,
 				E1884CC12454DA5B00D08EA6 /* GUISettingsViewController.swift in Sources */,
+				E1E6ADB0247D575C00DDC54E /* LoginViewController.swift in Sources */,
 				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E133BF4C247B0E270048EE61 /* PlayersViewController.swift in Sources */,
