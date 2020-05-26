@@ -81,8 +81,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
        let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
        request.httpBody = jsonData
-               
-       // Perform HTTP Request
+
        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
            // Check for Error
            if let error = error {
