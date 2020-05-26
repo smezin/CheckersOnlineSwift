@@ -24,6 +24,7 @@
 		E1884CC72456190900D08EA6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1884CC62456190900D08EA6 /* GameModel.swift */; };
 		E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */; };
 		E1C7C672247C3AAC007DEA95 /* PlayersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */; };
+		E1C7C674247CEC01007DEA95 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7C673247CEC01007DEA95 /* SignupViewController.swift */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
@@ -51,6 +52,7 @@
 		E1884CC62456190900D08EA6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersTableViewCell.swift; sourceTree = "<group>"; };
 		E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayersTableViewCell.xib; sourceTree = "<group>"; };
+		E1C7C673247CEC01007DEA95 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				E1884CAB245439C700D08EA6 /* GameViewController.swift */,
 				E133BF4B247B0E270048EE61 /* PlayersViewController.swift */,
 				E1884CAD245439C700D08EA6 /* Main.storyboard */,
+				E1C7C673247CEC01007DEA95 /* SignupViewController.swift */,
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
@@ -256,6 +259,7 @@
 				E133BF4C247B0E270048EE61 /* PlayersViewController.swift in Sources */,
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
 				E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */,
+				E1C7C674247CEC01007DEA95 /* SignupViewController.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
 				E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */,
 				E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */,

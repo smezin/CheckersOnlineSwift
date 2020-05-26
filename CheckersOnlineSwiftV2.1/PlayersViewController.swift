@@ -14,6 +14,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
     var idlePlayers:[[String:Any]] = []
+    var allPlayersNames:[String] = []
     var playersAtDispalyFormat:[String] = []
     let scheme = "http"
     let port = 3000
@@ -39,7 +40,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
    //tempies
     @IBAction func loginB(_ sender: Any) {
         let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
-        "password": defaults.string(forKey: "password")! as String]
+                                   "password": defaults.string(forKey: "password")! as String]
         self.login(user)
     }
     @IBAction func conncetB(_ sender: Any) {
@@ -56,7 +57,24 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     
    
    //
-   
+    func getAllUsers () {
+        let url = self.setURLWithPath(path: "/users")
+        let request = self.setRequestTypeWithHeaders(method: "GET", url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        if let error = error {
+            print("Error took place \(error)")
+            return
+        }
+        let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+            if let responseJSON = responseJSON as? [[String: Any]] {
+                let allPlayersNames:[String] = self.createPlayersNamesList(allPlayers: responseJSON)
+                print("from getAllUsers: ", allPlayersNames)
+                self.allPlayersNames = allPlayersNames
+            }
+        }
+        task.resume()
+    }
+    
    func createUser (_ user: [String: Any]) {
        
        let url = self.setURLWithPath(path: "/users")
@@ -76,7 +94,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                    PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
                    DispatchQueue.main.async {
-                  //     self.outputText.text = response
                        print("from createUser: ", response)
                    }
                }
@@ -102,7 +119,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                    PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
                    DispatchQueue.main.async {
-                  //     self.outputText.text = response
                        print("from login: ", response)
                    }
                }
@@ -207,7 +223,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
                                            //utility funcs//
    
-   func stringify (json:[String: Any]) -> String {
+    func stringify (json:[String: Any]) -> String {
        var convertedString:String = ""
        do {
            let data1 =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
@@ -216,40 +232,49 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                  print("from stringify", myJSONError)
              }
        return convertedString
-   }
-   func setURLWithPath (path:String) -> URL {
+    }
+    func setURLWithPath (path:String) -> URL {
        var components = URLComponents()
        components.scheme = scheme
        components.host = host
        components.port = port
        components.path = path
        return components.url!
-   }
-   func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
+    }
+    func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
        var request = URLRequest(url: url)
        request.httpMethod = method
        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
        request.addValue("application/json", forHTTPHeaderField: "Accept")
        return request
-   }
+    }
    
    
-   func convertPlayersToDisplayDescription () {
+    func convertPlayersToDisplayDescription () {
        self.playersAtDispalyFormat = []
        for player in idlePlayers {
            let playerDisplayDescription = self.convertPlayerToDisplayDescription(player: player)
            playersAtDispalyFormat.append(playerDisplayDescription)
            print (playerDisplayDescription)
        }
-   }
+    }
+    
+    func createPlayersNamesList (allPlayers:[[String:Any]]) -> [String] {
+        var namesList:[String] = []
+        for player in allPlayers {
+            let name = self.convertPlayerToDisplayDescription(player: player)
+            namesList.append(name)
+        }
+        return namesList
+    }
    
-   func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
-       let userDetails = player["user"]!
+    func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
+       let userDetails = player["user"] ?? player
        let displayDescription = (userDetails as! [String:Any])["userName"] as! String
        return displayDescription
-   }
+    }
    
-   func gameOfferedBy (opponent:[String:Any]) {
+    func gameOfferedBy (opponent:[String:Any]) {
        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
@@ -265,7 +290,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        optionMenu.addAction(declineAction)
 
        self.present(optionMenu, animated: true, completion: nil)
-   }
+    }
   
 }
 

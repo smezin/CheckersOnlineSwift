@@ -42,13 +42,13 @@ class GUISettingsViewController: UIViewController {
     
     @IBAction func tempLogin(_ sender: Any) {
         
-        UserDefaults.standard.set("iPhone11pro", forKey: "userName")
-        UserDefaults.standard.set("abcd1234", forKey: "password")
-        let defaults = UserDefaults.standard
-        let playerName = defaults.string(forKey: "userName")
-        let password = defaults.string(forKey: "password")
-        let user: [String: Any] = ["userName": playerName!,
-        "password": password!]
-        PlayersViewController.shared.login(user)
+//        UserDefaults.standard.set("iPhone11pro", forKey: "userName")
+//        UserDefaults.standard.set("abcd1234", forKey: "password")
+//        let defaults = UserDefaults.standard
+//        let playerName = defaults.string(forKey: "userName")
+//        let password = defaults.string(forKey: "password")
+//        let user: [String: Any] = ["userName": playerName!,
+//        "password": password!]
+        PlayersViewController.shared.getAllUsers()
     }
 }

@@ -112,6 +112,71 @@
             </objects>
             <point key="canvasLocation" x="642" y="113"/>
         </scene>
+        <!--Signup View Controller-->
+        <scene sceneID="UYM-d6-LJW">
+            <objects>
+                <viewController id="2BK-e5-Mvt" customClass="SignupViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BPD-MY-Dr6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="signup" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-9w-rt3">
+                                <rect key="frame" x="45" y="67" width="324" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="name" translatesAutoresizingMaskIntoConstraints="NO" id="eou-Ff-ctC">
+                                <rect key="frame" x="10" y="286" width="128" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="Dob-ap-Mcy">
+                                <rect key="frame" x="20" y="336" width="176" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="re_enter" translatesAutoresizingMaskIntoConstraints="NO" id="ufx-53-6On">
+                                <rect key="frame" x="20" y="407" width="176" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="3-12 charecters" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zpP-Mi-rRg">
+                                <rect key="frame" x="220" y="290" width="174" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="At least 6 charecters" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7C2-Cm-z6I">
+                                <rect key="frame" x="220" y="357" width="174" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="At least 6 charecters" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5PC-r6-zbZ">
+                                <rect key="frame" x="220" y="428" width="174" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fi-mm-gM1">
+                                <rect key="frame" x="88" y="531" width="238" height="98"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="create_account"/>
+                                <connections>
+                                    <action selector="createAccount:" destination="2BK-e5-Mvt" eventType="touchUpInside" id="1oE-kR-IAg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.33330240849999998" green="0.33335375789999999" blue="0.3332862258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="GZ0-mg-tSk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rYz-QA-mgo"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="zpP-Mi-rRg" id="aLy-Ze-52O"/>
+                        <outlet property="passwordTextField" destination="7C2-Cm-z6I" id="cNi-iv-j9f"/>
+                        <outlet property="reEnterPassTextField" destination="5PC-r6-zbZ" id="GzJ-nu-DXZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JLg-4u-ZPz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1007.2463768115942" y="124.55357142857142"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="EBb-o3-F9Z">
             <objects>
@@ -172,11 +237,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="online" translatesAutoresizingMaskIntoConstraints="NO" id="ere-W1-uxP">
                                 <rect key="frame" x="87" y="189" width="240" height="62"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCo-hd-kPi">
-                                <rect key="frame" x="106" y="677" width="202" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="new_player"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnL-js-Y4u">
                                 <rect key="frame" x="152" y="541" width="73" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -186,6 +246,14 @@
                                 <connections>
                                     <action selector="tempLogin:" destination="trE-gv-xql" eventType="touchUpInside" id="2I2-Rg-6rl"/>
                                     <segue destination="tX8-Q2-8xs" kind="presentation" id="n4N-me-Egs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCo-hd-kPi">
+                                <rect key="frame" x="106" y="716" width="202" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="new_player"/>
+                                <connections>
+                                    <segue destination="2BK-e5-Mvt" kind="show" id="fOK-Aq-3RM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -248,13 +316,18 @@
         </scene>
     </scenes>
     <resources>
+        <image name="create_account" width="388" height="184"/>
         <image name="login" width="256" height="101"/>
         <image name="logo" width="450" height="101"/>
+        <image name="name" width="266" height="101"/>
         <image name="new_player" width="546" height="101"/>
         <image name="online" width="287" height="101"/>
+        <image name="password" width="492" height="101"/>
         <image name="play_bottom" width="542" height="101"/>
         <image name="play_whites" width="541" height="101"/>
+        <image name="re_enter" width="492" height="184"/>
         <image name="show_path" width="499" height="101"/>
+        <image name="signup" width="325" height="101"/>
         <image name="sound_on" width="439" height="101"/>
     </resources>
 </document>

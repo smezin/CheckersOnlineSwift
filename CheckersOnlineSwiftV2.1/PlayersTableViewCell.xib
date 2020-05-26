@@ -34,7 +34,7 @@
             <connections>
                 <outlet property="playerName" destination="J9p-hd-5Ap" id="5e0-9s-b0Y"/>
             </connections>
-            <point key="canvasLocation" x="131.8840579710145" y="120.53571428571428"/>
+            <point key="canvasLocation" x="-32" y="41"/>
         </tableViewCell>
     </objects>
     <resources>
