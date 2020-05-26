@@ -12,7 +12,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -77,6 +77,7 @@
                                 <state key="normal" title="New player"/>
                                 <connections>
                                     <action selector="newPlayerB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="c0z-1b-4Hk"/>
+                                    <segue destination="BYZ-38-t0r" kind="showDetail" identifier="startGame" id="Hlo-ha-WP8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -117,7 +118,7 @@
             <objects>
                 <viewController id="2BK-e5-Mvt" customClass="SignupViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BPD-MY-Dr6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="signup" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-9w-rt3">
@@ -228,7 +229,7 @@
                                     <color key="titleColor" red="0.89552299219999998" green="0.52384600869999998" blue="0.001733056912" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5YW-KA-CXk" kind="show" id="qp4-Fb-Iny"/>
+                                    <segue destination="5YW-KA-CXk" kind="presentation" modalPresentationStyle="fullScreen" id="qp4-Fb-Iny"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="y4C-s1-5qa">
@@ -253,7 +254,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="new_player"/>
                                 <connections>
-                                    <segue destination="2BK-e5-Mvt" kind="show" id="fOK-Aq-3RM"/>
+                                    <segue destination="2BK-e5-Mvt" kind="presentation" modalPresentationStyle="fullScreen" id="fOK-Aq-3RM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -302,6 +303,7 @@
                         <viewLayoutGuide key="safeArea" id="adG-TA-mcI"/>
                     </view>
                     <connections>
+                        <outlet property="loginPlayButton" destination="UcM-TE-iyP" id="cEP-EF-9Di"/>
                         <outlet property="onlineImageView" destination="ere-W1-uxP" id="7G9-O3-f1d"/>
                         <outlet property="playBottomSwitch" destination="oY2-DB-yIn" id="QQc-iP-gxF"/>
                         <outlet property="playImageView" destination="UcM-TE-iyP" id="Qc1-D1-FIo"/>
@@ -319,13 +321,9 @@
             <objects>
                 <viewController id="5YW-KA-CXk" customClass="LoginViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mmC-Rv-2Ys">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="pTC-Jg-WWV">
-                                <rect key="frame" x="45" y="63" width="324" height="102"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="name" translatesAutoresizingMaskIntoConstraints="NO" id="OkI-Tv-cmr">
                                 <rect key="frame" x="20" y="283" width="112" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -354,6 +352,10 @@
                                     <action selector="connectButton:" destination="5YW-KA-CXk" eventType="touchUpInside" id="guk-Zt-OSq"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="pTC-Jg-WWV">
+                                <rect key="frame" x="45" y="69" width="324" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.33330240849999998" green="0.33335375789999999" blue="0.3332862258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="SVZ-Gp-Px5"/>

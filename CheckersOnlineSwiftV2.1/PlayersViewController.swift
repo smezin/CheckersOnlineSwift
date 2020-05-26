@@ -222,7 +222,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         socket.emit("disconnect")
     }
     func sendBoard (_ board:[Any]) {
-        let socket = PlayersViewController.shared.manager.defaultSocket
+        let socket = manager.defaultSocket
         print("from sendBoard", socket)
         socket.emit("boardData")//, self.myOpponent, board)
     }

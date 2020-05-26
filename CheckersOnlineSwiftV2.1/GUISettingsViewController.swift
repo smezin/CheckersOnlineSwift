@@ -10,6 +10,7 @@ import UIKit
 
 class GUISettingsViewController: UIViewController {
     
+    @IBOutlet weak var loginPlayButton: UIButton!
     @IBOutlet weak var soundSwitch: UISwitch!
     @IBOutlet weak var playWhitesSwitch: UISwitch!
     @IBOutlet weak var showPathsSwitch: UISwitch!
@@ -26,6 +27,14 @@ class GUISettingsViewController: UIViewController {
         }) { (success:Bool) in
         }
         
+       
+    }
+    override func viewWillLayoutSubviews() {
+        if (PlayersViewController.shared.isLoggedIn) {
+            loginPlayButton.setImage(UIImage(named: "play"), for: .normal)
+        } else {
+            loginPlayButton.setImage(UIImage(named: "login"), for: .normal)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

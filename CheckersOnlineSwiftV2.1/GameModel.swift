@@ -234,7 +234,6 @@ class GameModel: NSObject, GameData {
         }
         //GameModel.isMyTurn = false
         PlayersViewController.shared.sendBoard(GameModel.board)
-        
     }
     
     private func didIwin () -> Bool {
