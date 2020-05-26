@@ -1,10 +1,3 @@
-//
-//  Piece.swift
-//  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 26/04/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
 
 import UIKit
 
@@ -24,9 +17,9 @@ class Piece: BoardSquare {
         case moving
     }
 
-    var pieceType:PieceType?
-    var isMyPiece:Bool?
-    var forwardIs:ForwardIs?
+    var pieceType:PieceType!
+    var isMyPiece:Bool!
+    var forwardIs:ForwardIs!
     var status:Status = .resting
     
     init(isMyPiece:Bool?, pieceType:PieceType?, forwardIs:ForwardIs?)

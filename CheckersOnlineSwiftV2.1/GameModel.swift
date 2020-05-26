@@ -250,6 +250,7 @@ class GameModel: NSObject, GameData {
     }
     
     //Utility func
+   
     private func setEmptyBoard () {
         GameModel.board.removeAll()
         for _ in 0..<64 {

@@ -8,6 +8,7 @@ import SocketIO
 class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
     static let shared = PlayersViewController()
+    
    
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
@@ -22,11 +23,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var playersAtDispalyFormat:[String] = []
     var isLoggedIn:Bool = false
     
-    
-//    let user: [String: Any] = ["userName": name,
-//                              "password": pass]
    
-    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
+    static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
    
    
     override func viewDidLoad() {
@@ -161,7 +159,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
    
     //handle socket events
     func socketConnect () {
-       let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.on("connect") {data, ack in
            print("socket connected")
            socket.emit("hello", "iOS client says: connected")
@@ -193,47 +191,56 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     //emit events
     func connectRoom () {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
     }
     func sendGameMove () {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("play",[PlayersViewController.shared.me, "hello from 11pro"])
     }
     func getIdleUsers () {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("getIdlePlayers", PlayersViewController.shared.me)
     }
     func offerGame (opponent:[String:Any]) {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("offerGame", opponent)
     }
     func acceptGame (_ opponent:[String:Any]) {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("gameAccepted", opponent)
     }
     func declineGame (_ opponent:[String:Any]) {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         socket.emit("gameDeclined", opponent)
     }
     func disconnect () {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         print("disconnected")
         socket.emit("disconnect")
     }
     func sendBoard (_ board:[Any]) {
-        let socket = manager.defaultSocket
+        let socket = PlayersViewController.manager.defaultSocket
         print("from sendBoard", socket)
-        socket.emit("boardData")//, self.myOpponent, board)
+        let jsonBoard = self.jsonizeBoard(from: board)
+        socket.emit("boardData", jsonBoard!)
     }
 
                                            //utility funcs//
+    func jsonizeBoard(from object:Any) -> String? {
+        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
+            return nil
+        }
+        let boardStr = String(data: data, encoding: String.Encoding.utf8)
+        return boardStr
+    }
+
    
     func stringify (json:[String: Any]) -> String {
        var convertedString:String = ""
        do {
-           let data1 =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-           convertedString = String(data: data1, encoding: String.Encoding.utf8) ?? "Conversion error"
+           let data =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+           convertedString = String(data: data, encoding: String.Encoding.utf8) ?? "Conversion error"
              } catch let myJSONError {
                  print("from stringify", myJSONError)
              }
