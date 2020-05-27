@@ -17,6 +17,7 @@ class GUISettingsViewController: UIViewController {
     @IBOutlet weak var playBottomSwitch: UISwitch!
     @IBOutlet weak var onlineImageView: UIImageView!
     @IBOutlet weak var playImageView: UIButton!
+    let nc = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +27,18 @@ class GUISettingsViewController: UIViewController {
             self.playImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)*2
         }) { (success:Bool) in
         }
-        
-       
+        nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
+        nc.addObserver(self, selector: #selector(changeToLoginButton), name: .loginFailure, object: nil)
     }
-    override func viewWillLayoutSubviews() {
-        if (PlayersViewController.shared.isLoggedIn) {
-            loginPlayButton.setImage(UIImage(named: "play"), for: .normal)
-        } else {
-            loginPlayButton.setImage(UIImage(named: "login"), for: .normal)
+    
+    @objc func changeToPlayButton () {
+        DispatchQueue.main.async {
+            self.loginPlayButton.setImage(UIImage(named: "play"), for: .normal)
+        }
+    }
+    @objc func changeToLoginButton () {
+        DispatchQueue.main.async {
+            self.loginPlayButton.setImage(UIImage(named: "login"), for: .normal)
         }
     }
     

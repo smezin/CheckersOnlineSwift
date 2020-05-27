@@ -23,9 +23,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var isLoggedIn:Bool = false
     let nc = NotificationCenter.default
     
-   
     static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
-   
    
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -70,7 +68,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
             if let responseJSON = responseJSON as? [[String: Any]] {
                 let allPlayersNames:[String] = self.createPlayersNamesList(allPlayers: responseJSON)
-           //     print("from getAllUsers: ", allPlayersNames)
                 self.allPlayersNames = allPlayersNames
             }
         }
@@ -115,13 +112,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                if let responseJSON = responseJSON as? [String: Any] {
                    PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
-                    print("from login: ", response)
                     if (response.count < 10) {
                         PlayersViewController.shared.isLoggedIn = false
+                        self.nc.post(name: .loginFailure, object: nil)
                     } else {
                         PlayersViewController.shared.isLoggedIn = true
+                        self.nc.post(name: .loginSuccess, object: nil)
                     }
-                   
                }
         }
         task.resume()
@@ -166,11 +163,9 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            }
         }
         socket.on("letsPlay") {data, ack in
-            print("thanks dude")
             self.gameOfferedBy(opponent: data[0] as! [String : Any])
         }
         socket.on("startingGame") {data, ack in
-            print("starting game!!!", data[0])
             PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
             GameModel.isMyTurn = true
             self.goToGameView()
@@ -262,7 +257,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        for player in idlePlayers {
            let playerDisplayDescription = self.convertPlayerToDisplayDescription(player: player)
            playersAtDispalyFormat.append(playerDisplayDescription)
-           print (playerDisplayDescription)
        }
     }
     
@@ -285,11 +279,9 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
-           print("\n\nAccepted")
            self.acceptGame(opponent)
        }
        let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
-           print("\n\nDeclined")
            self.declineGame(opponent)
        }
 
@@ -353,7 +345,6 @@ extension PlayersViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row \(indexPath.row) picked")
         let pickedPlayer = self.idlePlayers[indexPath.row]
         self.offerGame(opponent: pickedPlayer)
     }
@@ -361,7 +352,9 @@ extension PlayersViewController:UITableViewDelegate, UITableViewDataSource {
 
 extension PlayersViewController:SettingsData {
     static var settings: GameSettings = GameSettings()
-    
-   
+}
+extension Notification.Name {
+    static let loginSuccess = Notification.Name("loginSuccess")
+    static let loginFailure = Notification.Name("loginFailure")
 }
 

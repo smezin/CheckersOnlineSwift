@@ -166,12 +166,12 @@ extension GameViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
-        print("regular reload")
+        print("regular reload 11")
         self.checkersBoardCollectionView.reloadData()
     }
     
     @objc func reloadData () {
-        print("reloading data by notification")
+        print("notification reloading 11")
         self.checkersBoardCollectionView.reloadData()
     }
 }
