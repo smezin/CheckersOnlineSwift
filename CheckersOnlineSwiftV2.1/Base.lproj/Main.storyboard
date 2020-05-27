@@ -10,9 +10,9 @@
         <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameViewID" id="BYZ-38-t0r" customClass="GameViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -74,10 +74,9 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="77" id="lnG-Gn-7F4"/>
                                 </constraints>
-                                <state key="normal" title="New player"/>
+                                <state key="normal" title="start game"/>
                                 <connections>
                                     <action selector="newPlayerB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="c0z-1b-4Hk"/>
-                                    <segue destination="BYZ-38-t0r" kind="showDetail" identifier="startGame" id="Hlo-ha-WP8"/>
                                 </connections>
                             </button>
                         </subviews>

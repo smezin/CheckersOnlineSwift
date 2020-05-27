@@ -52,6 +52,9 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.disconnect()
     }
     @IBAction func newPlayerB(_ sender: Any) {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
+        self.present(gameView, animated: true, completion: nil)
     }
     
    
@@ -154,30 +157,69 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let socket = PlayersViewController.manager.defaultSocket
         socket.on("connect") {data, ack in
            print("socket connected")
-       }
-       socket.on("idlePlayers") {data, ack in
+        }
+        socket.on("idlePlayers") {data, ack in
            self.idlePlayers = data[0] as! [[String : Any]]
            self.convertPlayersToDisplayDescription()
-        print("players in the room:", self.idlePlayers)
+         print("players in the room:", self.idlePlayers)
            DispatchQueue.main.async {
                self.playersTableView.reloadData()
            }
-       }
-       socket.on("letsPlay") {data, ack in
-           print("thanks dude")
-           self.gameOfferedBy(opponent: data[0] as! [String : Any])
-       }
-       socket.on("startingGame") {data, ack in
-           print("starting game!!!", data[0])
-       PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
-       }
-       socket.on("noGame") {data, ack in
-           print("no game!!!")
-       }
-       socket.on("reply") {data, ack in
-           print("msg from any:", data[0])
-       }
-       socket.connect()
+        }
+        socket.on("letsPlay") {data, ack in
+            print("thanks dude")
+            self.gameOfferedBy(opponent: data[0] as! [String : Any])
+        }
+        socket.on("startingGame") {data, ack in
+            print("starting game!!!", data[0])
+            PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
+            GameModel.isMyTurn = true
+            self.goToGameView()
+            
+        }
+        socket.on("noGame") {data, ack in
+            print("no game!!!")
+        }
+        socket.on("gameMove") {data, ack in
+            GameModel.isMyTurn = true
+            let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
+            GameModel.board = board
+        }
+        socket.connect()
+    }
+    
+    func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
+        var board:[BoardSquare] = Array()
+        for index:Int in 0 ..< 64 {
+            let strIndex = String(index)
+            let currentSquare:[String:Any] = jsonBoard[strIndex] as! [String : Any]
+            if currentSquare["type"] as! String == "boardSquare" {
+                board.append(BoardSquare())
+            } else if currentSquare["type"] as! String == "piece" {
+                let isMyPiece:Bool = currentSquare["isMyPiece"] as! Bool
+                let forwardIs:Piece.ForwardIs = currentSquare["forwardIs"] as! String == "up" ? .up:.down
+                let pieceType:Piece.PieceType = self.convertStringToPieceType(piece: currentSquare["pieceType"] as! String)
+                board.append(Piece(isMyPiece: isMyPiece, pieceType: pieceType, forwardIs: forwardIs))
+            }
+        }
+        return board
+    }
+    
+    private func convertStringToPieceType (piece:String) -> Piece.PieceType {
+        var pieceType:Piece.PieceType? = nil
+        switch piece {
+        case "blackPawn":
+            pieceType = .black_pawn
+        case "blackQueen":
+            pieceType = .black_queen
+        case "whitePawn":
+            pieceType = .white_pawn
+        case "whiteQueen":
+            pieceType = .white_queen
+        default:
+            pieceType = nil
+        }
+        return pieceType!
     }
     //emit events
     func connectRoom () {
@@ -199,6 +241,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     func acceptGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("gameAccepted", opponent)
+        self.goToGameView()
     }
     func declineGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
@@ -272,11 +315,11 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
-           print("\n\n accepted")
+           print("\n\nAccepted")
            self.acceptGame(opponent)
        }
        let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
-           print("\n\n declined")
+           print("\n\nDeclined")
            self.declineGame(opponent)
        }
 
@@ -284,6 +327,12 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        optionMenu.addAction(declineAction)
 
        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func goToGameView () {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
+        self.present(gameView, animated: true, completion: nil)
     }
   
 }
