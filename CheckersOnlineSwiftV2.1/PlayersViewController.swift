@@ -35,7 +35,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        playersTableView.delegate = self
        playersTableView.dataSource = self
        socketConnect()
-      //self.createUser(user)
    }
    //tempies
     @IBAction func loginB(_ sender: Any) {
@@ -68,7 +67,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
             if let responseJSON = responseJSON as? [[String: Any]] {
                 let allPlayersNames:[String] = self.createPlayersNamesList(allPlayers: responseJSON)
-                print("from getAllUsers: ", allPlayersNames)
+           //     print("from getAllUsers: ", allPlayersNames)
                 self.allPlayersNames = allPlayersNames
             }
         }
@@ -83,7 +82,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        request.httpBody = jsonData
 
        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-           // Check for Error
            if let error = error {
                print("Error took place \(error)")
                return
@@ -92,9 +90,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                if let responseJSON = responseJSON as? [String: Any] {
                    PlayersViewController.shared.me = responseJSON
                    let response = self.stringify(json: responseJSON)
-                   DispatchQueue.main.async {
-                       print("from createUser: ", response)
-                   }
                }
            }
            task.resume()
@@ -148,10 +143,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                if let responseJSON = responseJSON as? [String: Any] {
                    let response = self.stringify(json: responseJSON)
-                   DispatchQueue.main.async {
-                 //      self.outputText.text = response
-                       print("from logout: ", response)
-                   }
+                   print("from logout: ", response)
                }
        }
        task.resume()
@@ -162,7 +154,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let socket = PlayersViewController.manager.defaultSocket
         socket.on("connect") {data, ack in
            print("socket connected")
-           socket.emit("hello", "iOS client says: connected")
        }
        socket.on("idlePlayers") {data, ack in
            self.idlePlayers = data[0] as! [[String : Any]]
@@ -178,14 +169,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        }
        socket.on("startingGame") {data, ack in
            print("starting game!!!", data[0])
-           self.myOpponent = data[0] as! [String:Any]
+       PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
        }
        socket.on("noGame") {data, ack in
            print("no game!!!")
        }
        socket.on("reply") {data, ack in
            print("msg from any:", data[0])
-
        }
        socket.connect()
     }
@@ -222,7 +212,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     func sendBoard (_ board:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
         print("from sendBoard", socket)
-        socket.emit("boardData", board)
+        socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
     }
 
                                            //utility funcs//
