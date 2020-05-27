@@ -219,23 +219,14 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         print("disconnected")
         socket.emit("disconnect")
     }
-    func sendBoard (_ board:[Any]) {
+    func sendBoard (_ board:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
         print("from sendBoard", socket)
-        let jsonBoard = self.jsonizeBoard(from: board)
-        socket.emit("boardData", jsonBoard!)
+        socket.emit("boardData", board)
     }
 
                                            //utility funcs//
-    func jsonizeBoard(from object:Any) -> String? {
-        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
-            return nil
-        }
-        let boardStr = String(data: data, encoding: String.Encoding.utf8)
-        return boardStr
-    }
-
-   
+       
     func stringify (json:[String: Any]) -> String {
        var convertedString:String = ""
        do {

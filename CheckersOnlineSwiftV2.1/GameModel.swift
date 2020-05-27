@@ -233,7 +233,10 @@ class GameModel: NSObject, GameData {
             }
         }
         //GameModel.isMyTurn = false
-        PlayersViewController.shared.sendBoard(GameModel.board)
+       
+        let jsonBoard = self.jsonizeBoard()
+        GameModel.board = boardifyJson(jsonBoard: jsonBoard)
+        PlayersViewController.shared.sendBoard(jsonBoard)
     }
     
     private func didIwin () -> Bool {
@@ -250,7 +253,74 @@ class GameModel: NSObject, GameData {
     }
     
     //Utility func
-   
+    private func jsonizeBoard () -> [String:Any] {
+        var jsonBoard:[String:Any] = [:]
+        for index:Int in 0 ..< 64 {
+            let strIndex = String(index)
+            var square:[String:Any] = [:]
+            if GameModel.board[index].isKind(of: Piece.self) {
+                square["type"] = "piece"
+                let piece = GameModel.board[index] as! Piece
+                square["pieceType"] = self.convertPieceTypeToString(piece.pieceType)
+                square["forwardIs"] = piece.forwardIs == .up ? "up":"down"
+                square["isMyPiece"] = piece.isMyPiece ? true:false
+            } else if GameModel.board[index].isKind(of: BoardSquare.self) {
+                square["type"] = "boardSquare"
+            }
+            jsonBoard[strIndex] = square
+        }
+        return jsonBoard
+    }
+    private func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
+        var board:[BoardSquare] = Array()
+        for index:Int in 0 ..< 64 {
+            let strIndex = String(index)
+            let currentSquare:[String:Any] = jsonBoard[strIndex] as! [String : Any]
+            if currentSquare["type"] as! String == "boardSquare" {
+                board.append(BoardSquare())
+            } else if currentSquare["type"] as! String == "piece" {
+                let isMyPiece:Bool = currentSquare["isMyPiece"] as! Bool
+                let forwardIs:Piece.ForwardIs = currentSquare["forwardIs"] as! String == "up" ? .up:.down
+                let pieceType:Piece.PieceType = self.convertStringToPieceType(piece: currentSquare["pieceType"] as! String)
+                board.append(Piece(isMyPiece: isMyPiece, pieceType: pieceType, forwardIs: forwardIs))
+            }
+        }
+        return board
+    }
+    
+    private func convertStringToPieceType (piece:String) -> Piece.PieceType {
+        var pieceType:Piece.PieceType? = nil
+        switch piece {
+        case "blackPawn":
+            pieceType = .black_pawn
+        case "blackQueen":
+            pieceType = .black_queen
+        case "whitePawn":
+            pieceType = .white_pawn
+        case "whiteQueen":
+            pieceType = .white_queen
+        default:
+            pieceType = nil
+        }
+        return pieceType!
+    }
+    
+    private func convertPieceTypeToString (_ pieceType:Piece.PieceType) -> String {
+        var strPieceType:String = ""
+        switch pieceType {
+        case .black_pawn:
+            strPieceType = "blackPawn"
+        case .black_queen:
+            strPieceType = "blackQueen"
+        case .white_pawn:
+            strPieceType = "whitePawn"
+        case .white_queen:
+            strPieceType = "whiteQueen"
+        }
+        return strPieceType
+    }
+    
+    
     private func setEmptyBoard () {
         GameModel.board.removeAll()
         for _ in 0..<64 {
