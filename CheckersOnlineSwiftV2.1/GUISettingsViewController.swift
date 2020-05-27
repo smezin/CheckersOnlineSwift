@@ -21,12 +21,6 @@ class GUISettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        self.playImageView.center.y -= CGFloat(GameViewController.settings.bounceHeight)*2
-        UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.2, options: [.repeat, .autoreverse, .allowUserInteraction], animations: {
-            self.playImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)*2
-        }) { (success:Bool) in
-        }
         nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .loginFailure, object: nil)
     }
