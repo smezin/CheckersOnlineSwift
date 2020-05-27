@@ -3,6 +3,7 @@
 //  CheckersOnlineSwiftV2.1
 
 import UIKit
+import Foundation
 
 class GameViewController: UIViewController, GameData, SettingsData {
     
@@ -10,11 +11,14 @@ class GameViewController: UIViewController, GameData, SettingsData {
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
     static var board:[BoardSquare] = Array()
+    let nc = NotificationCenter.default
+    
     override func loadView() {
         super.loadView()
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        nc.addObserver(self, selector: #selector(reloadData), name: .didReceiveData, object: nil)
         
         self.view.addSubview(collectionView)
         let settings = GameSettings()
@@ -46,7 +50,11 @@ class GameViewController: UIViewController, GameData, SettingsData {
 }
 
 //Extentions
-
+extension Notification.Name {
+    static let didReceiveData = Notification.Name("didReceiveData")
+    static let didCompleteTask = Notification.Name("didCompleteTask")
+    static let completedLengthyDownload = Notification.Name("completedLengthyDownload")
+}
 extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -160,7 +168,10 @@ extension GameViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
-
+        self.checkersBoardCollectionView.reloadData()
+    }
+    
+    @objc func reloadData () {
         self.checkersBoardCollectionView.reloadData()
     }
 }

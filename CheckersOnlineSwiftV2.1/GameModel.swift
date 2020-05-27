@@ -23,6 +23,7 @@ class GameModel: NSObject, GameData {
     static var board:[BoardSquare] = Array()
     static var isMyTurn:Bool = false
     
+    
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
         var topPiecesColor:Piece.PieceType?
         var bottomPiecesColor:Piece.PieceType?
@@ -250,7 +251,7 @@ class GameModel: NSObject, GameData {
         return true
     }
     
-    //Utility func
+    //Utility funcs
     private func jsonizeBoard () -> [String:Any] {
         var jsonBoard:[String:Any] = [:]
         for index:Int in 0 ..< 64 {
@@ -269,39 +270,6 @@ class GameModel: NSObject, GameData {
         }
         return jsonBoard
     }
-//    func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
-//        var board:[BoardSquare] = Array()
-//        for index:Int in 0 ..< 64 {
-//            let strIndex = String(index)
-//            let currentSquare:[String:Any] = jsonBoard[strIndex] as! [String : Any]
-//            if currentSquare["type"] as! String == "boardSquare" {
-//                board.append(BoardSquare())
-//            } else if currentSquare["type"] as! String == "piece" {
-//                let isMyPiece:Bool = currentSquare["isMyPiece"] as! Bool
-//                let forwardIs:Piece.ForwardIs = currentSquare["forwardIs"] as! String == "up" ? .up:.down
-//                let pieceType:Piece.PieceType = self.convertStringToPieceType(piece: currentSquare["pieceType"] as! String)
-//                board.append(Piece(isMyPiece: isMyPiece, pieceType: pieceType, forwardIs: forwardIs))
-//            }
-//        }
-//        return board
-//    }
-//    
-//    private func convertStringToPieceType (piece:String) -> Piece.PieceType {
-//        var pieceType:Piece.PieceType? = nil
-//        switch piece {
-//        case "blackPawn":
-//            pieceType = .black_pawn
-//        case "blackQueen":
-//            pieceType = .black_queen
-//        case "whitePawn":
-//            pieceType = .white_pawn
-//        case "whiteQueen":
-//            pieceType = .white_queen
-//        default:
-//            pieceType = nil
-//        }
-//        return pieceType!
-//    }
     
     private func convertPieceTypeToString (_ pieceType:Piece.PieceType) -> String {
         var strPieceType:String = ""

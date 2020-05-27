@@ -22,6 +22,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var allPlayersNames:[String] = []
     var playersAtDispalyFormat:[String] = []
     var isLoggedIn:Bool = false
+    let nc = NotificationCenter.default
     
    
     static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
@@ -161,7 +162,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         socket.on("idlePlayers") {data, ack in
            self.idlePlayers = data[0] as! [[String : Any]]
            self.convertPlayersToDisplayDescription()
-         print("players in the room:", self.idlePlayers)
            DispatchQueue.main.async {
                self.playersTableView.reloadData()
            }
@@ -184,43 +184,12 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
             GameModel.isMyTurn = true
             let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
             GameModel.board = board
+            PlayersViewController.shared.nc.post(name: .didReceiveData, object: nil)
         }
         socket.connect()
     }
     
-    func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
-        var board:[BoardSquare] = Array()
-        for index:Int in 0 ..< 64 {
-            let strIndex = String(index)
-            let currentSquare:[String:Any] = jsonBoard[strIndex] as! [String : Any]
-            if currentSquare["type"] as! String == "boardSquare" {
-                board.append(BoardSquare())
-            } else if currentSquare["type"] as! String == "piece" {
-                let isMyPiece:Bool = currentSquare["isMyPiece"] as! Bool
-                let forwardIs:Piece.ForwardIs = currentSquare["forwardIs"] as! String == "up" ? .up:.down
-                let pieceType:Piece.PieceType = self.convertStringToPieceType(piece: currentSquare["pieceType"] as! String)
-                board.append(Piece(isMyPiece: isMyPiece, pieceType: pieceType, forwardIs: forwardIs))
-            }
-        }
-        return board
-    }
-    
-    private func convertStringToPieceType (piece:String) -> Piece.PieceType {
-        var pieceType:Piece.PieceType? = nil
-        switch piece {
-        case "blackPawn":
-            pieceType = .black_pawn
-        case "blackQueen":
-            pieceType = .black_queen
-        case "whitePawn":
-            pieceType = .white_pawn
-        case "whiteQueen":
-            pieceType = .white_queen
-        default:
-            pieceType = nil
-        }
-        return pieceType!
-    }
+
     //emit events
     func connectRoom () {
         let socket = PlayersViewController.manager.defaultSocket
@@ -240,6 +209,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     func acceptGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
+        PlayersViewController.shared.myOpponent = opponent
         socket.emit("gameAccepted", opponent)
         self.goToGameView()
     }
@@ -333,6 +303,40 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
         self.present(gameView, animated: true, completion: nil)
+    }
+    
+    func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
+        var board:[BoardSquare] = Array()
+        for index:Int in 0 ..< 64 {
+            let strIndex = String(index)
+            let currentSquare:[String:Any] = jsonBoard[strIndex] as! [String : Any]
+            if currentSquare["type"] as! String == "boardSquare" {
+                board.append(BoardSquare())
+            } else if currentSquare["type"] as! String == "piece" {
+                let isMyPiece:Bool = currentSquare["isMyPiece"] as! Bool
+                let forwardIs:Piece.ForwardIs = currentSquare["forwardIs"] as! String == "up" ? .up:.down
+                let pieceType:Piece.PieceType = self.convertStringToPieceType(piece: currentSquare["pieceType"] as! String)
+                board.append(Piece(isMyPiece: isMyPiece, pieceType: pieceType, forwardIs: forwardIs))
+            }
+        }
+        return board
+    }
+    
+    private func convertStringToPieceType (piece:String) -> Piece.PieceType {
+        var pieceType:Piece.PieceType? = nil
+        switch piece {
+        case "blackPawn":
+            pieceType = .black_pawn
+        case "blackQueen":
+            pieceType = .black_queen
+        case "whitePawn":
+            pieceType = .white_pawn
+        case "whiteQueen":
+            pieceType = .white_queen
+        default:
+            pieceType = nil
+        }
+        return pieceType!
     }
   
 }
