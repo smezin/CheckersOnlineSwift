@@ -18,7 +18,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        nc.addObserver(self, selector: #selector(reloadData), name: .didReceiveData, object: nil)
+        nc.addObserver(self, selector: #selector(reloadData), name: .boardReceived, object: nil)
         
         self.view.addSubview(collectionView)
         let settings = GameSettings()
@@ -51,9 +51,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
 //Extentions
 extension Notification.Name {
-    static let didReceiveData = Notification.Name("didReceiveData")
-    static let didCompleteTask = Notification.Name("didCompleteTask")
-    static let completedLengthyDownload = Notification.Name("completedLengthyDownload")
+    static let boardReceived = Notification.Name("boardReceived")
 }
 extension GameViewController: UICollectionViewDataSource {
 
@@ -168,10 +166,12 @@ extension GameViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
+        print("regular reload")
         self.checkersBoardCollectionView.reloadData()
     }
     
     @objc func reloadData () {
+        print("reloading data by notification")
         self.checkersBoardCollectionView.reloadData()
     }
 }

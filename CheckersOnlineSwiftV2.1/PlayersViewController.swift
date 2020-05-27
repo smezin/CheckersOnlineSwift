@@ -9,7 +9,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
     static let shared = PlayersViewController()
     
-   
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
     let scheme = "http"
@@ -184,7 +183,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
             GameModel.isMyTurn = true
             let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
             GameModel.board = board
-            PlayersViewController.shared.nc.post(name: .didReceiveData, object: nil)
+            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
+            
         }
         socket.connect()
     }
