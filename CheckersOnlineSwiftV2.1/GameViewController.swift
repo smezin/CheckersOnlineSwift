@@ -15,7 +15,8 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-  //      nc.addObserver(self, selector: #selector(renderBoard), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(renderBoard), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(reloadBoard), name: .boardReceived, object: nil)
         
         self.view.addSubview(collectionView)
@@ -46,14 +47,66 @@ class GameViewController: UIViewController, GameData, SettingsData {
     }
     
     @objc func renderBoard () {
-        self.flipBoard()
-        self.flipColors()
+        if GameViewController.settings.playWhites && !self.amIWhite()! {
+            self.flipColors()
+        }
+        else if !GameViewController.settings.playWhites && self.amIWhite()! {
+            self.flipColors()
+        }
+        
+        if GameViewController.settings.playBottom && !self.amIatButtom()! {
+            self.flipBoard()
+        }
+        else if !GameViewController.settings.playBottom && self.amIatButtom()! {
+            self.flipBoard()
+        }
         GameModel.board = GameViewController.board
     }
+    
+    func amIWhite () -> Bool? {
+        for square in GameViewController.board {
+            if square.isKind(of: Piece.self) {
+                let piece = square as! Piece
+                if piece.isMyPiece {
+                    if piece.pieceType == .white_pawn || piece.pieceType == .white_queen {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    func amIatButtom () -> Bool? {
+        for square in GameViewController.board {
+            if square.isKind(of: Piece.self) {
+                let piece = square as! Piece
+                if piece.isMyPiece {
+                    if piece.forwardIs == .up {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     func flipBoard () {
         let tempBoard = GameViewController.board
         for index:Int in 0 ..< 64 {
             GameViewController.board[index] = tempBoard[63 - index]
+            if GameViewController.board[index].isKind(of: Piece.self) {
+                let piece = GameViewController.board[index] as! Piece
+                if piece.forwardIs == .up {
+                    piece.forwardIs = .down
+                }
+                else if piece.forwardIs == .down {
+                    piece.forwardIs = .up
+                }
+            }
         }
     }
     func flipColors () {
@@ -199,9 +252,11 @@ extension GameViewController: UICollectionViewDelegate
     
     @objc func reloadBoard () {
         DispatchQueue.main.async {
-            GameViewController.board = GameModel.board
             self.checkersBoardCollectionView.reloadData()
         }
+    }
+    @objc func updateBoard () {
+        GameViewController.board = GameModel.board
     }
 }
 

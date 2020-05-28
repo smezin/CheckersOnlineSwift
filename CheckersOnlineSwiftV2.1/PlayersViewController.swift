@@ -54,8 +54,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
         self.present(gameView, animated: true, completion: nil)
     }
-    
-   
+
    //
     func getAllUsers () {
         let url = self.setURLWithPath(path: "/users")
