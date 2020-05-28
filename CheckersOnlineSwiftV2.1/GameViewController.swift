@@ -1,6 +1,3 @@
-//
-//  ViewController.swift
-//  CheckersOnlineSwiftV2.1
 
 import UIKit
 import Foundation
@@ -18,7 +15,8 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        nc.addObserver(self, selector: #selector(reloadData), name: .boardReceived, object: nil)
+  //      nc.addObserver(self, selector: #selector(renderBoard), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(reloadBoard), name: .boardReceived, object: nil)
         
         self.view.addSubview(collectionView)
         let settings = GameSettings()
@@ -33,7 +31,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         
         self.checkersBoardCollectionView = collectionView
     }
-
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.checkersBoardCollectionView.dataSource = self
@@ -47,6 +45,36 @@ class GameViewController: UIViewController, GameData, SettingsData {
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
     
+    @objc func renderBoard () {
+        self.flipBoard()
+        self.flipColors()
+        GameModel.board = GameViewController.board
+    }
+    func flipBoard () {
+        let tempBoard = GameViewController.board
+        for index:Int in 0 ..< 64 {
+            GameViewController.board[index] = tempBoard[63 - index]
+        }
+    }
+    func flipColors () {
+        for square in GameViewController.board {
+            if square.isKind(of: Piece.self) {
+                let piece = square as! Piece
+                switch piece.pieceType {
+                case .white_pawn:
+                    piece.pieceType = .black_pawn
+                case .white_queen:
+                    piece.pieceType = .black_queen
+                case .black_pawn:
+                    piece.pieceType = .white_pawn
+                case .black_queen:
+                    piece.pieceType = .white_queen
+                case .none:
+                    print("render error")
+                }
+            }
+        }
+    }
 }
 
 //Extentions
@@ -166,13 +194,14 @@ extension GameViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
-        print("regular reload 11")
         self.checkersBoardCollectionView.reloadData()
     }
     
-    @objc func reloadData () {
-        print("notification reloading 11")
-        self.checkersBoardCollectionView.reloadData()
+    @objc func reloadBoard () {
+        DispatchQueue.main.async {
+            GameViewController.board = GameModel.board
+            self.checkersBoardCollectionView.reloadData()
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsData {
-    static var settings:GameSettings {get set}
+    static var settings:GameSettings {get}
 }
 
 class GameSettings: NSObject {

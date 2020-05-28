@@ -179,8 +179,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
             let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
             GameModel.board = board
             PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
-            
         }
+        
         socket.connect()
     }
     
@@ -190,10 +190,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
     }
-    func sendGameMove () {
-        let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("play",[PlayersViewController.shared.me, "hello from 11pro"])
-    }
+    
     func getIdleUsers () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("getIdlePlayers", PlayersViewController.shared.me)

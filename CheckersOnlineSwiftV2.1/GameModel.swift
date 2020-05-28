@@ -4,7 +4,6 @@
 
 
 import UIKit
-import SocketIO
 
 protocol GameData
 {
@@ -59,6 +58,7 @@ class GameModel: NSObject, GameData {
         if (!GameModel.isMyTurn) {
             return board
         }
+       
         var didMove:Bool = false
         var isTurnEnded:Bool = false
         let index:Int? = indexOfPickedPiece()
