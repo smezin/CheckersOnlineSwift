@@ -23,6 +23,9 @@
             </subviews>
             <color key="backgroundColor" red="0.89552299219999998" green="0.52384600869999998" blue="0.001733056912" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <connections>
+                <outlet property="turnsLabel" destination="O85-Ye-bu7" id="A2i-sT-Hjg"/>
+            </connections>
             <point key="canvasLocation" x="-65.217391304347828" y="10.379464285714285"/>
         </collectionReusableView>
     </objects>

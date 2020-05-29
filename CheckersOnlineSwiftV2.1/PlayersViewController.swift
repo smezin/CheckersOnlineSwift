@@ -32,29 +32,23 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
        playersTableView.delegate = self
        playersTableView.dataSource = self
+       playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
+        
        socketConnect()
    }
    //tempies
-    @IBAction func loginB(_ sender: Any) {
-        let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
-                                   "password": defaults.string(forKey: "password")! as String]
-        self.login(user)
-    }
+    
     @IBAction func conncetB(_ sender: Any) {
         self.connectRoom()
     }
     @IBAction func logoutB(_ sender: Any) {
         self.logout()
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func disconnectB(_ sender: Any) {
         self.disconnect()
     }
-    @IBAction func newPlayerB(_ sender: Any) {
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
-        self.present(gameView, animated: true, completion: nil)
-    }
-
+    
    //
     func getAllUsers () {
         let url = self.setURLWithPath(path: "/users")
@@ -88,7 +82,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                if let responseJSON = responseJSON as? [String: Any] {
                    PlayersViewController.shared.me = responseJSON
-                   let response = self.stringify(json: responseJSON)
                }
            }
            task.resume()
@@ -142,7 +135,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                if let responseJSON = responseJSON as? [String: Any] {
                    let response = self.stringify(json: responseJSON)
-                   print("from logout: ", response)
+                self.nc.post(name: .logout, object: nil)
                }
        }
        task.resume()
@@ -344,6 +337,7 @@ extension PlayersViewController:UITableViewDelegate, UITableViewDataSource {
         let pickedPlayer = self.idlePlayers[indexPath.row]
         self.offerGame(opponent: pickedPlayer)
     }
+    
 }
 
 extension PlayersViewController:SettingsData {
@@ -352,5 +346,6 @@ extension PlayersViewController:SettingsData {
 extension Notification.Name {
     static let loginSuccess = Notification.Name("loginSuccess")
     static let loginFailure = Notification.Name("loginFailure")
+    static let logout = Notification.Name("logout")
 }
 

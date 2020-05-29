@@ -15,14 +15,16 @@ class GUISettingsViewController: UIViewController {
     @IBOutlet weak var playWhitesSwitch: UISwitch!
     @IBOutlet weak var showPathsSwitch: UISwitch!
     @IBOutlet weak var playBottomSwitch: UISwitch!
-    @IBOutlet weak var onlineImageView: UIImageView!
     @IBOutlet weak var playImageView: UIButton!
     let nc = NotificationCenter.default
+    var isLoggedin = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .loginFailure, object: nil)
+        nc.addObserver(self, selector: #selector(changeToLoginButton), name: .logout, object: nil)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,11 +37,13 @@ class GUISettingsViewController: UIViewController {
     }
     
     @objc func changeToPlayButton () {
+        self.isLoggedin = true
         DispatchQueue.main.async {
             self.loginPlayButton.setImage(UIImage(named: "play"), for: .normal)
         }
     }
     @objc func changeToLoginButton () {
+        self.isLoggedin = false
         DispatchQueue.main.async {
             self.loginPlayButton.setImage(UIImage(named: "login"), for: .normal)
         }
@@ -67,5 +71,16 @@ class GUISettingsViewController: UIViewController {
 //        let user: [String: Any] = ["userName": playerName!,
 //        "password": password!]
         PlayersViewController.shared.getAllUsers()
+    }
+    @IBAction func loginPlayButton(_ sender: Any) {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if self.isLoggedin {
+            let playersView  = storyBoard.instantiateViewController(withIdentifier: "playersID") as! PlayersViewController
+            self.present(playersView, animated: true, completion: nil)
+        } else {
+            let loginView  = storyBoard.instantiateViewController(withIdentifier: "loginID") as! LoginViewController
+            self.present(loginView, animated: true, completion: nil)
+        }
+        
     }
 }
