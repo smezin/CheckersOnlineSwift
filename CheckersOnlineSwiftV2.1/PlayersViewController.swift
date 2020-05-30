@@ -21,6 +21,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var allPlayersNames:[String] = []
     var playersAtDispalyFormat:[String] = []
     var isLoggedIn:Bool = false
+    var isInRoom = false
     let nc = NotificationCenter.default
     
     
@@ -35,27 +36,30 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         playersTableView.dataSource = self
         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
         nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
+        nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
+        
         self.socketConnect()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.connectRoom()
-        self.updateEnterChooseButton()
+        self.getIdlePlayers()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.disconnect()
     }
     @objc func updateEnterChooseButton () {
-        if PlayersViewController.shared.isLoggedIn {
+        if self.isInRoom {
             self.enterChooseButton.setImage(UIImage(named: "choose_player"), for: .normal)
         } else {
             self.enterChooseButton.setImage(UIImage(named: "enter_room"), for: .normal)
         }
     }
     
+    
     @IBAction func enterRoomButton(_ sender: Any) {
         self.connectRoom()
+        self.updateEnterChooseButton()
     }
     @IBAction func logoutButton(_ sender: Any) {
         self.logout()
@@ -126,6 +130,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                         self.nc.post(name: .loginFailure, object: nil)
                     } else {
                         PlayersViewController.shared.isLoggedIn = true
+                        PlayersViewController.shared.me = responseJSON
                         self.nc.post(name: .loginSuccess, object: nil)
                     }
                }
@@ -134,7 +139,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
    
     func logout () {
-       
        self.disconnect()
        PlayersViewController.shared.isLoggedIn = false
        let url = self.setURLWithPath(path: "/users/logout")
@@ -164,12 +168,15 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
             print("socket connected")
         }
         socket.on("idlePlayers") {data, ack in
-           self.idlePlayers = data[0] as! [[String : Any]]
-           self.convertPlayersToDisplayDescription()
-           DispatchQueue.main.async {
-               self.playersTableView.reloadData()
-           }
+            if (!data.isEmpty) {
+               self.idlePlayers = data[0] as! [[String : Any]]
+               self.convertPlayersToDisplayDescription()
+               DispatchQueue.main.async {
+                   self.playersTableView.reloadData()
+               }
+            }
         }
+        
         socket.on("letsPlay") {data, ack in
             self.gameOfferedBy(opponent: data[0] as! [String : Any])
         }
@@ -189,9 +196,16 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
             PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
         }
         
+        socket.on("enteredRoom") {data, ack in
+            self.isInRoom = true
+            self.updateEnterChooseButton()
+        }
+        socket.on("leftRoom") {data, ack in
+            self.isInRoom = false
+            self.updateEnterChooseButton()
+        }
         socket.connect()
     }
-    
 
     //emit events
     @objc func connectRoom () {
@@ -203,6 +217,10 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         socket.emit("getIdlePlayers", PlayersViewController.shared.me)
     }
     func offerGame (opponent:[String:Any]) {
+        if self.convertPlayerToDisplayDescription(player: opponent)  == self.convertPlayerToDisplayDescription(player: PlayersViewController.shared.me) {
+            self.showAlertMessage("Don't play with yourself", "Not here anyway")
+            return
+        }
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("offerGame", opponent)
     }
@@ -223,8 +241,11 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     func sendBoard (_ board:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
-        print("from sendBoard", socket)
         socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
+    }
+    func amIInRoom () {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("amIInRoom")
     }
 
                                            //utility funcs//
@@ -274,12 +295,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
    
     func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
-       let userDetails = player["user"] ?? player
-       let displayDescription = (userDetails as! [String:Any])["userName"] as! String
-       return displayDescription
+        let userDetails = player["user"] ?? player
+        let displayDescription = (userDetails as! [String:Any])["userName"] as! String
+        return displayDescription
     }
    
     func gameOfferedBy (opponent:[String:Any]) {
+        
        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
@@ -288,7 +310,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
            self.declineGame(opponent)
        }
-
        optionMenu.addAction(acceptAction)
        optionMenu.addAction(declineAction)
 
@@ -341,18 +362,17 @@ extension PlayersViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.idlePlayers.count
     }
-       
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:PlayersTableViewCell = self.playersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! PlayersTableViewCell
         cell.playerName?.text = self.playersAtDispalyFormat[indexPath.row]
         return cell
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pickedPlayer = self.idlePlayers[indexPath.row]
         self.offerGame(opponent: pickedPlayer)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+
 }
 
 extension PlayersViewController:SettingsData {
@@ -362,5 +382,15 @@ extension Notification.Name {
     static let loginSuccess = Notification.Name("loginSuccess")
     static let loginFailure = Notification.Name("loginFailure")
     static let logout = Notification.Name("logout")
+    static let enteredRoom = Notification.Name("enteredRoom")
 }
+
+extension PlayersViewController {
+    func showAlertMessage (_ title:String, _ message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+}
+
 

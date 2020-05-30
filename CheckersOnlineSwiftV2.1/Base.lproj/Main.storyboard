@@ -230,7 +230,7 @@
         <!--Settings View Controller-->
         <scene sceneID="EBb-o3-F9Z">
             <objects>
-                <viewController id="trE-gv-xql" customClass="GUISettingsViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" id="trE-gv-xql" customClass="GUISettingsViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CJ3-5N-Fr7" userLabel="mainView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
