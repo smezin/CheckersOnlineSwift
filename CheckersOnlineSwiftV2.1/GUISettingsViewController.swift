@@ -24,7 +24,6 @@ class GUISettingsViewController: UIViewController {
         nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .loginFailure, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .logout, object: nil)
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

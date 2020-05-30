@@ -34,7 +34,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         playersTableView.delegate = self
         playersTableView.dataSource = self
         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
-        socketConnect()
+        nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
+        self.socketConnect()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -160,7 +161,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     func socketConnect () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.on("connect") {data, ack in
-           print("socket connected")
+            print("socket connected")
         }
         socket.on("idlePlayers") {data, ack in
            self.idlePlayers = data[0] as! [[String : Any]]
@@ -193,11 +194,11 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     
 
     //emit events
-    func connectRoom () {
+    @objc func connectRoom () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
     }
-    func getIdleUsers () {
+    func getIdlePlayers () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("getIdlePlayers", PlayersViewController.shared.me)
     }
