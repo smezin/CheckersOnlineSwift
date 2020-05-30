@@ -42,7 +42,7 @@
                                 </constraints>
                                 <state key="normal" image="enter_room"/>
                                 <connections>
-                                    <action selector="conncetB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="dqS-zp-vpb"/>
+                                    <action selector="enterRoomButton:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="dqS-zp-vpb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stj-mh-Y6h">
@@ -52,7 +52,7 @@
                                 </constraints>
                                 <state key="normal" image="leave_room"/>
                                 <connections>
-                                    <action selector="disconnectB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="l0x-pL-uJ4"/>
+                                    <action selector="leaveRoomButton:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="l0x-pL-uJ4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
@@ -62,7 +62,7 @@
                                 </constraints>
                                 <state key="normal" image="logout"/>
                                 <connections>
-                                    <action selector="logoutB:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="XKr-bq-Ve8"/>
+                                    <action selector="logoutButton:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="XKr-bq-Ve8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -85,6 +85,7 @@
                         <viewLayoutGuide key="safeArea" id="0Ku-eI-KFP"/>
                     </view>
                     <connections>
+                        <outlet property="enterChooseButton" destination="4wr-t8-Gci" id="32f-By-As6"/>
                         <outlet property="playersTableView" destination="y9W-Zr-hpj" id="04i-LH-wfM"/>
                     </connections>
                 </viewController>

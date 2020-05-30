@@ -8,7 +8,7 @@ import SocketIO
 class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
     static let shared = PlayersViewController()
-    
+    @IBOutlet weak var enterChooseButton: UIButton!
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
     let scheme = "http"
@@ -23,30 +23,46 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var isLoggedIn:Bool = false
     let nc = NotificationCenter.default
     
+    
     static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
    
     override func viewDidLoad() {
-       super.viewDidLoad()
-       self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-       let nib = UINib(nibName: "PlayersTableViewCell",bundle: nil)
-       self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
-       playersTableView.delegate = self
-       playersTableView.dataSource = self
-       playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
-        
-       socketConnect()
-   }
-   //tempies
+        super.viewDidLoad()
+        self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        let nib = UINib(nibName: "PlayersTableViewCell",bundle: nil)
+        self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
+        playersTableView.delegate = self
+        playersTableView.dataSource = self
+        playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
+        socketConnect()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.connectRoom()
+        self.updateEnterChooseButton()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.disconnect()
+    }
+    @objc func updateEnterChooseButton () {
+        if PlayersViewController.shared.isLoggedIn {
+            self.enterChooseButton.setImage(UIImage(named: "choose_player"), for: .normal)
+        } else {
+            self.enterChooseButton.setImage(UIImage(named: "enter_room"), for: .normal)
+        }
+    }
     
-    @IBAction func conncetB(_ sender: Any) {
+    @IBAction func enterRoomButton(_ sender: Any) {
         self.connectRoom()
     }
-    @IBAction func logoutB(_ sender: Any) {
+    @IBAction func logoutButton(_ sender: Any) {
         self.logout()
         self.dismiss(animated: true, completion: nil)
     }
-    @IBAction func disconnectB(_ sender: Any) {
+    @IBAction func leaveRoomButton(_ sender: Any) {
         self.disconnect()
+        self.updateEnterChooseButton()
     }
     
    //
@@ -133,8 +149,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
                return
            }
            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-               if let responseJSON = responseJSON as? [String: Any] {
-                   let response = self.stringify(json: responseJSON)
+                if (responseJSON as? [String: Any]) != nil {
                 self.nc.post(name: .logout, object: nil)
                }
        }
@@ -182,7 +197,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
     }
-    
     func getIdleUsers () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("getIdlePlayers", PlayersViewController.shared.me)
