@@ -19,10 +19,14 @@ class GameViewController: UIViewController, GameData, SettingsData {
         nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
         self.view.addSubview(collectionView)
-        let settings = GameSettings()
         
         //set board size constraints
-        self.setupBoardConstraints()
+        NSLayoutConstraint.activate([
+            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: -CGFloat(GameViewController.settings.topMarginConstraint)),
+            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: -CGFloat(GameViewController.settings.sideMarginConstraint)),
+            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: CGFloat(GameViewController.settings.sideMarginConstraint)),
+        ])
         
         self.checkersBoardCollectionView = collectionView
     }
@@ -40,12 +44,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
     func setupBoardConstraints () {
-        NSLayoutConstraint.activate([
-            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: -CGFloat(settings.topMarginConstraint)),
-            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
-            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: -CGFloat(settings.sideMarginConstraint)),
-            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: CGFloat(settings.sideMarginConstraint)),
-        ])
+        
     }
     
     func renderBoard () {
