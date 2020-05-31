@@ -15,8 +15,8 @@ class GameViewController: UIViewController, GameData, SettingsData {
         super.loadView()
         nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
-        nc.addObserver(self, selector: #selector(playerWon), name: .iWon, object: nil)
-        nc.addObserver(self, selector: #selector(playerLost), name: .iLost, object: nil)
+        nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost), name: .showLostMessage, object: nil)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
@@ -53,17 +53,11 @@ class GameViewController: UIViewController, GameData, SettingsData {
     }
     func showAlertMessage (_ title:String, _ message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in self.goToPlayersVC()}))
-        if self.presentedViewController == nil {
-            self.present(alert, animated: true)
-        } else {
-            return
-        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in self.dismiss(animated: true, completion: nil)}))
+        self.present(alert, animated: true)
+        
     }
-    func goToPlayersVC () {
-        let playersView = storyboard?.instantiateViewController(withIdentifier: "playersID") as! PlayersViewController
-        self.present(playersView, animated: true, completion: nil)
-    }
+   
     //Handle rendering board according to settings
     func renderBoard () {
         if GameViewController.settings.playWhites && !self.amIWhite()! {

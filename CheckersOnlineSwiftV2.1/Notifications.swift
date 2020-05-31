@@ -9,4 +9,6 @@ extension Notification.Name {
     static let boardReceived = Notification.Name("boardReceived")
     static let iWon = Notification.Name("iWon")
     static let iLost = Notification.Name("iLost")
+    static let showWinMessage = Notification.Name("showWinMessage")
+    static let showLostMessage = Notification.Name("showLostMessage")
 }

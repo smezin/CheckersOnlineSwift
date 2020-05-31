@@ -11,5 +11,6 @@ class FooterView: UICollectionReusableView {
     
     @IBAction func resignGameButton(_ sender: Any) {
         self.nc.post(name: .iLost, object: nil)
+        self.nc.post(name: .showLostMessage, object: nil)
     }
 }

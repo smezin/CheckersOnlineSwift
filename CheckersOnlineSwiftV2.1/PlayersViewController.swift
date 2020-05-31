@@ -136,10 +136,10 @@ extension PlayersViewController {
            self.updateEnterChooseButton()
        }
        socket.on("youLost") {data, ack in
-            PlayersViewController.shared.nc.post(name: .iLost, object: nil)
+        PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil)
        }
        socket.on("youWon") {data, ack in
-            PlayersViewController.shared.nc.post(name: .iWon, object: nil)
+            PlayersViewController.shared.nc.post(name: .showWinMessage, object: nil)
        }
        socket.connect()
    }
