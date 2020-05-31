@@ -56,7 +56,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         }
     }
     
-    
     @IBAction func enterRoomButton(_ sender: Any) {
         self.connectRoom()
         self.updateEnterChooseButton()
@@ -69,9 +68,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.disconnect()
         self.updateEnterChooseButton()
     }
-    
-  
-  
+
     func gameOfferedBy (opponent:[String:Any]) {
         
        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
@@ -88,9 +85,10 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
        self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func goToGameView () {
+    func goToGameView (isFirstTurnMine:Bool) {
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
+        gameView.isMyTurn = isFirstTurnMine
         self.present(gameView, animated: true, completion: nil)
     }
 }
@@ -110,14 +108,13 @@ extension PlayersViewController {
                   }
                }
            }
-           
            socket.on("letsPlay") {data, ack in
                self.gameOfferedBy(opponent: data[0] as! [String : Any])
            }
            socket.on("startingGame") {data, ack in
                PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
                GameModel.isMyTurn = true
-               self.goToGameView()
+               self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
            }
            socket.on("noGame") {data, ack in
                let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
@@ -129,7 +126,6 @@ extension PlayersViewController {
                GameModel.board = board
                PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
            }
-           
            socket.on("enteredRoom") {data, ack in
                self.isInRoom = true
                self.updateEnterChooseButton()
@@ -162,7 +158,7 @@ extension PlayersViewController {
            let socket = PlayersViewController.manager.defaultSocket
            PlayersViewController.shared.myOpponent = opponent
            socket.emit("gameAccepted", opponent)
-           self.goToGameView()
+           self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
        }
        func declineGame (_ opponent:[String:Any]) {
            let socket = PlayersViewController.manager.defaultSocket
@@ -176,13 +172,8 @@ extension PlayersViewController {
        func sendBoard (_ board:[String:Any]) {
            let socket = PlayersViewController.manager.defaultSocket
            socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
+           PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
        }
-       func amIInRoom () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("amIInRoom")
-       }
-
-    
 }
 //Handle communication with DB
 extension PlayersViewController {
@@ -394,5 +385,6 @@ extension Notification.Name {
     static let loginFailure = Notification.Name("loginFailure")
     static let logout = Notification.Name("logout")
     static let enteredRoom = Notification.Name("enteredRoom")
+    static let boardSent = Notification.Name("boardSent")
 }
 

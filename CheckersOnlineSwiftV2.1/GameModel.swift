@@ -22,7 +22,6 @@ class GameModel: NSObject, GameData {
     static var board:[BoardSquare] = Array()
     static var isMyTurn:Bool = false
     
-    
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
         var topPiecesColor:Piece.PieceType?
         var bottomPiecesColor:Piece.PieceType?

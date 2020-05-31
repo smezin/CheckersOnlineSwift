@@ -8,6 +8,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
     static var board:[BoardSquare] = Array()
+    var isMyTurn:Bool = false
     let nc = NotificationCenter.default
     
     override func loadView() {
@@ -16,9 +17,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
-        nc.addObserver(self, selector: #selector(renderBoard), name: .boardReceived, object: nil)
-        nc.addObserver(self, selector: #selector(reloadBoard), name: .boardReceived, object: nil)
-        
+        nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
         self.view.addSubview(collectionView)
         let settings = GameSettings()
         
@@ -46,7 +45,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
     
-    @objc func renderBoard () {
+    func renderBoard () {
         if GameViewController.settings.playWhites && !self.amIWhite()! {
             self.flipColors()
         }
@@ -63,7 +62,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         GameModel.board = GameViewController.board
     }
     
-    func amIWhite () -> Bool? {
+    private func amIWhite () -> Bool? {
         for square in GameViewController.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
@@ -78,7 +77,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         }
         return nil
     }
-    func amIatButtom () -> Bool? {
+    private func amIatButtom () -> Bool? {
         for square in GameViewController.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
@@ -94,7 +93,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         return nil
     }
     
-    func flipBoard () {
+    private func flipBoard () {
         let tempBoard = GameViewController.board
         for index:Int in 0 ..< 64 {
             GameViewController.board[index] = tempBoard[63 - index]
@@ -109,7 +108,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
             }
         }
     }
-    func flipColors () {
+    private func flipColors () {
         for square in GameViewController.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
@@ -173,14 +172,18 @@ extension GameViewController: UICollectionViewDataSource {
             header.backgroundColor = self.view.backgroundColor
             return header
         } else if kind.isEqual(UICollectionView.elementKindSectionFooter) {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.footerViewId, for: indexPath) as! FooterView
+            var footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.footerViewId, for: indexPath) as! FooterView
             footer.backgroundColor = self.view.backgroundColor
+            DispatchQueue.main.async {
+                footer = self.updateFooter(footer)
+            }
             return footer
         }
         else {
             return UICollectionReusableView()
         }
     }
+    
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
         let boardSquare:BoardSquare = GameViewController.board[index]
         var image = UIImage()
@@ -249,14 +252,29 @@ extension GameViewController: UICollectionViewDelegate
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
         self.checkersBoardCollectionView.reloadData()
     }
-    
-    @objc func reloadBoard () {
+
+    @objc func updateBoard () {
+        GameViewController.board = GameModel.board
+        self.renderBoard()
         DispatchQueue.main.async {
             self.checkersBoardCollectionView.reloadData()
         }
+        self.startMyTurn()
     }
-    @objc func updateBoard () {
-        GameViewController.board = GameModel.board
+    func updateFooter (_ footer:FooterView) -> FooterView {
+        if self.isMyTurn {
+            footer.turnsImageView.image = UIImage(named: "your_turn")
+        } else {
+            footer.turnsImageView.image = UIImage(named: "opponents_turn")
+        }
+        return footer
+    }
+  
+    func startMyTurn () {
+        self.isMyTurn = true
+    }
+    @objc func endMyTurn () {
+        self.isMyTurn = false
     }
 }
 
