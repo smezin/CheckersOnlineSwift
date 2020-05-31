@@ -36,6 +36,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
         nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
+        nc.addObserver(self, selector: #selector(opponentLost), name: .iWon, object: nil)
+        nc.addObserver(self, selector: #selector(opponentWon), name: .iLost, object: nil)
         
         self.socketConnect()
     }
@@ -94,49 +96,55 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
 //Handle sockets events listen and emit
 extension PlayersViewController {
     func socketConnect () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.on("connect") {data, ack in
-               print("socket connected")
-           }
-           socket.on("idlePlayers") {data, ack in
-               if (!data.isEmpty) {
-                  self.idlePlayers = data[0] as! [[String : Any]]
-                  self.convertPlayersToDisplayDescription()
-                  DispatchQueue.main.async {
-                      self.playersTableView.reloadData()
-                  }
-               }
-           }
-           socket.on("letsPlay") {data, ack in
-               self.gameOfferedBy(opponent: data[0] as! [String : Any])
-           }
-           socket.on("startingGame") {data, ack in
-               PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
-               GameModel.isMyTurn = true
-               self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
-           }
-           socket.on("noGame") {data, ack in
-               let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
-               self.showAlertMessage("\(opponentName) declined the offer", "Choose another player")
-           }
-           socket.on("gameMove") {data, ack in
-               GameModel.isMyTurn = true
-               let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
-               GameModel.board = board
-               PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
-           }
-           socket.on("enteredRoom") {data, ack in
-               self.isInRoom = true
-               self.updateEnterChooseButton()
-           }
-           socket.on("leftRoom") {data, ack in
-               self.isInRoom = false
-               self.updateEnterChooseButton()
-           }
-           socket.connect()
+       let socket = PlayersViewController.manager.defaultSocket
+       socket.on("connect") {data, ack in
+           print("socket connected")
        }
+       socket.on("idlePlayers") {data, ack in
+           if (!data.isEmpty) {
+              self.idlePlayers = data[0] as! [[String : Any]]
+              self.convertPlayersToDisplayDescription()
+              DispatchQueue.main.async {
+                  self.playersTableView.reloadData()
+              }
+           }
+       }
+       socket.on("letsPlay") {data, ack in
+           self.gameOfferedBy(opponent: data[0] as! [String : Any])
+       }
+       socket.on("startingGame") {data, ack in
+           PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
+           GameModel.isMyTurn = true
+           self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
+       }
+       socket.on("noGame") {data, ack in
+           let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
+           self.showAlertMessage("\(opponentName) declined the offer", "Choose another player")
+       }
+       socket.on("gameMove") {data, ack in
+           GameModel.isMyTurn = true
+           let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
+           GameModel.board = board
+           PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
+       }
+       socket.on("enteredRoom") {data, ack in
+           self.isInRoom = true
+           self.updateEnterChooseButton()
+       }
+       socket.on("leftRoom") {data, ack in
+           self.isInRoom = false
+           self.updateEnterChooseButton()
+       }
+       socket.on("youLost") {data, ack in
+            PlayersViewController.shared.nc.post(name: .iLost, object: nil)
+       }
+       socket.on("youWon") {data, ack in
+            PlayersViewController.shared.nc.post(name: .iWon, object: nil)
+       }
+       socket.connect()
+   }
 
-       //emit events
+   //emit events
        @objc func connectRoom () {
            let socket = PlayersViewController.manager.defaultSocket
            socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
@@ -146,10 +154,14 @@ extension PlayersViewController {
            socket.emit("getIdlePlayers", PlayersViewController.shared.me)
        }
        func offerGame (opponent:[String:Any]) {
-           if self.convertPlayerToDisplayDescription(player: opponent)  == self.convertPlayerToDisplayDescription(player: PlayersViewController.shared.me) {
+            if self.convertPlayerToDisplayDescription(player: opponent)  == self.convertPlayerToDisplayDescription(player: PlayersViewController.shared.me) {
                self.showAlertMessage("Don't play with yourself", "Not here anyway")
                return
-           }
+            }
+            if !self.isInRoom {
+                self.showAlertMessage("You are not in the room", "Please enter room in order to pick opponent")
+                return
+            }
            let socket = PlayersViewController.manager.defaultSocket
            socket.emit("offerGame", opponent)
        }
@@ -172,6 +184,14 @@ extension PlayersViewController {
            let socket = PlayersViewController.manager.defaultSocket
            socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
            PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
+       }
+       @objc func opponentLost () {
+           let socket = PlayersViewController.manager.defaultSocket
+           socket.emit("iWon", PlayersViewController.shared.myOpponent)
+       }
+       @objc func opponentWon () {
+           let socket = PlayersViewController.manager.defaultSocket
+           socket.emit("iLost", PlayersViewController.shared.myOpponent)
        }
 }
 //Handle communication with DB
@@ -207,6 +227,7 @@ extension PlayersViewController {
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                 if let responseJSON = responseJSON as? [String: Any] {
                     PlayersViewController.shared.me = responseJSON
+                    PlayersViewController.shared.login(PlayersViewController.shared.me)
                 }
             }
             task.resume()

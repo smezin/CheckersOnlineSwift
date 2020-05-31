@@ -91,18 +91,29 @@ class GameModel: NSObject, GameData {
             }
         }
         if isTurnEnded {
-            print ("turn ended")
             let pieceLocation:Int = (didMove ? indexPath.row:index)!
             coronate(piece: GameModel.board[pieceLocation] as? Piece)
             if didIwin() {
-                print("I WON")
+                self.nc.post(name: .iWon, object: nil)
+            } else {
+                switchPlayer()
             }
-            switchPlayer()
         }
         return GameModel.board
     }
+    private func didIwin () -> Bool {
+        for index in 0..<64 {
+            if let piece:Piece = GameModel.board[index] as? Piece {
+                if !piece.isMyPiece! {
+                    if findPathForPieceAt(index: index, markPath: false) {
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
     
-    //Game management
     private func findPathForPieceAt (index:Int, markPath:Bool = true) -> Bool{
         let piece:Piece? = GameModel.board[index] as? Piece
         var isPathFound = false
@@ -238,19 +249,7 @@ class GameModel: NSObject, GameData {
         PlayersViewController.shared.sendBoard(jsonBoard)
     }
     
-    private func didIwin () -> Bool {
-        for index in 0..<64 {
-            if let piece:Piece = GameModel.board[index] as? Piece {
-                if !piece.isMyPiece! {
-                    if findPathForPieceAt(index: index, markPath: false) {
-                        return false
-                    }
-                }
-            }
-        }
-        self.nc.post(name: .iWon, object: nil)
-        return true
-    }
+    
     
     private func jsonizeBoard () -> [String:Any] {
         var jsonBoard:[String:Any] = [:]

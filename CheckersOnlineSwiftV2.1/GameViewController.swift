@@ -13,11 +13,12 @@ class GameViewController: UIViewController, GameData, SettingsData {
     
     override func loadView() {
         super.loadView()
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
+        nc.addObserver(self, selector: #selector(playerWon), name: .iWon, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost), name: .iLost, object: nil)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
         
         //set board size constraints
@@ -43,10 +44,27 @@ class GameViewController: UIViewController, GameData, SettingsData {
         
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
-    func setupBoardConstraints () {
-        
+    //Handle game end scenarios
+    @objc func playerWon () {
+        self.showAlertMessage("YOU WON!!!", "Opponent lost or left the game")
     }
-    
+    @objc func playerLost () {
+        self.showAlertMessage("YOU LOST", "You'll get better. probably")
+    }
+    func showAlertMessage (_ title:String, _ message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in self.goToPlayersVC()}))
+        if self.presentedViewController == nil {
+            self.present(alert, animated: true)
+        } else {
+            return
+        }
+    }
+    func goToPlayersVC () {
+        let playersView = storyboard?.instantiateViewController(withIdentifier: "playersID") as! PlayersViewController
+        self.present(playersView, animated: true, completion: nil)
+    }
+    //Handle rendering board according to settings
     func renderBoard () {
         if GameViewController.settings.playWhites && !self.amIWhite()! {
             self.flipColors()
@@ -131,8 +149,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     }
 }
 
-//Extentions
-
+//Handling data source
 extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -261,7 +278,7 @@ extension GameViewController: UICollectionViewDelegate
         }
         self.startMyTurn()
     }
-    func updateFooter (_ footer:FooterView) -> FooterView {
+    func updateFooter (_ footer:FooterView, gameOver:Bool = false) -> FooterView {
         if self.isMyTurn {
             footer.turnsImageView.image = UIImage(named: "your_turn")
         } else {
@@ -318,4 +335,7 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 10.0, left: 1.0, bottom: 1.0, right: 1.0)
     }
 }
+
+    
+
 
