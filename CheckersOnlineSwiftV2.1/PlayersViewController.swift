@@ -1,9 +1,8 @@
-//
-//  PlayersViewController.swift
-//
+
 import UIKit
 import Foundation
 import SocketIO
+
 
 class PlayersViewController: UIViewController, UIActionSheetDelegate {
 
@@ -30,7 +29,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        let nib = UINib(nibName: "PlayersTableViewCell",bundle: nil)
+        let nib = UINib(nibName: "PlayersTableViewCell", bundle: nil)
         self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         playersTableView.delegate = self
         playersTableView.dataSource = self
@@ -380,11 +379,5 @@ extension PlayersViewController {
 extension PlayersViewController:SettingsData {
     static var settings: GameSettings = GameSettings()
 }
-extension Notification.Name {
-    static let loginSuccess = Notification.Name("loginSuccess")
-    static let loginFailure = Notification.Name("loginFailure")
-    static let logout = Notification.Name("logout")
-    static let enteredRoom = Notification.Name("enteredRoom")
-    static let boardSent = Notification.Name("boardSent")
-}
+
 

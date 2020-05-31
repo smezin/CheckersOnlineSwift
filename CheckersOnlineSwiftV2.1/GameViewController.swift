@@ -22,12 +22,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         let settings = GameSettings()
         
         //set board size constraints
-        NSLayoutConstraint.activate([
-            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: -CGFloat(settings.topMarginConstraint)),
-            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
-            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: -CGFloat(settings.sideMarginConstraint)),
-            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: CGFloat(settings.sideMarginConstraint)),
-        ])
+        self.setupBoardConstraints()
         
         self.checkersBoardCollectionView = collectionView
     }
@@ -43,6 +38,14 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.alwaysBounceVertical = true
         
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
+    }
+    func setupBoardConstraints () {
+        NSLayoutConstraint.activate([
+            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: -CGFloat(settings.topMarginConstraint)),
+            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: -CGFloat(settings.sideMarginConstraint)),
+            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: CGFloat(settings.sideMarginConstraint)),
+        ])
     }
     
     func renderBoard () {
@@ -130,9 +133,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
 }
 
 //Extentions
-extension Notification.Name {
-    static let boardReceived = Notification.Name("boardReceived")
-}
+
 extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -318,3 +319,4 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 10.0, left: 1.0, bottom: 1.0, right: 1.0)
     }
 }
+

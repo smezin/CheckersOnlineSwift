@@ -21,6 +21,7 @@ class GameModel: NSObject, GameData {
     
     static var board:[BoardSquare] = Array()
     static var isMyTurn:Bool = false
+    let nc = NotificationCenter.default
     
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
         var topPiecesColor:Piece.PieceType?
@@ -247,10 +248,10 @@ class GameModel: NSObject, GameData {
                 }
             }
         }
+        self.nc.post(name: .iWon, object: nil)
         return true
     }
     
-    //Utility funcs
     private func jsonizeBoard () -> [String:Any] {
         var jsonBoard:[String:Any] = [:]
         for index:Int in 0 ..< 64 {
