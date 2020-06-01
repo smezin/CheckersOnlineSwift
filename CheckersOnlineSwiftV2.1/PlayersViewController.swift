@@ -90,10 +90,12 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
         gameView.isMyTurn = isFirstTurnMine
+        gameView.modalPresentationStyle = .fullScreen
         self.present(gameView, animated: true, completion: nil)
     }
 }
 //Handle sockets events listen and emit
+//Listen
 extension PlayersViewController {
     func socketConnect () {
        let socket = PlayersViewController.manager.defaultSocket
@@ -144,7 +146,7 @@ extension PlayersViewController {
        socket.connect()
    }
 
-   //emit events
+   //Emit events
        @objc func connectRoom () {
            let socket = PlayersViewController.manager.defaultSocket
            socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
