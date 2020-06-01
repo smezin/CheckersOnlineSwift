@@ -5,7 +5,7 @@ import SocketIO
 
 
 class PlayersViewController: UIViewController, UIActionSheetDelegate {
-
+    
     static let shared = PlayersViewController()
     @IBOutlet weak var enterChooseButton: UIButton!
     @IBOutlet weak var playersTableView: UITableView!
@@ -25,7 +25,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     
     
     static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -69,21 +69,21 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.disconnect()
         self.updateEnterChooseButton()
     }
-
+    
     func gameOfferedBy (opponent:[String:Any]) {
         
-       let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
-       let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
-       let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
-           self.acceptGame(opponent)
-       }
-       let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
-           self.declineGame(opponent)
-       }
-       optionMenu.addAction(acceptAction)
-       optionMenu.addAction(declineAction)
-
-       self.present(optionMenu, animated: true, completion: nil)
+        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
+        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
+        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
+            self.acceptGame(opponent)
+        }
+        let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
+            self.declineGame(opponent)
+        }
+        optionMenu.addAction(acceptAction)
+        optionMenu.addAction(declineAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     func goToGameView (isFirstTurnMine:Bool) {
@@ -98,195 +98,195 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
 //Listen
 extension PlayersViewController {
     func socketConnect () {
-       let socket = PlayersViewController.manager.defaultSocket
-       socket.on("connect") {data, ack in
-           print("socket connected")
-       }
-       socket.on("idlePlayers") {data, ack in
-           if (!data.isEmpty) {
-              self.idlePlayers = data[0] as! [[String : Any]]
-              self.convertPlayersToDisplayDescription()
-              DispatchQueue.main.async {
-                  self.playersTableView.reloadData()
-              }
-           }
-       }
-       socket.on("letsPlay") {data, ack in
-           self.gameOfferedBy(opponent: data[0] as! [String : Any])
-       }
-       socket.on("startingGame") {data, ack in
-           PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
-           GameModel.isMyTurn = true
-           self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
-       }
-       socket.on("noGame") {data, ack in
-           let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
-           self.showAlertMessage("\(opponentName) declined the offer", "Choose another player")
-       }
-       socket.on("gameMove") {data, ack in
-           GameModel.isMyTurn = true
-           let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
-           GameModel.board = board
-           PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
-       }
-       socket.on("enteredRoom") {data, ack in
-           self.isInRoom = true
-           self.updateEnterChooseButton()
-       }
-       socket.on("leftRoom") {data, ack in
-           self.isInRoom = false
-           self.updateEnterChooseButton()
-       }
-       socket.on("youLost") {data, ack in
-        PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil)
-       }
-       socket.on("youWon") {data, ack in
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.on("connect") {data, ack in
+            print("socket connected")
+        }
+        socket.on("idlePlayers") {data, ack in
+            if (!data.isEmpty) {
+                self.idlePlayers = data[0] as! [[String : Any]]
+                self.convertPlayersToDisplayDescription()
+                DispatchQueue.main.async {
+                    self.playersTableView.reloadData()
+                }
+            }
+        }
+        socket.on("letsPlay") {data, ack in
+            self.gameOfferedBy(opponent: data[0] as! [String : Any])
+        }
+        socket.on("startingGame") {data, ack in
+            PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
+            GameModel.isMyTurn = true
+            self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
+        }
+        socket.on("noGame") {data, ack in
+            let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
+            self.showAlertMessage("\(opponentName) declined the offer", "Choose another player")
+        }
+        socket.on("gameMove") {data, ack in
+            GameModel.isMyTurn = true
+            let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
+            GameModel.board = board
+            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
+        }
+        socket.on("enteredRoom") {data, ack in
+            self.isInRoom = true
+            self.updateEnterChooseButton()
+        }
+        socket.on("leftRoom") {data, ack in
+            self.isInRoom = false
+            self.updateEnterChooseButton()
+        }
+        socket.on("youLost") {data, ack in
+            PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil)
+        }
+        socket.on("youWon") {data, ack in
             PlayersViewController.shared.nc.post(name: .showWinMessage, object: nil)
-       }
-       socket.connect()
-   }
-
-   //Emit events
-       @objc func connectRoom () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
-       }
-       func getIdlePlayers () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("getIdlePlayers", PlayersViewController.shared.me)
-       }
-       func offerGame (opponent:[String:Any]) {
-            if self.convertPlayerToDisplayDescription(player: opponent)  == self.convertPlayerToDisplayDescription(player: PlayersViewController.shared.me) {
-               self.showAlertMessage("Don't play with yourself", "Not here anyway")
-               return
-            }
-            if !self.isInRoom {
-                self.showAlertMessage("You are not in the room", "Please enter room in order to pick opponent")
-                return
-            }
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("offerGame", opponent)
-       }
-       func acceptGame (_ opponent:[String:Any]) {
-           let socket = PlayersViewController.manager.defaultSocket
-           PlayersViewController.shared.myOpponent = opponent
-           socket.emit("gameAccepted", opponent)
-           self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
-       }
-       func declineGame (_ opponent:[String:Any]) {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("gameDeclined", opponent)
-       }
-       func disconnect () {
-           let socket = PlayersViewController.manager.defaultSocket
-           print("disconnected")
-           socket.emit("disconnect")
-       }
-       func sendBoard (_ board:[String:Any]) {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
-           PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
-       }
-       @objc func opponentLost () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("iWon", PlayersViewController.shared.myOpponent)
-       }
-       @objc func opponentWon () {
-           let socket = PlayersViewController.manager.defaultSocket
-           socket.emit("iLost", PlayersViewController.shared.myOpponent)
-       }
+        }
+        socket.connect()
+    }
+    
+    //Emit events
+    @objc func connectRoom () {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("enterAsIdlePlayer", PlayersViewController.shared.me)
+    }
+    func getIdlePlayers () {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("getIdlePlayers", PlayersViewController.shared.me)
+    }
+    func offerGame (opponent:[String:Any]) {
+        if self.convertPlayerToDisplayDescription(player: opponent)  == self.convertPlayerToDisplayDescription(player: PlayersViewController.shared.me) {
+            self.showAlertMessage("Don't play with yourself", "Not here anyway")
+            return
+        }
+        if !self.isInRoom {
+            self.showAlertMessage("You are not in the room", "Please enter room in order to pick opponent")
+            return
+        }
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("offerGame", opponent)
+    }
+    func acceptGame (_ opponent:[String:Any]) {
+        let socket = PlayersViewController.manager.defaultSocket
+        PlayersViewController.shared.myOpponent = opponent
+        socket.emit("gameAccepted", opponent)
+        self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
+    }
+    func declineGame (_ opponent:[String:Any]) {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("gameDeclined", opponent)
+    }
+    func disconnect () {
+        let socket = PlayersViewController.manager.defaultSocket
+        print("disconnected")
+        socket.emit("disconnect")
+    }
+    func sendBoard (_ board:[String:Any]) {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
+        PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
+    }
+    @objc func opponentLost () {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("iWon", PlayersViewController.shared.myOpponent)
+    }
+    @objc func opponentWon () {
+        let socket = PlayersViewController.manager.defaultSocket
+        socket.emit("iLost", PlayersViewController.shared.myOpponent)
+    }
 }
 //Handle communication with DB
 extension PlayersViewController {
     func getAllUsers () {
-         let url = self.setURLWithPath(path: "/users")
-         let request = self.setRequestTypeWithHeaders(method: "GET", url: url)
-         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-         if let error = error {
-             print("Error took place \(error)")
-             return
-         }
-         let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-             if let responseJSON = responseJSON as? [[String: Any]] {
-                 let allPlayersNames:[String] = self.createPlayersNamesList(allPlayers: responseJSON)
-                 self.allPlayersNames = allPlayersNames
-             }
-         }
-         task.resume()
-     }
+        let url = self.setURLWithPath(path: "/users")
+        let request = self.setRequestTypeWithHeaders(method: "GET", url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+            if let responseJSON = responseJSON as? [[String: Any]] {
+                let allPlayersNames:[String] = self.createPlayersNamesList(allPlayers: responseJSON)
+                self.allPlayersNames = allPlayersNames
+            }
+        }
+        task.resume()
+    }
     func createUser (_ user: [String: Any]) {
         
         let url = self.setURLWithPath(path: "/users")
         var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
         request.httpBody = jsonData
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("Error took place \(error)")
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                if let responseJSON = responseJSON as? [String: Any] {
-                    PlayersViewController.shared.me = responseJSON
-                    PlayersViewController.shared.login(PlayersViewController.shared.me)
-                }
+            if let responseJSON = responseJSON as? [String: Any] {
+                PlayersViewController.shared.me = responseJSON
+                PlayersViewController.shared.login(PlayersViewController.shared.me)
             }
-            task.resume()
         }
+        task.resume()
+    }
     
-     func login (_ user: [String: Any]) {
-         let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
-                                    "password": defaults.string(forKey: "password")! as String]
-         let url = self.setURLWithPath(path: "/users/login")
-         var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
-         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-         request.httpBody = jsonData
-
-         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+    func login (_ user: [String: Any]) {
+        let user: [String: Any] = ["userName": defaults.string(forKey: "userName")! as String,
+                                   "password": defaults.string(forKey: "password")! as String]
+        let url = self.setURLWithPath(path: "/users/login")
+        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
+        let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("Error took place \(error)")
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                if let responseJSON = responseJSON as? [String: Any] {
+            if let responseJSON = responseJSON as? [String: Any] {
+                PlayersViewController.shared.me = responseJSON
+                let response = self.stringify(json: responseJSON)
+                if (response.count < 10) {
+                    PlayersViewController.shared.isLoggedIn = false
+                    self.nc.post(name: .loginFailure, object: nil)
+                } else {
+                    PlayersViewController.shared.isLoggedIn = true
                     PlayersViewController.shared.me = responseJSON
-                    let response = self.stringify(json: responseJSON)
-                     if (response.count < 10) {
-                         PlayersViewController.shared.isLoggedIn = false
-                         self.nc.post(name: .loginFailure, object: nil)
-                     } else {
-                         PlayersViewController.shared.isLoggedIn = true
-                         PlayersViewController.shared.me = responseJSON
-                         self.nc.post(name: .loginSuccess, object: nil)
-                     }
+                    self.nc.post(name: .loginSuccess, object: nil)
                 }
-         }
-         task.resume()
-     }
+            }
+        }
+        task.resume()
+    }
     
-     func logout () {
+    func logout () {
         self.disconnect()
         PlayersViewController.shared.isLoggedIn = false
         let url = self.setURLWithPath(path: "/users/logout")
         var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: PlayersViewController.shared.me, options: .prettyPrinted)
         PlayersViewController.shared.me = [:]
-
+        
         request.httpBody = jsonData
-                
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("Error took place \(error)")
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                 if (responseJSON as? [String: Any]) != nil {
-                 self.nc.post(name: .logout, object: nil)
-                }
+            if (responseJSON as? [String: Any]) != nil {
+                self.nc.post(name: .logout, object: nil)
+            }
         }
         task.resume()
-     }
+    }
 }
 
 //Handle players tableView
@@ -318,14 +318,14 @@ extension PlayersViewController {
 //handle JSONs and strings
 extension PlayersViewController {
     func stringify (json:[String: Any]) -> String {
-       var convertedString:String = ""
-       do {
-           let data =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-           convertedString = String(data: data, encoding: String.Encoding.utf8) ?? "Conversion error"
-             } catch let myJSONError {
-                 print("from stringify", myJSONError)
-             }
-       return convertedString
+        var convertedString:String = ""
+        do {
+            let data =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            convertedString = String(data: data, encoding: String.Encoding.utf8) ?? "Conversion error"
+        } catch let myJSONError {
+            print("from stringify", myJSONError)
+        }
+        return convertedString
     }
     func convertPlayersToDisplayDescription () {
         self.playersAtDispalyFormat = []
@@ -333,20 +333,20 @@ extension PlayersViewController {
             let playerDisplayDescription = self.convertPlayerToDisplayDescription(player: player)
             playersAtDispalyFormat.append(playerDisplayDescription)
         }
-     }
-     func createPlayersNamesList (allPlayers:[[String:Any]]) -> [String] {
-         var namesList:[String] = []
-         for player in allPlayers {
-             let name = self.convertPlayerToDisplayDescription(player: player)
-             namesList.append(name)
-         }
-         return namesList
-     }
-     func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
-         let userDetails = player["user"] ?? player
-         let displayDescription = (userDetails as! [String:Any])["userName"] as! String
-         return displayDescription
-     }
+    }
+    func createPlayersNamesList (allPlayers:[[String:Any]]) -> [String] {
+        var namesList:[String] = []
+        for player in allPlayers {
+            let name = self.convertPlayerToDisplayDescription(player: player)
+            namesList.append(name)
+        }
+        return namesList
+    }
+    func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
+        let userDetails = player["user"] ?? player
+        let displayDescription = (userDetails as! [String:Any])["userName"] as! String
+        return displayDescription
+    }
     func boardifyJson (jsonBoard:[String:Any]) -> [BoardSquare] {
         var board:[BoardSquare] = Array()
         for index:Int in 0 ..< 64 {
@@ -383,19 +383,19 @@ extension PlayersViewController {
 //Handle URL andrequests
 extension PlayersViewController {
     func setURLWithPath (path:String) -> URL {
-       var components = URLComponents()
-       components.scheme = scheme
-       components.host = host
-       components.port = port
-       components.path = path
-       return components.url!
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+        components.path = path
+        return components.url!
     }
     func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
-       var request = URLRequest(url: url)
-       request.httpMethod = method
-       request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-       request.addValue("application/json", forHTTPHeaderField: "Accept")
-       return request
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        return request
     }
 }
 

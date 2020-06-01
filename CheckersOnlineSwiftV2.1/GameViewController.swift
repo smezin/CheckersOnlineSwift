@@ -31,7 +31,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         
         self.checkersBoardCollectionView = collectionView
     }
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.checkersBoardCollectionView.dataSource = self
@@ -57,7 +57,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.present(alert, animated: true)
         
     }
-   
+    
     //Handle rendering board according to settings
     func renderBoard () {
         if GameViewController.settings.playWhites && !self.amIWhite()! {
@@ -145,12 +145,12 @@ class GameViewController: UIViewController, GameData, SettingsData {
 
 //Handling data source
 extension GameViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return 64
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         let cellFrame = CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: cell.bounds.size.height)
@@ -176,7 +176,7 @@ extension GameViewController: UICollectionViewDataSource {
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind.isEqual(UICollectionView.elementKindSectionHeader) {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.headerViewId, for: indexPath) as! HeaderView
@@ -213,7 +213,7 @@ extension GameViewController: UICollectionViewDataSource {
         imageView.frame = cellFrame
         imageView.tag = imageViewsTag
         return imageView
-       
+        
     }
     func getCellBackgroundView (index:Int) -> UIImageView{
         
@@ -263,7 +263,7 @@ extension GameViewController: UICollectionViewDelegate
         GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
         self.checkersBoardCollectionView.reloadData()
     }
-
+    
     @objc func updateBoard () {
         GameViewController.board = GameModel.board
         self.renderBoard()
@@ -280,7 +280,7 @@ extension GameViewController: UICollectionViewDelegate
         }
         return footer
     }
-  
+    
     func startMyTurn () {
         self.isMyTurn = true
     }
@@ -290,27 +290,27 @@ extension GameViewController: UICollectionViewDelegate
 }
 
 extension GameViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellSideSize = min(collectionView.bounds.width, collectionView.bounds.height)/8
         return CGSize(width: cellSideSize, height: cellSideSize)
-
+        
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -330,6 +330,6 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-    
+
 
 
