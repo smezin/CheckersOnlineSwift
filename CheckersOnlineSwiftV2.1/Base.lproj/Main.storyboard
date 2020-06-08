@@ -123,7 +123,6 @@
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="174" id="KeT-te-BK0"/>
                                     <constraint firstAttribute="height" constant="34" id="nWm-59-Rqv"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="174" id="tR7-dD-Png"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
@@ -185,7 +184,6 @@
                             <constraint firstAttribute="trailing" secondItem="huk-pb-wRF" secondAttribute="trailing" id="2qY-JK-osC"/>
                             <constraint firstItem="9fi-mm-gM1" firstAttribute="leading" secondItem="GZ0-mg-tSk" secondAttribute="leading" constant="88" id="558-ee-a0X"/>
                             <constraint firstItem="L2c-9w-rt3" firstAttribute="centerX" secondItem="BPD-MY-Dr6" secondAttribute="centerX" id="5cr-20-Y46"/>
-                            <constraint firstItem="9fi-mm-gM1" firstAttribute="leading" secondItem="GZ0-mg-tSk" secondAttribute="leading" constant="88" id="5ng-7B-omy"/>
                             <constraint firstItem="L2c-9w-rt3" firstAttribute="leading" secondItem="GZ0-mg-tSk" secondAttribute="leading" constant="45" id="6RV-uy-SB8"/>
                             <constraint firstItem="Dob-ap-Mcy" firstAttribute="leading" secondItem="ufx-53-6On" secondAttribute="leading" id="7nV-ic-pfN"/>
                             <constraint firstItem="huk-pb-wRF" firstAttribute="top" secondItem="GZ0-mg-tSk" secondAttribute="top" id="8Cl-BL-4ei"/>
@@ -195,7 +193,6 @@
                             <constraint firstItem="huk-pb-wRF" firstAttribute="leading" secondItem="GZ0-mg-tSk" secondAttribute="leading" constant="339" id="AYv-Ko-m34"/>
                             <constraint firstItem="7C2-Cm-z6I" firstAttribute="trailing" secondItem="5PC-r6-zbZ" secondAttribute="trailing" id="B0E-lc-FdM"/>
                             <constraint firstItem="eou-Ff-ctC" firstAttribute="leading" secondItem="BPD-MY-Dr6" secondAttribute="leading" id="Clc-hp-tNJ"/>
-                            <constraint firstItem="L2c-9w-rt3" firstAttribute="leading" secondItem="GZ0-mg-tSk" secondAttribute="leading" constant="45" id="DWl-Kc-FQ7"/>
                             <constraint firstItem="Dob-ap-Mcy" firstAttribute="trailing" secondItem="ufx-53-6On" secondAttribute="trailing" id="FK2-MZ-Yk1"/>
                             <constraint firstItem="L2c-9w-rt3" firstAttribute="top" secondItem="huk-pb-wRF" secondAttribute="bottom" constant="9" id="Fuw-u3-uTm"/>
                             <constraint firstItem="9fi-mm-gM1" firstAttribute="top" secondItem="ufx-53-6On" secondAttribute="bottom" constant="35.5" id="Id6-ZE-X45"/>
@@ -448,7 +445,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tqf-To-kDq"/>
+        <segue reference="Hee-Ju-5Xa"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="checkers_online" width="457" height="184"/>
