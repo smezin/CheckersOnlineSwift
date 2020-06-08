@@ -12,7 +12,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     let cellReuseIdentifier = "PlayersTableCell"
     let scheme = "http"
     let port = 3000
-    let host = "localhost"
+    let host = "134.122.110.154"
     let defaults = UserDefaults.standard
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
@@ -23,8 +23,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var isInRoom = false
     let nc = NotificationCenter.default
     
-    
-    static let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
+    static let manager = SocketManager(socketURL: URL(string: "http://134.122.110.154:3000")!, config: [.log(false), .compress])
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,7 +1,3 @@
-//
-//  GameModel.swift
-//  CheckersOnlineSwiftV2.1
-
 
 import UIKit
 

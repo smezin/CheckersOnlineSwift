@@ -1,4 +1,4 @@
-
+//represents square with piece 
 import UIKit
 
 class Piece: BoardSquare {

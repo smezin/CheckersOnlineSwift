@@ -1,0 +1,4 @@
+This is a swift client for checkers game, made for 2 remote players.
+The client communicates with a NodeJS server, the one that is in my "basic-game-server" repo.
+Game board designed as a collectionView table.
+Logic (game model) and board rendering is handled on the client side

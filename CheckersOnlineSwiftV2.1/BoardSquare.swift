@@ -1,11 +1,4 @@
-//
-//  BoardSquare.swift
-//  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 30/04/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
-
+//represents empty square on board
 import UIKit
 
 class BoardSquare: NSObject {
