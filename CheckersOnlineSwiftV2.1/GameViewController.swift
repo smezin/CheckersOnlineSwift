@@ -11,6 +11,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     static var board:[BoardSquare] = Array()
     var isMyTurn:Bool = false
     let nc = NotificationCenter.default
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         super.loadView()
@@ -44,8 +45,15 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
-        
+        self.loadSettings()
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
+    }
+    //load settings
+    func loadSettings () {
+        GameViewController.settings.playBottom = defaults.bool(forKey: "playBottom")
+        GameViewController.settings.playWhites = defaults.bool(forKey: "playWhites")
+        GameViewController.settings.showPaths = defaults.bool(forKey: "showPaths")
+        GameViewController.settings.soundOn = defaults.bool(forKey: "soundOn")
     }
     //make sounds
     @objc func makeMoveSound () {

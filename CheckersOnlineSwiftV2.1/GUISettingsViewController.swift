@@ -10,6 +10,7 @@ class GUISettingsViewController: UIViewController {
     @IBOutlet weak var playBottomSwitch: UISwitch!
     @IBOutlet weak var playImageView: UIButton!
     let nc = NotificationCenter.default
+    let defaults = UserDefaults.standard
     var isLoggedin = false
     
     override func viewDidLoad() {
@@ -25,6 +26,18 @@ class GUISettingsViewController: UIViewController {
         UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.2, options: [.repeat, .autoreverse, .allowUserInteraction], animations: {
             self.playImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)*2
         }) { (success:Bool) in
+        }
+        if defaults.object(forKey: "soundOn") != nil {
+            self.soundSwitch.setOn(defaults.bool(forKey: "soundOn"), animated: true)
+        }
+        if defaults.object(forKey: "playWhites") != nil {
+            self.playWhitesSwitch.setOn(defaults.bool(forKey: "playWhites"), animated: true)
+        }
+        if defaults.object(forKey: "showPaths") != nil {
+            self.showPathsSwitch.setOn(defaults.bool(forKey: "showPaths"), animated: true)
+        }
+        if defaults.object(forKey: "playBottom") != nil {
+            self.playBottomSwitch.setOn(defaults.bool(forKey: "playBottom"), animated: true)
         }
     }
     
@@ -43,18 +56,19 @@ class GUISettingsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        
-        let settings = GameSettings()
-        settings.soundOn = soundSwitch.isOn
-        settings.playWhites = playWhitesSwitch.isOn
-        settings.showPaths = showPathsSwitch.isOn
-        settings.playBottom = playBottomSwitch.isOn
-        GameViewController.settings = settings;
-        
+        self.updatePlayerPreferences()
+    }
+    
+    func updatePlayerPreferences () {
+        defaults.set(soundSwitch.isOn as Bool, forKey: "soundOn")
+        defaults.set(playWhitesSwitch.isOn as Bool, forKey: "playWhites")
+        defaults.set(showPathsSwitch.isOn as Bool, forKey: "showPaths")
+        defaults.set(playBottomSwitch.isOn as Bool, forKey: "playBottom")
     }
     
     
     @IBAction func loginPlayButton(_ sender: Any) {
+        self.updatePlayerPreferences()
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if self.isLoggedin {
             let playersView  = storyBoard.instantiateViewController(withIdentifier: "playersID") as! PlayersViewController
