@@ -219,23 +219,27 @@ class GameModel: NSObject, GameData {
     }
     
     private func coronate (piece:Piece?) {
-           if piece == nil {
-               return
-           }
-           let index:Int = GameModel.board.firstIndex(of: piece!)!
-           let queenType:Piece.PieceType = ((piece!.pieceType == .white_pawn) ? .white_queen: .black_queen)
-           
-           if piece?.forwardIs == .up {
-               if index < 8 {
-                   GameModel.board[index] = Piece(isMyPiece: true, pieceType: queenType, forwardIs: .up)
-               }
-           }
-           if piece?.forwardIs == .down {
-               if index > 55 {
-                   GameModel.board[index] = Piece(isMyPiece: true, pieceType: queenType, forwardIs: .up)
-               }
-           }
-       }
+        if piece == nil {
+            return
+        }
+        if piece?.pieceType == .white_queen || piece?.pieceType == .black_queen {
+            return
+        }
+        
+        let index:Int = GameModel.board.firstIndex(of: piece!)!
+        let queenType:Piece.PieceType = ((piece!.pieceType == .white_pawn) ? .white_queen: .black_queen)
+        
+        if piece?.forwardIs == .up {
+            if index < 8 {
+                GameModel.board[index] = Piece(isMyPiece: true, pieceType: queenType, forwardIs: .up)
+            }
+        }
+        if piece?.forwardIs == .down {
+            if index > 55 {
+                GameModel.board[index] = Piece(isMyPiece: true, pieceType: queenType, forwardIs: .up)
+            }
+        }
+    }
     
     private func switchPlayer () {
         for index:Int in 0..<64 {
