@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.text = defaults.string(forKey: "password")
         nameTextField.delegate = self
         passwordTextField.delegate = self
+        
         nc.addObserver(self, selector: #selector(showFailAlert), name: .loginFailure, object: nil)
         nc.addObserver(self, selector: #selector(loginSuccess), name: .loginSuccess, object: nil)
         
