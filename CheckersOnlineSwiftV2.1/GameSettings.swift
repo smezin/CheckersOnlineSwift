@@ -1,12 +1,10 @@
 //
 //  GameSettings.swift
 //  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 25/04/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
+
 
 import UIKit
+import AVFoundation
 
 protocol SettingsData {
     static var settings:GameSettings {get}
@@ -32,6 +30,8 @@ class GameSettings: NSObject {
     var headerHeight:CGFloat
     var footerViewId:String
     var footerHeight:CGFloat
+    var moveSoundID: SystemSoundID
+    var pickSoundID: SystemSoundID
     
     override init ()
     {
@@ -48,6 +48,8 @@ class GameSettings: NSObject {
         self.blackQueenImage = "black_queen"
         self.headerViewId = "HeaderView"
         self.footerViewId = "FooterView"
+        self.moveSoundID = 1016
+        self.pickSoundID = 1010
         let screenSize: CGRect = UIScreen.main.bounds
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)
         self.topMarginConstraint = Int(screenSize.size.height * 0.05)

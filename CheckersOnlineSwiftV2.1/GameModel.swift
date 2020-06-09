@@ -61,6 +61,7 @@ class GameModel: NSObject, GameData {
        
         if index == nil { //no picked piece (square)
             if isMyPiece(index: indexPath.row) {
+                nc.post(name: .makePickSound, object: nil)
                 GameModel.board[indexPath.row].isPicked = true
                 findPathForPieceAt(index: indexPath.row)
             }
@@ -68,6 +69,7 @@ class GameModel: NSObject, GameData {
         else { //piece or square at 'index' picked
             let piece:Piece? = GameModel.board[index!] as? Piece
             if GameModel.board[indexPath.row].isOnPath {
+                nc.post(name: .makeMoveSound, object: nil)
                 didMove = movePiece(from: index!, to: indexPath.row)
                 if piece?.status == .moving {
                     clearPaths()

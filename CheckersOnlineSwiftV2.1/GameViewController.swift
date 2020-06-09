@@ -1,6 +1,7 @@
 
 import UIKit
 import Foundation
+import AVFoundation
 
 class GameViewController: UIViewController, GameData, SettingsData {
     
@@ -17,6 +18,8 @@ class GameViewController: UIViewController, GameData, SettingsData {
         nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
         nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
         nc.addObserver(self, selector: #selector(playerLost), name: .showLostMessage, object: nil)
+        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
+        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
@@ -43,6 +46,17 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.alwaysBounceVertical = true
         
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
+    }
+    //make sounds
+    @objc func makeMoveSound () {
+        if GameViewController.settings.soundOn {
+            AudioServicesPlaySystemSound(GameViewController.settings.moveSoundID)
+        }
+    }
+    @objc func makePickSound () {
+        if GameViewController.settings.soundOn {
+            AudioServicesPlaySystemSound(GameViewController.settings.pickSoundID)
+        }
     }
     //Handle game end scenarios
     @objc func playerWon () {
