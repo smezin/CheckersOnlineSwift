@@ -12,7 +12,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     let cellReuseIdentifier = "PlayersTableCell"
     let scheme = "http"
     let port = 3000
-    let host = "134.122.110.154"
+    let host = "127.0.0.1"
+    //let host = "134.122.110.154"
     let defaults = UserDefaults.standard
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
@@ -23,7 +24,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var isInRoom = false
     let nc = NotificationCenter.default
     
-    static let manager = SocketManager(socketURL: URL(string: "http://134.122.110.154:3000")!, config: [.log(false), .compress])
+    static let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +38,14 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
         nc.addObserver(self, selector: #selector(opponentLost), name: .iWon, object: nil)
         nc.addObserver(self, selector: #selector(opponentWon), name: .iLost, object: nil)
-        
+        nc.addObserver(self, selector: #selector(appExit), name: .appExit, object: nil)
         self.socketConnect()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.getIdlePlayers()
+        self.playersTableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -54,6 +57,9 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         } else {
             self.enterChooseButton.setImage(UIImage(named: "enter_room"), for: .normal)
         }
+    }
+    @objc func appExit () {
+        self.disconnect()
     }
     
     @IBAction func enterRoomButton(_ sender: Any) {
@@ -111,7 +117,9 @@ extension PlayersViewController {
             }
         }
         socket.on("letsPlay") {data, ack in
-            self.gameOfferedBy(opponent: data[0] as! [String : Any])
+            if let otherPlayer = data[0] as? [String : Any] {
+                self.gameOfferedBy(opponent: otherPlayer)
+            }
         }
         socket.on("startingGame") {data, ack in
             PlayersViewController.shared.myOpponent = data[0] as! [String:Any]

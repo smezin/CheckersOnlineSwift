@@ -3,13 +3,17 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    let nc = NotificationCenter.default
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        nc.post(name: .appExit, object: nil)
+    }
+
 
     // MARK: UISceneSession Lifecycle
 
