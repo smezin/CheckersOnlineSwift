@@ -258,8 +258,8 @@ extension PlayersViewController {
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
                 PlayersViewController.shared.me = responseJSON
-                let response = self.stringify(json: responseJSON)
-                if (response.count < 10) {
+                let responseStatus = responseJSON["status"] as? String
+                if (responseStatus == "error") {
                     PlayersViewController.shared.isLoggedIn = false
                     self.nc.post(name: .loginFailure, object: nil)
                 } else {
