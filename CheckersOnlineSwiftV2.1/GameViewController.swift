@@ -15,12 +15,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
     
     override func loadView() {
         super.loadView()
-        nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
-        nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
-        nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
-        nc.addObserver(self, selector: #selector(playerLost), name: .showLostMessage, object: nil)
-        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
-        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
+        self.addObservers()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
@@ -48,7 +43,15 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.loadSettings()
         GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
-    //load settings
+    func addObservers () {
+        nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(makeTurnPassSound), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
+        nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost), name: .showLostMessage, object: nil)
+        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
+        nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
+    }
     func loadSettings () {
         GameViewController.settings.playBottom = defaults.bool(forKey: "playBottom")
         GameViewController.settings.playWhites = defaults.bool(forKey: "playWhites")
@@ -66,6 +69,12 @@ class GameViewController: UIViewController, GameData, SettingsData {
             AudioServicesPlaySystemSound(GameViewController.settings.pickSoundID)
         }
     }
+    @objc func makeTurnPassSound () {
+        if GameViewController.settings.soundOn {
+            AudioServicesPlaySystemSound(GameViewController.settings.BoardReceivedSoundID)
+        }
+    }
+    
     //Handle game end scenarios
     @objc func playerWon () {
         self.showAlertMessage("YOU WON!!!", "Opponent lost or left the game")

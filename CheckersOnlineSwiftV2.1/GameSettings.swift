@@ -32,6 +32,7 @@ class GameSettings: NSObject {
     var footerHeight:CGFloat
     var moveSoundID: SystemSoundID
     var pickSoundID: SystemSoundID
+    var BoardReceivedSoundID: SystemSoundID
     
     override init ()
     {
@@ -50,6 +51,7 @@ class GameSettings: NSObject {
         self.footerViewId = "FooterView"
         self.moveSoundID = 1016
         self.pickSoundID = 1010
+        self.BoardReceivedSoundID = 1016
         let screenSize: CGRect = UIScreen.main.bounds
         self.sideMarginConstraint = Int(screenSize.size.width * 0.03)
         self.topMarginConstraint = Int(screenSize.size.height * 0.05)
