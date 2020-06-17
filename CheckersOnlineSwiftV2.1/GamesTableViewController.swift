@@ -12,8 +12,8 @@ class GamesTableViewController: UITableViewController {
 
     @IBOutlet var GamesTableView: UITableView!
     let cellReuseIdentifier = "GamesTableViewCell"
-    var current:String = ""
-    var activeGames:[String] = []
+    var gameView:GameViewController? = nil
+    var activeGames:[[String:Any]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +21,7 @@ class GamesTableViewController: UITableViewController {
         self.GamesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         GamesTableView.delegate = self
         GamesTableView.dataSource = self
-        print(current)
-        self.activeGames.append(current)
+       
         self.GamesTableView.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -41,14 +40,18 @@ class GamesTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         print("selected \(indexPath.row)")
         tableView.deselectRow(at: indexPath, animated: true)
+        let gameView = Array(activeGames[indexPath.row].values)[0] as! GameViewController
+        self.present(gameView, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        cell.textLabel?.text = self.activeGames[indexPath.row]
-        // Configure the cell...
+    
+        cell.textLabel?.text = Array(activeGames[indexPath.row].keys)[0]
+       
 
         return cell
     }

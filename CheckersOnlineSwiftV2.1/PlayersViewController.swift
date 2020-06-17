@@ -99,9 +99,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.present(gameView, animated: true, completion: nil)
     }
     func goToGamesView (isFirstTurnMine:Bool) {
+        let opponentName:String = self.convertPlayerToDisplayDescription(player: self.myOpponent)
+        let gameView = GameViewController()
+        gameView.isMyTurn = isFirstTurnMine
+        let info = [opponentName:gameView]
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesTableID") as! GamesTableViewController
-        gamesView.activeGames.append(self.convertPlayerToDisplayDescription(player: self.myOpponent))
+        gamesView.activeGames.append(info)
         gamesView.modalPresentationStyle = .fullScreen
         self.present(gamesView, animated: true, completion: nil)
     }
@@ -182,7 +186,7 @@ extension PlayersViewController {
         let socket = PlayersViewController.manager.defaultSocket
         self.myOpponent = opponent
         socket.emit("gameAccepted", opponent)
-        self.goToGameView(isFirstTurnMine: true)
+        self.goToGamesView(isFirstTurnMine: true)
     }
     func declineGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
