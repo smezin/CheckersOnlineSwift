@@ -101,7 +101,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     func goToGamesView (isFirstTurnMine:Bool) {
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesTableID") as! GamesTableViewController
-        gamesView.current = "popo"//self.convertPlayerToDisplayDescription(player: self.myOpponent))
+        gamesView.activeGames.append(self.convertPlayerToDisplayDescription(player: self.myOpponent))
         gamesView.modalPresentationStyle = .fullScreen
         self.present(gamesView, animated: true, completion: nil)
     }
@@ -129,7 +129,7 @@ extension PlayersViewController {
             }
         }
         socket.on("startingGame") {data, ack in
-            PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
+            self.myOpponent = data[0] as! [String:Any]
             self.goToGamesView(isFirstTurnMine: false)
         }
         socket.on("noGame") {data, ack in
@@ -180,7 +180,7 @@ extension PlayersViewController {
     }
     func acceptGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
-        PlayersViewController.shared.myOpponent = opponent
+        self.myOpponent = opponent
         socket.emit("gameAccepted", opponent)
         self.goToGameView(isFirstTurnMine: true)
     }
@@ -195,16 +195,16 @@ extension PlayersViewController {
     }
     func sendBoard (_ board:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("boardData", PlayersViewController.shared.myOpponent, board)
+        socket.emit("boardData", self.myOpponent, board)
         PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
     }
     @objc func opponentLost () {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("iWon", PlayersViewController.shared.myOpponent)
+        socket.emit("iWon", self.myOpponent)
     }
     @objc func opponentWon () {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("iLost", PlayersViewController.shared.myOpponent)
+        socket.emit("iLost", self.myOpponent)
     }
 }
 //Handle communication with DB

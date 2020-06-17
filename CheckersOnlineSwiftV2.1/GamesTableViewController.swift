@@ -19,8 +19,6 @@ class GamesTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.GamesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        let nib = UINib(nibName: "GamesTableViewCell", bundle: nil)
-        self.GamesTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         GamesTableView.delegate = self
         GamesTableView.dataSource = self
         print(current)
@@ -48,7 +46,7 @@ class GamesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = self.activeGames[indexPath.row]
         // Configure the cell...
 
