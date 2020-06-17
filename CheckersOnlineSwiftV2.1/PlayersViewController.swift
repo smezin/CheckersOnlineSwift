@@ -92,11 +92,18 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func goToGameView (isFirstTurnMine:Bool) {
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let gameView  = storyBoard.instantiateViewController(withIdentifier: "GameViewID") as! GameViewController
+
+        let gameView = GameViewController()
         gameView.isMyTurn = isFirstTurnMine
         gameView.modalPresentationStyle = .fullScreen
         self.present(gameView, animated: true, completion: nil)
+    }
+    func goToGamesView (isFirstTurnMine:Bool) {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let gamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesTableID") as! GamesTableViewController
+        gamesView.current = "popo"//self.convertPlayerToDisplayDescription(player: self.myOpponent))
+        gamesView.modalPresentationStyle = .fullScreen
+        self.present(gamesView, animated: true, completion: nil)
     }
 }
 //Handle sockets events listen and emit
@@ -123,7 +130,7 @@ extension PlayersViewController {
         }
         socket.on("startingGame") {data, ack in
             PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
-            self.goToGameView(isFirstTurnMine: false)
+            self.goToGamesView(isFirstTurnMine: false)
         }
         socket.on("noGame") {data, ack in
             let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])

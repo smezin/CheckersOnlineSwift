@@ -19,6 +19,7 @@ class GameViewController: UIViewController, SettingsData, GameData {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
+        self.view.backgroundColor = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1)
         
         //set board size constraints
         NSLayoutConstraint.activate([
