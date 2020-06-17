@@ -1,10 +1,4 @@
-//
-//  ActiveGamesViewController.swift
-//  CheckersOnlineSwiftV2.1
-//
-//  Created by hyperactive on 17/06/2020.
-//  Copyright © 2020 hyperActive. All rights reserved.
-//
+
 
 import UIKit
 
@@ -12,7 +6,6 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var activeGamesTable: UITableView!
     let cellReuseIdentifier = "GamesTableViewCell"
-    var gameView:GameViewController? = nil
     var activeGames:[[String:Any]] = []
     
     override func viewDidLoad() {
@@ -21,13 +14,10 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         self.activeGamesTable.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTable.delegate = self
         activeGamesTable.dataSource = self
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+       
         return self.activeGames.count
     }
     

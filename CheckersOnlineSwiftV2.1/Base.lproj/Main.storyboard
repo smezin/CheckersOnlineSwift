@@ -12,15 +12,15 @@
             <objects>
                 <viewController storyboardIdentifier="playersID" id="tX8-Q2-8xs" customClass="PlayersViewController" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gz8-9g-S51">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y9W-Zr-hpj">
-                                <rect key="frame" x="20" y="127" width="374" height="628"/>
+                                <rect key="frame" x="20" y="83" width="374" height="618"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wr-t8-Gci">
-                                <rect key="frame" x="63" y="73" width="288" height="46"/>
+                                <rect key="frame" x="63" y="29" width="288" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="iGQ-Gd-WZy"/>
                                 </constraints>
@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stj-mh-Y6h">
-                                <rect key="frame" x="87" y="763" width="240" height="34"/>
+                                <rect key="frame" x="87" y="709" width="240" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="BlS-TN-MRf"/>
                                 </constraints>
@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
-                                <rect key="frame" x="151" y="805" width="112" height="32"/>
+                                <rect key="frame" x="151" y="751" width="112" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Mqx-7P-9g9"/>
                                 </constraints>
@@ -192,23 +192,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="GamesTableID" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WZX-wo-pTa">
-                                <rect key="frame" x="20" y="168" width="374" height="694"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgW-q4-APn">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Active Games" id="Gja-cx-SJe">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="kS6-OJ-nrK"/>
+                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="U7N-xg-2Hm">
+                                            <connections>
+                                                <segue destination="tX8-Q2-8xs" kind="presentation" id="O5g-Vf-4qu"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="GamesTableID" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WZX-wo-pTa">
+                                <rect key="frame" x="20" y="88" width="374" height="694"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.32938116789999999" green="0.3294320107" blue="0.3293651044" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="WZX-wo-pTa" firstAttribute="top" secondItem="wgW-q4-APn" secondAttribute="bottom" id="2og-tA-a8Q"/>
+                            <constraint firstItem="Cc7-Jq-Jgg" firstAttribute="bottom" secondItem="WZX-wo-pTa" secondAttribute="bottom" constant="80" id="6Ec-zV-IWL"/>
+                            <constraint firstItem="wgW-q4-APn" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" id="Ixi-uR-mQ2"/>
+                            <constraint firstItem="wgW-q4-APn" firstAttribute="top" secondItem="Cc7-Jq-Jgg" secondAttribute="top" id="q5f-mJ-dlg"/>
+                            <constraint firstItem="WZX-wo-pTa" firstAttribute="leading" secondItem="JAv-AL-W0V" secondAttribute="leadingMargin" id="qsi-VP-hCh"/>
+                            <constraint firstItem="wgW-q4-APn" firstAttribute="centerX" secondItem="WZX-wo-pTa" secondAttribute="centerX" id="sNQ-sb-xt1"/>
+                            <constraint firstItem="WZX-wo-pTa" firstAttribute="trailing" secondItem="JAv-AL-W0V" secondAttribute="trailingMargin" id="xNB-TH-72f"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Cc7-Jq-Jgg"/>
                     </view>
                     <connections>
-                        <outlet property="activeGames" destination="WZX-wo-pTa" id="Jfk-EB-krM"/>
                         <outlet property="activeGamesTable" destination="WZX-wo-pTa" id="EDp-1w-b5d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nUt-4A-zZF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1334.7826086956522" y="813.61607142857144"/>
+            <point key="canvasLocation" x="1494" y="113"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="EBb-o3-F9Z">

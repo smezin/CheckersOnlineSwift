@@ -105,10 +105,10 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.myOpponent = self.myOpponent
         let info = [opponentName:gameView]
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let gamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesViewID") as! ActiveGamesViewController
-        gamesView.activeGames.append(info)
-        gamesView.modalPresentationStyle = .fullScreen
-        self.present(gamesView, animated: true, completion: nil)
+        let allGamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesViewID") as! ActiveGamesViewController
+        allGamesView.activeGames.append(info)
+        allGamesView.modalPresentationStyle = .fullScreen
+        self.present(allGamesView, animated: true, completion: nil)
     }
 }
 //Handle sockets events listen and emit
