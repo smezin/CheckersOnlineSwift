@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		66275374E0BBD6D9BAD34401 /* Pods_CheckersOnlineSwiftV2_1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C571AF5944C27CBA6D660 /* Pods_CheckersOnlineSwiftV2_1.framework */; };
 		E133BF4C247B0E270048EE61 /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133BF4B247B0E270048EE61 /* PlayersViewController.swift */; };
-		E14578C0249A0163000EC591 /* GamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14578BF249A0163000EC591 /* GamesViewController.swift */; };
-		E14578C2249A0242000EC591 /* GamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14578C1249A0242000EC591 /* GamesTableViewController.swift */; };
 		E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14F9BFD245DA9D000684F9A /* FooterView.swift */; };
 		E14F9C00245DA9D000684F9A /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E14F9BFE245DA9D000684F9A /* FooterView.xib */; };
 		E15377692483A3D800C9DB2E /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15377682483A3D800C9DB2E /* Notifications.swift */; };
@@ -29,6 +27,7 @@
 		E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */; };
 		E1C7C672247C3AAC007DEA95 /* PlayersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */; };
 		E1C7C674247CEC01007DEA95 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7C673247CEC01007DEA95 /* SignupViewController.swift */; };
+		E1D05525249A42BC0097BE3F /* ActiveGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D05524249A42BC0097BE3F /* ActiveGamesViewController.swift */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
@@ -40,8 +39,6 @@
 		396C571AF5944C27CBA6D660 /* Pods_CheckersOnlineSwiftV2_1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckersOnlineSwiftV2_1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		766A72A1C35CADEB5D13B6A8 /* Pods-CheckersOnlineSwiftV2.1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckersOnlineSwiftV2.1.debug.xcconfig"; path = "Target Support Files/Pods-CheckersOnlineSwiftV2.1/Pods-CheckersOnlineSwiftV2.1.debug.xcconfig"; sourceTree = "<group>"; };
 		E133BF4B247B0E270048EE61 /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayersViewController.swift; path = /Users/natali/Documents/programs/CheckersOnlineSwiftV2.1/CheckersOnlineSwiftV2.1/PlayersViewController.swift; sourceTree = "<absolute>"; };
-		E14578BF249A0163000EC591 /* GamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewController.swift; sourceTree = "<group>"; };
-		E14578C1249A0242000EC591 /* GamesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesTableViewController.swift; sourceTree = "<group>"; };
 		E14F9BFD245DA9D000684F9A /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		E14F9BFE245DA9D000684F9A /* FooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
 		E15377682483A3D800C9DB2E /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -62,6 +59,7 @@
 		E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersTableViewCell.swift; sourceTree = "<group>"; };
 		E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayersTableViewCell.xib; sourceTree = "<group>"; };
 		E1C7C673247CEC01007DEA95 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		E1D05524249A42BC0097BE3F /* ActiveGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveGamesViewController.swift; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -128,10 +126,9 @@
 				E1884CC42456114600D08EA6 /* Piece.swift */,
 				E1884CBE2454C12800D08EA6 /* Cell.swift */,
 				E1884CC62456190900D08EA6 /* GameModel.swift */,
+				E1D05524249A42BC0097BE3F /* ActiveGamesViewController.swift */,
 				E1884CAB245439C700D08EA6 /* GameViewController.swift */,
 				E133BF4B247B0E270048EE61 /* PlayersViewController.swift */,
-				E14578BF249A0163000EC591 /* GamesViewController.swift */,
-				E14578C1249A0242000EC591 /* GamesTableViewController.swift */,
 				E1C7C673247CEC01007DEA95 /* SignupViewController.swift */,
 				E1E6ADAF247D575C00DDC54E /* LoginViewController.swift */,
 				E1884CAD245439C700D08EA6 /* Main.storyboard */,
@@ -267,12 +264,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D05525249A42BC0097BE3F /* ActiveGamesViewController.swift in Sources */,
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
 				E1884CC52456114600D08EA6 /* Piece.swift in Sources */,
 				E1884CC12454DA5B00D08EA6 /* GUISettingsViewController.swift in Sources */,
 				E1E6ADB0247D575C00DDC54E /* LoginViewController.swift in Sources */,
 				E1884CC32454DB2400D08EA6 /* GameSettings.swift in Sources */,
-				E14578C0249A0163000EC591 /* GamesViewController.swift in Sources */,
 				E1884CBF2454C12800D08EA6 /* Cell.swift in Sources */,
 				E133BF4C247B0E270048EE61 /* PlayersViewController.swift in Sources */,
 				E1884CC72456190900D08EA6 /* GameModel.swift in Sources */,
@@ -280,7 +277,6 @@
 				E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */,
 				E1C7C674247CEC01007DEA95 /* SignupViewController.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
-				E14578C2249A0242000EC591 /* GamesTableViewController.swift in Sources */,
 				E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */,
 				E14F9BFF245DA9D000684F9A /* FooterView.swift in Sources */,
 				E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */,
