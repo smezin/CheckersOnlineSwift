@@ -123,18 +123,15 @@ extension PlayersViewController {
         }
         socket.on("startingGame") {data, ack in
             PlayersViewController.shared.myOpponent = data[0] as! [String:Any]
-            GameModel.isMyTurn = true
-            self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
+            self.goToGameView(isFirstTurnMine: false)
         }
         socket.on("noGame") {data, ack in
             let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
             self.showAlertMessage("\(opponentName) declined the offer", "Choose another player")
         }
         socket.on("gameMove") {data, ack in
-            GameModel.isMyTurn = true
             let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
-            GameModel.board = board
-            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil)
+            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil, userInfo: ["board":board])
         }
         socket.on("enteredRoom") {data, ack in
             self.isInRoom = true
@@ -178,7 +175,7 @@ extension PlayersViewController {
         let socket = PlayersViewController.manager.defaultSocket
         PlayersViewController.shared.myOpponent = opponent
         socket.emit("gameAccepted", opponent)
-        self.goToGameView(isFirstTurnMine: GameModel.isMyTurn)
+        self.goToGameView(isFirstTurnMine: true)
     }
     func declineGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket

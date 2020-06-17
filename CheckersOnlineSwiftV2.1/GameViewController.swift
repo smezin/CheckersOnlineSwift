@@ -3,12 +3,12 @@ import UIKit
 import Foundation
 import AVFoundation
 
-class GameViewController: UIViewController, GameData, SettingsData {
+class GameViewController: UIViewController, SettingsData, GameData {
     
     static var settings: GameSettings = GameSettings()
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
-    static var board:[BoardSquare] = Array()
+    var board:[BoardSquare] = Array()
     var isMyTurn:Bool = false
     let nc = NotificationCenter.default
     let defaults = UserDefaults.standard
@@ -41,10 +41,10 @@ class GameViewController: UIViewController, GameData, SettingsData {
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
         self.loadSettings()
-        GameViewController.board = GameModel().setBoardForNewGame(GameViewController.settings)
+        self.board = GameModel().setBoardForNewGame(GameViewController.settings)
     }
     func addObservers () {
-        nc.addObserver(self, selector: #selector(updateBoard), name: .boardReceived, object: nil)
+        nc.addObserver(self, selector: #selector(updateBoard(_:)), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(makeTurnPassSound), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
         nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
@@ -104,11 +104,11 @@ class GameViewController: UIViewController, GameData, SettingsData {
         else if !GameViewController.settings.playBottom && self.amIatButtom()! {
             self.flipBoard()
         }
-        GameModel.board = GameViewController.board
+   //     GameModel.board = self.board
     }
     
     private func amIWhite () -> Bool? {
-        for square in GameViewController.board {
+        for square in self.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
                 if piece.isMyPiece {
@@ -123,7 +123,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         return nil
     }
     private func amIatButtom () -> Bool? {
-        for square in GameViewController.board {
+        for square in self.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
                 if piece.isMyPiece {
@@ -139,11 +139,11 @@ class GameViewController: UIViewController, GameData, SettingsData {
     }
     
     private func flipBoard () {
-        let tempBoard = GameViewController.board
+        let tempBoard = self.board
         for index:Int in 0 ..< 64 {
-            GameViewController.board[index] = tempBoard[63 - index]
-            if GameViewController.board[index].isKind(of: Piece.self) {
-                let piece = GameViewController.board[index] as! Piece
+            self.board[index] = tempBoard[63 - index]
+            if self.board[index].isKind(of: Piece.self) {
+                let piece = self.board[index] as! Piece
                 if piece.forwardIs == .up {
                     piece.forwardIs = .down
                 }
@@ -154,7 +154,7 @@ class GameViewController: UIViewController, GameData, SettingsData {
         }
     }
     private func flipColors () {
-        for square in GameViewController.board {
+        for square in self.board {
             if square.isKind(of: Piece.self) {
                 let piece = square as! Piece
                 switch piece.pieceType {
@@ -190,7 +190,7 @@ extension GameViewController: UICollectionViewDataSource {
         //animate pick
         if let cellImageView = getCellImageView(indexPath.row, cellFrame) {
             cell.addSubview(cellImageView)
-            if GameModel.board[indexPath.row].isPicked {
+            if self.board[indexPath.row].isPicked {
                 cellImageView.center.y -= CGFloat(GameViewController.settings.bounceHeight)
                 UIImageView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.0, options: .allowUserInteraction, animations: {
                     cellImageView.center.y += CGFloat(GameViewController.settings.bounceHeight)
@@ -227,7 +227,7 @@ extension GameViewController: UICollectionViewDataSource {
     }
     
     func getCellImageView (_ index:Int, _ cellFrame:CGRect) -> UIImageView? {
-        let boardSquare:BoardSquare = GameViewController.board[index]
+        let boardSquare:BoardSquare = self.board[index]
         var image = UIImage()
         var imageView = UIImageView()
         let piece:Piece? = boardSquare as? Piece
@@ -290,13 +290,14 @@ extension GameViewController: UICollectionViewDataSource {
 extension GameViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        GameViewController.board = GameModel().processRequest(board: GameViewController.board, indexPath: indexPath)
-        self.checkersBoardCollectionView.reloadData()
+        if self.isMyTurn {
+            self.board = GameModel().processRequest(board: self.board, indexPath: indexPath)
+            self.checkersBoardCollectionView.reloadData()
+        }
     }
     
-    @objc func updateBoard () {
-        GameViewController.board = GameModel.board
+    @objc func updateBoard (_ notification:NSNotification) {
+        self.board = notification.userInfo?["board"] as! [BoardSquare]
         self.renderBoard()
         DispatchQueue.main.async {
             self.checkersBoardCollectionView.reloadData()
