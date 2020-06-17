@@ -9,6 +9,7 @@ class GameViewController: UIViewController, SettingsData, GameData {
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
     var board:[BoardSquare] = Array()
+    var myOpponent:[String:Any] = [:]//
     var isMyTurn:Bool = false
     let nc = NotificationCenter.default
     let defaults = UserDefaults.standard
@@ -105,7 +106,6 @@ class GameViewController: UIViewController, SettingsData, GameData {
         else if !GameViewController.settings.playBottom && self.amIatButtom()! {
             self.flipBoard()
         }
-   //     GameModel.board = self.board
     }
     
     private func amIWhite () -> Bool? {
@@ -292,7 +292,7 @@ extension GameViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.isMyTurn {
-            self.board = GameModel().processRequest(board: self.board, indexPath: indexPath)
+            self.board = GameModel().processRequest(board: self.board, indexPath: indexPath, self.myOpponent)
             self.checkersBoardCollectionView.reloadData()
         }
     }

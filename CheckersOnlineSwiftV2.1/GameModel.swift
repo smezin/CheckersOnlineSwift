@@ -16,6 +16,7 @@ enum Direction:Int, CaseIterable
 class GameModel: NSObject, GameData {
     
     var board:[BoardSquare] = Array()
+    var myOpponent:[String:Any] = [:]
     let nc = NotificationCenter.default
     
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
@@ -49,9 +50,10 @@ class GameModel: NSObject, GameData {
         return self.board
     }
          
-    func processRequest(board:[BoardSquare], indexPath:IndexPath) -> [BoardSquare] {
+    func processRequest(board:[BoardSquare], indexPath:IndexPath, _ opponent:[String:Any]) -> [BoardSquare] {
 
         self.board = board
+        self.myOpponent = opponent
         var didMove:Bool = false
         var isTurnEnded:Bool = false
         let index:Int? = indexOfPickedPiece()
@@ -245,7 +247,10 @@ class GameModel: NSObject, GameData {
             }
         }
         let jsonBoard = self.jsonizeBoard()
-        PlayersViewController.shared.sendBoard(jsonBoard)
+        self.passTurnToServer(jsonBoard)
+    }
+    private func passTurnToServer (_ board:[String:Any]) {
+        PlayersViewController.shared.sendBoard(board, opponent: self.myOpponent)
     }
     
     

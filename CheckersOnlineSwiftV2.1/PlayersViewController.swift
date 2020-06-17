@@ -102,6 +102,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         let opponentName:String = self.convertPlayerToDisplayDescription(player: self.myOpponent)
         let gameView = GameViewController()
         gameView.isMyTurn = isFirstTurnMine
+        gameView.myOpponent = self.myOpponent
         let info = [opponentName:gameView]
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesTableID") as! GamesTableViewController
@@ -197,9 +198,9 @@ extension PlayersViewController {
         print("disconnected")
         socket.emit("disconnect")
     }
-    func sendBoard (_ board:[String:Any]) {
+    func sendBoard (_ board:[String:Any], opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("boardData", self.myOpponent, board)
+        socket.emit("boardData", opponent, board)
         PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
     }
     @objc func opponentLost () {
