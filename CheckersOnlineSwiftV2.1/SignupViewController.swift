@@ -15,6 +15,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         reEnterPassTextField.delegate = self
     }
    
+    @IBAction func gotoRootView(_ sender: Any) {
+        self.goBackToMainView()
+    }
     @IBAction func createAccount(_ sender: Any) {
         let defaults = UserDefaults.standard
         PlayersViewController.shared.getAllUsers()
@@ -55,6 +58,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
+    }
+    func goBackToMainView () {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

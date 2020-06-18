@@ -21,6 +21,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @IBAction func gotoRootView(_ sender: Any) {
+        self.goBackToMainView()
+    }
     @IBAction func connectButton(_ sender: Any) {
         defaults.set(nameTextField.text, forKey: "userName")
         defaults.set(passwordTextField.text, forKey: "password")

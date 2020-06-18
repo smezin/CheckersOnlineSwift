@@ -75,6 +75,7 @@ class GUISettingsViewController: UIViewController {
             self.present(playersView, animated: true, completion: nil)
         } else {
             let loginView  = storyBoard.instantiateViewController(withIdentifier: "loginID") as! LoginViewController
+            loginView.modalPresentationStyle = .fullScreen
             self.present(loginView, animated: true, completion: nil)
         }
         

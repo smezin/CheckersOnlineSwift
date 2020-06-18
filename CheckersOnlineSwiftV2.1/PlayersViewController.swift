@@ -91,13 +91,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func goToGameView (isFirstTurnMine:Bool) {
-
-        let gameView = GameViewController()
-        gameView.isMyTurn = isFirstTurnMine
-        gameView.modalPresentationStyle = .fullScreen
-        self.present(gameView, animated: true, completion: nil)
-    }
     func goToGamesView (isFirstTurnMine:Bool) {
         let opponentName:String = self.convertPlayerToDisplayDescription(player: self.myOpponent)
         let gameView = GameViewController()
@@ -105,10 +98,19 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.myOpponent = self.myOpponent
         let info = [opponentName:gameView]
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let allGamesView  = storyBoard.instantiateViewController(withIdentifier: "GamesViewID") as! ActiveGamesViewController
-        allGamesView.activeGames.append(info)
-        allGamesView.modalPresentationStyle = .fullScreen
-        self.present(allGamesView, animated: true, completion: nil)
+        let allGamesView = ActiveGamesViewController()
+        allGamesView.performSegue(withIdentifier: "gotoActiveGames", sender: self)
+//        ActiveGamesViewController.shared.activeGames.append(info)
+//        ActiveGamesViewController.shared.modalPresentationStyle = .fullScreen
+//        self.present(ActiveGamesViewController.shared, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "gotoActiveGames" {
+            let destination = segue.destination as! ActiveGamesViewController
+            destination.activeGames.append(["1":"A"])
+          //  destination
+        }
     }
 }
 //Handle sockets events listen and emit
