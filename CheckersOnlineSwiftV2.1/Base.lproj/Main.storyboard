@@ -56,6 +56,13 @@
                                     <action selector="gotoGV:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="c48-Id-Ndv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZR-BD-Ehz">
+                                <rect key="frame" x="335" y="797" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="EKn-PR-WIS" kind="presentation" identifier="gotoActiveGames" modalPresentationStyle="fullScreen" id="DDq-sd-ybC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.33330240849999998" green="0.33335375789999999" blue="0.3332862258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -64,12 +71,14 @@
                             <constraint firstItem="4wr-t8-Gci" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="63" id="Iht-h5-Y3i"/>
                             <constraint firstItem="4wr-t8-Gci" firstAttribute="centerX" secondItem="y9W-Zr-hpj" secondAttribute="centerX" id="JWz-rx-jAX"/>
                             <constraint firstItem="grs-dN-e7Q" firstAttribute="top" secondItem="y9W-Zr-hpj" secondAttribute="bottom" constant="1" id="Jsu-gQ-fpf"/>
+                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="WZR-BD-Ehz" secondAttribute="bottom" constant="35" id="LT7-cu-dA2"/>
                             <constraint firstItem="Stj-mh-Y6h" firstAttribute="top" secondItem="y9W-Zr-hpj" secondAttribute="bottom" constant="8" symbolic="YES" id="SJy-Tr-KEX"/>
                             <constraint firstItem="y9W-Zr-hpj" firstAttribute="top" secondItem="4wr-t8-Gci" secondAttribute="bottom" constant="8" symbolic="YES" id="TIN-BC-SbQ"/>
                             <constraint firstItem="exM-6e-hfi" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="151" id="a54-OS-H27"/>
                             <constraint firstItem="exM-6e-hfi" firstAttribute="top" secondItem="Stj-mh-Y6h" secondAttribute="bottom" constant="8" symbolic="YES" id="cbM-6K-YcO"/>
                             <constraint firstItem="Stj-mh-Y6h" firstAttribute="centerX" secondItem="exM-6e-hfi" secondAttribute="centerX" id="ejm-we-AOE"/>
                             <constraint firstItem="y9W-Zr-hpj" firstAttribute="centerX" secondItem="Stj-mh-Y6h" secondAttribute="centerX" id="gCP-YQ-HKG"/>
+                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="trailing" secondItem="WZR-BD-Ehz" secondAttribute="trailing" constant="33" id="lXg-jQ-oH6"/>
                             <constraint firstItem="Stj-mh-Y6h" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="87" id="lxY-8r-5x7"/>
                             <constraint firstItem="y9W-Zr-hpj" firstAttribute="trailing" secondItem="gz8-9g-S51" secondAttribute="trailingMargin" id="mVe-yi-ZDv"/>
                             <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="exM-6e-hfi" secondAttribute="bottom" constant="25" id="x2X-em-PDr"/>
@@ -208,7 +217,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgW-q4-APn">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgW-q4-APn">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Active Games" id="Gja-cx-SJe">
@@ -220,21 +229,25 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X0f-Rb-9WN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X0f-Rb-9WN">
                                 <rect key="frame" x="87" y="103" width="240" height="451"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.32938116789999999" green="0.3294320107" blue="0.3293651044" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="X0f-Rb-9WN" firstAttribute="top" secondItem="wgW-q4-APn" secondAttribute="bottom" constant="15" id="7CP-Ik-DYn"/>
+                            <constraint firstItem="wgW-q4-APn" firstAttribute="centerX" secondItem="X0f-Rb-9WN" secondAttribute="centerX" id="BMX-7o-H5e"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" id="Ixi-uR-mQ2"/>
+                            <constraint firstItem="Cc7-Jq-Jgg" firstAttribute="bottom" secondItem="X0f-Rb-9WN" secondAttribute="bottom" constant="308" id="gRf-Nn-TVu"/>
+                            <constraint firstItem="X0f-Rb-9WN" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" constant="87" id="p6n-QJ-4i0"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="top" secondItem="Cc7-Jq-Jgg" secondAttribute="top" id="q5f-mJ-dlg"/>
+                            <constraint firstItem="wgW-q4-APn" firstAttribute="centerX" secondItem="JAv-AL-W0V" secondAttribute="centerX" id="ucB-E9-tCi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Cc7-Jq-Jgg"/>
                     </view>
                     <connections>
-                        <outlet property="activeGamesTableView" destination="X0f-Rb-9WN" id="4N6-Iq-vf7"/>
+                        <outlet property="activeGamesTableView" destination="X0f-Rb-9WN" id="qmx-om-14e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nUt-4A-zZF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
