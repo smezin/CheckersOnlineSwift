@@ -117,32 +117,56 @@
 		E1884CA6245439C700D08EA6 /* CheckersOnlineSwiftV2.1 */ = {
 			isa = PBXGroup;
 			children = (
-				E1884CA7245439C700D08EA6 /* AppDelegate.swift */,
+				E1D05528249E52550097BE3F /* delegates */,
+				E1D05527249E51CC0097BE3F /* GameView and Model */,
+				E1D05526249E51470097BE3F /* PlayersRoom */,
 				E15377682483A3D800C9DB2E /* Notifications.swift */,
-				E1884CA9245439C700D08EA6 /* SceneDelegate.swift */,
 				E1884CC02454DA5B00D08EA6 /* GUISettingsViewController.swift */,
-				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
-				E1DC2142245AE4C20099F382 /* BoardSquare.swift */,
-				E1884CC42456114600D08EA6 /* Piece.swift */,
-				E1884CBE2454C12800D08EA6 /* Cell.swift */,
-				E1884CC62456190900D08EA6 /* GameModel.swift */,
 				E1D05524249A42BC0097BE3F /* ActiveGamesViewController.swift */,
-				E1884CAB245439C700D08EA6 /* GameViewController.swift */,
-				E133BF4B247B0E270048EE61 /* PlayersViewController.swift */,
 				E1C7C673247CEC01007DEA95 /* SignupViewController.swift */,
 				E1E6ADAF247D575C00DDC54E /* LoginViewController.swift */,
 				E1884CAD245439C700D08EA6 /* Main.storyboard */,
 				E1884CB0245439E400D08EA6 /* Assets.xcassets */,
 				E1884CB2245439E400D08EA6 /* LaunchScreen.storyboard */,
 				E1884CB5245439E400D08EA6 /* Info.plist */,
+			);
+			path = CheckersOnlineSwiftV2.1;
+			sourceTree = "<group>";
+		};
+		E1D05526249E51470097BE3F /* PlayersRoom */ = {
+			isa = PBXGroup;
+			children = (
+				E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */,
+				E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */,
+				E133BF4B247B0E270048EE61 /* PlayersViewController.swift */,
+			);
+			path = PlayersRoom;
+			sourceTree = "<group>";
+		};
+		E1D05527249E51CC0097BE3F /* GameView and Model */ = {
+			isa = PBXGroup;
+			children = (
+				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
+				E1884CC62456190900D08EA6 /* GameModel.swift */,
+				E1884CAB245439C700D08EA6 /* GameViewController.swift */,
 				E1DC2148245CDA570099F382 /* HeaderView.swift */,
 				E1DC2149245CDA570099F382 /* HeaderView.xib */,
 				E14F9BFD245DA9D000684F9A /* FooterView.swift */,
 				E14F9BFE245DA9D000684F9A /* FooterView.xib */,
-				E1C7C66F247C3AAC007DEA95 /* PlayersTableViewCell.swift */,
-				E1C7C670247C3AAC007DEA95 /* PlayersTableViewCell.xib */,
+				E1DC2142245AE4C20099F382 /* BoardSquare.swift */,
+				E1884CC42456114600D08EA6 /* Piece.swift */,
+				E1884CBE2454C12800D08EA6 /* Cell.swift */,
 			);
-			path = CheckersOnlineSwiftV2.1;
+			path = "GameView and Model";
+			sourceTree = "<group>";
+		};
+		E1D05528249E52550097BE3F /* delegates */ = {
+			isa = PBXGroup;
+			children = (
+				E1884CA7245439C700D08EA6 /* AppDelegate.swift */,
+				E1884CA9245439C700D08EA6 /* SceneDelegate.swift */,
+			);
+			path = delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

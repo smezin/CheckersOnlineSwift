@@ -17,14 +17,7 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         self.activeGamesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTableView.delegate = self
         activeGamesTableView.dataSource = self
-        /*
-         self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-         let nib = UINib(nibName: "PlayersTableViewCell", bundle: nil)
-         self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
-         playersTableView.delegate = self
-         playersTableView.dataSource = self
-         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
-         */
+      
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
