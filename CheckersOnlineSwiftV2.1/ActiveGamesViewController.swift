@@ -5,16 +5,25 @@ import UIKit
 class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     static let shared = ActiveGamesViewController()
-    @IBOutlet weak var activeGamesTable: UITableView!
+    @IBOutlet weak var activeGamesTableView: UITableView!
     let cellReuseIdentifier = "GamesTableViewCell"
     var activeGames:[[String:Any]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("lines: \(activeGames.count)")
-        self.activeGamesTable.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        activeGamesTable.delegate = self
-        activeGamesTable.dataSource = self
+        print(activeGames[0])
+        self.activeGamesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        activeGamesTableView.delegate = self
+        activeGamesTableView.dataSource = self
+        /*
+         self.playersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+         let nib = UINib(nibName: "PlayersTableViewCell", bundle: nil)
+         self.playersTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
+         playersTableView.delegate = self
+         playersTableView.dataSource = self
+         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
+         */
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

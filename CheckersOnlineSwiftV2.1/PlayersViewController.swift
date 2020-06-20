@@ -97,12 +97,23 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.isMyTurn = isFirstTurnMine
         gameView.myOpponent = self.myOpponent
         let info = [opponentName:gameView]
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let allGamesView = ActiveGamesViewController()
-        allGamesView.performSegue(withIdentifier: "gotoActiveGames", sender: self)
-//        ActiveGamesViewController.shared.activeGames.append(info)
-//        ActiveGamesViewController.shared.modalPresentationStyle = .fullScreen
-//        self.present(ActiveGamesViewController.shared, animated: true, completion: nil)
+ //       allGamesView.performSegue(withIdentifier: "gotoActiveGames", sender: self)
+        ActiveGamesViewController.shared.activeGames.append(info)
+        ActiveGamesViewController.shared.modalPresentationStyle = .fullScreen
+        self.present(ActiveGamesViewController.shared, animated: true, completion: nil)
+    }
+    
+    @IBAction func gotoGV(_ sender: Any) {
+        self.goToGamesView1()
+    }
+    func goToGamesView1 () {
+        let info = ["2":"B"]
+        let vc = ActiveGamesViewController()
+        vc.activeGames.append(info)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
