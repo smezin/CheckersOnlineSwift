@@ -230,7 +230,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X0f-Rb-9WN">
-                                <rect key="frame" x="87" y="103" width="240" height="451"/>
+                                <rect key="frame" x="11" y="103" width="392" height="708"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
@@ -239,8 +239,8 @@
                             <constraint firstItem="X0f-Rb-9WN" firstAttribute="top" secondItem="wgW-q4-APn" secondAttribute="bottom" constant="15" id="7CP-Ik-DYn"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="centerX" secondItem="X0f-Rb-9WN" secondAttribute="centerX" id="BMX-7o-H5e"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" id="Ixi-uR-mQ2"/>
-                            <constraint firstItem="Cc7-Jq-Jgg" firstAttribute="bottom" secondItem="X0f-Rb-9WN" secondAttribute="bottom" constant="308" id="gRf-Nn-TVu"/>
-                            <constraint firstItem="X0f-Rb-9WN" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" constant="87" id="p6n-QJ-4i0"/>
+                            <constraint firstItem="Cc7-Jq-Jgg" firstAttribute="bottom" secondItem="X0f-Rb-9WN" secondAttribute="bottom" constant="51" id="gRf-Nn-TVu"/>
+                            <constraint firstItem="X0f-Rb-9WN" firstAttribute="leading" secondItem="Cc7-Jq-Jgg" secondAttribute="leading" constant="11" id="p6n-QJ-4i0"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="top" secondItem="Cc7-Jq-Jgg" secondAttribute="top" id="q5f-mJ-dlg"/>
                             <constraint firstItem="wgW-q4-APn" firstAttribute="centerX" secondItem="JAv-AL-W0V" secondAttribute="centerX" id="ucB-E9-tCi"/>
                         </constraints>

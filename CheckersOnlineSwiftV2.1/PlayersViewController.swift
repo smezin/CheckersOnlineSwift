@@ -34,11 +34,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         playersTableView.delegate = self
         playersTableView.dataSource = self
         playersTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background.jpg"))
-        nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
-        nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
-        nc.addObserver(self, selector: #selector(opponentLost), name: .iWon, object: nil)
-        nc.addObserver(self, selector: #selector(opponentWon), name: .iLost, object: nil)
-        nc.addObserver(self, selector: #selector(appExit), name: .appExit, object: nil)
+        self.addObservers()
         self.socketConnect()
     }
     
@@ -50,6 +46,14 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.disconnect()
+    }
+    
+    private func addObservers () {
+        nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
+        nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
+        nc.addObserver(self, selector: #selector(opponentLost), name: .iWon, object: nil)
+        nc.addObserver(self, selector: #selector(opponentWon), name: .iLost, object: nil)
+        nc.addObserver(self, selector: #selector(appExit), name: .appExit, object: nil)
     }
     @objc func updateEnterChooseButton () {
         if self.isInRoom {

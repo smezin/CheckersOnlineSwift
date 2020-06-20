@@ -7,17 +7,18 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     static let shared = ActiveGamesViewController()
   
     @IBOutlet weak var activeGamesTableView: UITableView!
-    let cellReuseIdentifier = "GamesTableViewCell"
+    let cellReuseIdentifier = "ActiveGamesTableViewCell"
     static var activeGames:[[String:Any]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("lines: \(ActiveGamesViewController.activeGames.count)")
         print(ActiveGamesViewController.activeGames[0])
-        self.activeGamesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        let nib = UINib(nibName: "ActiveGamesTableViewCell", bundle: nil)
+        self.activeGamesTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTableView.delegate = self
         activeGamesTableView.dataSource = self
-      
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -33,9 +34,9 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ActiveGamesTableViewCell
         
-        cell.textLabel?.text = Array(ActiveGamesViewController.activeGames[indexPath.row].keys)[0]
+        cell.gameNameLabel.text = Array(ActiveGamesViewController.activeGames[indexPath.row].keys)[0]
         return cell
     }
     
