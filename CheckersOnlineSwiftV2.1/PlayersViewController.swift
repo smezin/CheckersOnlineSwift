@@ -51,8 +51,8 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     private func addObservers () {
         nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
-        nc.addObserver(self, selector: #selector(opponentLost), name: .iWon, object: nil)
-        nc.addObserver(self, selector: #selector(opponentWon), name: .iLost, object: nil)
+        nc.addObserver(self, selector: #selector(opponentLost(_:)), name: .iWon, object: nil)
+        nc.addObserver(self, selector: #selector(opponentWon(_:)), name: .iLost, object: nil)
         nc.addObserver(self, selector: #selector(appExit), name: .appExit, object: nil)
     }
     @objc func updateEnterChooseButton () {
@@ -155,10 +155,12 @@ extension PlayersViewController {
             self.updateEnterChooseButton()
         }
         socket.on("youLost") {data, ack in
-            PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil)
+            let gameID:String = data[0] as! String
+            PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil, userInfo: ["gameID":gameID])
         }
         socket.on("youWon") {data, ack in
-            PlayersViewController.shared.nc.post(name: .showWinMessage, object: nil)
+            let gameID:String = data[0] as! String
+            PlayersViewController.shared.nc.post(name: .showWinMessage, object: nil, userInfo: ["gameID":gameID])
         }
         socket.connect()
     }
@@ -203,15 +205,17 @@ extension PlayersViewController {
     func sendBoard (_ board:[String:Any], opponent:[String:Any], _ gameID:String) {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("boardData", opponent, board, gameID)
-        PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
+        PlayersViewController.shared.nc.post(name: .boardSent, object: nil, userInfo: ["gameID":gameID])
     }
-    @objc func opponentLost () {
+    @objc func opponentLost (_ notification:NSNotification) {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("iWon", self.myOpponent)
+        let gameID:String = notification.userInfo?["gameID"] as! String
+        socket.emit("iWon", self.myOpponent, gameID)
     }
-    @objc func opponentWon () {
+    @objc func opponentWon (_ notification:NSNotification) {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("iLost", self.myOpponent)
+        let gameID:String = notification.userInfo?["gameID"] as! String
+        socket.emit("iLost", self.myOpponent, gameID)
     }
 }
 //Handle communication with DB

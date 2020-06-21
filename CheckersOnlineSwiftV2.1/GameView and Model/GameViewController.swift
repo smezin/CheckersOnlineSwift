@@ -49,9 +49,9 @@ class GameViewController: UIViewController, SettingsData, GameData {
     func addObservers () {
         nc.addObserver(self, selector: #selector(updateBoard(_:)), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(makeTurnPassSound), name: .boardReceived, object: nil)
-        nc.addObserver(self, selector: #selector(endMyTurn), name: .boardSent, object: nil)
-        nc.addObserver(self, selector: #selector(playerWon), name: .showWinMessage, object: nil)
-        nc.addObserver(self, selector: #selector(playerLost), name: .showLostMessage, object: nil)
+        nc.addObserver(self, selector: #selector(endMyTurn(_:)), name: .boardSent, object: nil)
+        nc.addObserver(self, selector: #selector(playerWon(_:)), name: .showWinMessage, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost(_:)), name: .showLostMessage, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
     }
@@ -79,10 +79,16 @@ class GameViewController: UIViewController, SettingsData, GameData {
     }
     
     //Handle game end scenarios
-    @objc func playerWon () {
+    @objc func playerWon (_ notification:NSNotification) {
+        if self.gameID != notification.userInfo?["gameID"] as! String {
+            return
+        }
         self.showAlertMessage("YOU WON!!!", "Opponent lost or left the game")
     }
-    @objc func playerLost () {
+    @objc func playerLost (_ notification:NSNotification) {
+        if self.gameID != notification.userInfo?["gameID"] as! String {
+            return
+        }
         self.showAlertMessage("YOU LOST", "You'll get better. probably")
     }
     func showAlertMessage (_ title:String, _ message:String) {
@@ -215,6 +221,7 @@ extension GameViewController: UICollectionViewDataSource {
             return header
         } else if kind.isEqual(UICollectionView.elementKindSectionFooter) {
             var footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GameViewController.settings.footerViewId, for: indexPath) as! FooterView
+            footer.gameID = self.gameID
             footer.backgroundColor = self.view.backgroundColor
             DispatchQueue.main.async {
                 footer = self.updateFooter(footer)
@@ -297,7 +304,6 @@ extension GameViewController: UICollectionViewDelegate
     }
     
     @objc func updateBoard (_ notification:NSNotification) {
-        print(notification.userInfo?["gameID"] as! String, "<--->", self.gameID)
         if self.gameID != notification.userInfo?["gameID"] as! String {
             return
         }
@@ -308,6 +314,9 @@ extension GameViewController: UICollectionViewDelegate
         }
         self.startMyTurn()
     }
+    func startMyTurn () {
+        self.isMyTurn = true
+    }
     func updateFooter (_ footer:FooterView, gameOver:Bool = false) -> FooterView {
         if self.isMyTurn {
             footer.turnsImageView.image = UIImage(named: "your_turn")
@@ -317,10 +326,10 @@ extension GameViewController: UICollectionViewDelegate
         return footer
     }
     
-    func startMyTurn () {
-        self.isMyTurn = true
-    }
-    @objc func endMyTurn () {
+    @objc func endMyTurn (_ notification:NSNotification) {
+        if self.gameID != notification.userInfo?["gameID"] as! String {
+            return
+        }
         self.isMyTurn = false
     }
 }
