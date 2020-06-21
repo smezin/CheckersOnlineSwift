@@ -102,7 +102,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.isMyTurn = isFirstTurnMine
         gameView.myOpponent = self.myOpponent
         gameView.gameID = gameID
-        let info = [opponentName:gameView]
+        let info:[String:Any] = ["gameID":gameID, "gameView":gameView, "opponentName":opponentName]
         let vc = ActiveGamesViewController()
         ActiveGamesViewController.activeGames.append(info)
         vc.modalPresentationStyle = .fullScreen

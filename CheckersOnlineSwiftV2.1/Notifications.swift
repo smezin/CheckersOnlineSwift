@@ -13,5 +13,6 @@ extension Notification.Name {
     static let showLostMessage = Notification.Name("showLostMessage")
     static let makePickSound = Notification.Name("makePickSound")
     static let makeMoveSound = Notification.Name("makeMoveSound")
+    static let closeActiveGame = Notification.Name("closeActiveGame")
     static let appExit = Notification.Name("appExit")
 }

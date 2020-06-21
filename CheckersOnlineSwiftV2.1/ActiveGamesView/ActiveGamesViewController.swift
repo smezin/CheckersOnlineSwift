@@ -8,6 +8,7 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
   
     @IBOutlet weak var activeGamesTableView: UITableView!
     let cellReuseIdentifier = "ActiveGamesTableViewCell"
+    let nc = NotificationCenter.default
     static var activeGames:[[String:Any]] = []
     
     override func viewDidLoad() {
@@ -18,9 +19,18 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         self.activeGamesTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTableView.delegate = self
         activeGamesTableView.dataSource = self
-        
+        nc.addObserver(self, selector: #selector(closeActiveGame(_:)), name: .closeActiveGame, object: nil)
     }
-    
+    @objc func closeActiveGame (_ notification:NSNotification) {
+        let gameID = notification.userInfo?["gameID"] as! String
+        for index in 0..<ActiveGamesViewController.activeGames.count {
+            if ActiveGamesViewController.activeGames[index]["gameID"] as! String == gameID {
+                ActiveGamesViewController.activeGames.remove(at: index)
+                self.activeGamesTableView.reloadData()
+                return
+            }
+        }
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ActiveGamesViewController.activeGames.count
     }
@@ -29,14 +39,18 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         
         print("selected \(indexPath.row)")
         tableView.deselectRow(at: indexPath, animated: true)
-        let gameView = Array(ActiveGamesViewController.activeGames[indexPath.row].values)[0] as! GameViewController
+        let gameInfo = ActiveGamesViewController.activeGames[indexPath.row]
+        let gameView = gameInfo["gameView"] as! GameViewController
         self.present(gameView, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ActiveGamesTableViewCell
         
-        cell.gameNameLabel.text = Array(ActiveGamesViewController.activeGames[indexPath.row].keys)[0]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ActiveGamesTableViewCell
+        let gameInfo = ActiveGamesViewController.activeGames[indexPath.row]
+        let opponentName = gameInfo["opponentName"] as! String
+        cell.gameNameLabel.text = opponentName
+        
         return cell
     }
     

@@ -80,22 +80,17 @@ class GameViewController: UIViewController, SettingsData, GameData {
     
     //Handle game end scenarios
     @objc func playerWon (_ notification:NSNotification) {
-        if self.gameID != notification.userInfo?["gameID"] as! String {
-            return
-        }
+        nc.post(name: .closeActiveGame, object: nil, userInfo: ["gameID":gameID])
         self.showAlertMessage("YOU WON!!!", "Opponent lost or left the game")
     }
     @objc func playerLost (_ notification:NSNotification) {
-        if self.gameID != notification.userInfo?["gameID"] as! String {
-            return
-        }
+        nc.post(name: .closeActiveGame, object: nil, userInfo: ["gameID":gameID])
         self.showAlertMessage("YOU LOST", "You'll get better. probably")
     }
     func showAlertMessage (_ title:String, _ message:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in self.dismiss(animated: true, completion: nil)}))
         self.present(alert, animated: true)
-        
     }
     
     //Handle rendering board according to settings
