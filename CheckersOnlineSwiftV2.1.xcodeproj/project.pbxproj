@@ -150,9 +150,9 @@
 		E1D05527249E51CC0097BE3F /* GameView and Model */ = {
 			isa = PBXGroup;
 			children = (
-				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
-				E1884CC62456190900D08EA6 /* GameModel.swift */,
 				E1884CAB245439C700D08EA6 /* GameViewController.swift */,
+				E1884CC62456190900D08EA6 /* GameModel.swift */,
+				E1884CC22454DB2400D08EA6 /* GameSettings.swift */,
 				E1DC2148245CDA570099F382 /* HeaderView.swift */,
 				E1DC2149245CDA570099F382 /* HeaderView.xib */,
 				E14F9BFD245DA9D000684F9A /* FooterView.swift */,

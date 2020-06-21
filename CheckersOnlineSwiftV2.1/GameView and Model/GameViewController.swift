@@ -9,8 +9,9 @@ class GameViewController: UIViewController, SettingsData, GameData {
     let imageViewsTag = 1000
     var checkersBoardCollectionView: UICollectionView!
     var board:[BoardSquare] = Array()
-    var myOpponent:[String:Any] = [:]//
+    var myOpponent:[String:Any] = [:]
     var isMyTurn:Bool = false
+    var gameID:String = ""
     let nc = NotificationCenter.default
     let defaults = UserDefaults.standard
     
@@ -43,7 +44,7 @@ class GameViewController: UIViewController, SettingsData, GameData {
         self.checkersBoardCollectionView.backgroundColor = self.view.backgroundColor
         self.checkersBoardCollectionView.alwaysBounceVertical = true
         self.loadSettings()
-        self.board = GameModel().setBoardForNewGame(GameViewController.settings)
+        self.board = GameModel(self.gameID).setBoardForNewGame(GameViewController.settings)
     }
     func addObservers () {
         nc.addObserver(self, selector: #selector(updateBoard(_:)), name: .boardReceived, object: nil)
@@ -138,7 +139,6 @@ class GameViewController: UIViewController, SettingsData, GameData {
         }
         return nil
     }
-    
     private func flipBoard () {
         let tempBoard = self.board
         for index:Int in 0 ..< 64 {
@@ -174,7 +174,6 @@ class GameViewController: UIViewController, SettingsData, GameData {
         }
     }
 }
-
 //Handling data source
 extension GameViewController: UICollectionViewDataSource {
     
@@ -292,12 +291,16 @@ extension GameViewController: UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.isMyTurn {
-            self.board = GameModel().processRequest(board: self.board, indexPath: indexPath, self.myOpponent)
+            self.board = GameModel(self.gameID).processRequest(board: self.board, indexPath: indexPath, self.myOpponent)
             self.checkersBoardCollectionView.reloadData()
         }
     }
     
     @objc func updateBoard (_ notification:NSNotification) {
+        print(notification.userInfo?["gameID"] as! String, "<--->", self.gameID)
+        if self.gameID != notification.userInfo?["gameID"] as! String {
+            return
+        }
         self.board = notification.userInfo?["board"] as! [BoardSquare]
         self.renderBoard()
         DispatchQueue.main.async {

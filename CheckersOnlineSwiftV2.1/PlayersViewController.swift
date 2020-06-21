@@ -96,11 +96,12 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     
 
-    func goToGamesView (isFirstTurnMine:Bool) {
+    func goToGamesView (isFirstTurnMine:Bool, _ gameID:String) {
         let opponentName:String = self.convertPlayerToDisplayDescription(player: self.myOpponent)
         let gameView = GameViewController()
         gameView.isMyTurn = isFirstTurnMine
         gameView.myOpponent = self.myOpponent
+        gameView.gameID = gameID
         let info = [opponentName:gameView]
         let vc = ActiveGamesViewController()
         ActiveGamesViewController.activeGames.append(info)
@@ -133,7 +134,8 @@ extension PlayersViewController {
         }
         socket.on("startingGame") {data, ack in
             self.myOpponent = data[0] as! [String:Any]
-            self.goToGamesView(isFirstTurnMine: false)
+            let gameID = data[1] as! String
+            self.goToGamesView(isFirstTurnMine: false, gameID)
         }
         socket.on("noGame") {data, ack in
             let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
@@ -141,7 +143,8 @@ extension PlayersViewController {
         }
         socket.on("gameMove") {data, ack in
             let board:[BoardSquare] = self.boardifyJson(jsonBoard: data[0] as! [String:Any])
-            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil, userInfo: ["board":board])
+            let gameID:String = data[1] as! String
+            PlayersViewController.shared.nc.post(name: .boardReceived, object: nil, userInfo: ["board":board, "gameID":gameID])
         }
         socket.on("enteredRoom") {data, ack in
             self.isInRoom = true
@@ -184,8 +187,9 @@ extension PlayersViewController {
     func acceptGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
         self.myOpponent = opponent
-        socket.emit("gameAccepted", opponent)
-        self.goToGamesView(isFirstTurnMine: true)
+        let gameID = UUID()
+        socket.emit("gameAccepted", opponent, gameID.uuidString)
+        self.goToGamesView(isFirstTurnMine: true, gameID.uuidString)
     }
     func declineGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
@@ -196,9 +200,9 @@ extension PlayersViewController {
         print("disconnected")
         socket.emit("disconnect")
     }
-    func sendBoard (_ board:[String:Any], opponent:[String:Any]) {
+    func sendBoard (_ board:[String:Any], opponent:[String:Any], _ gameID:String) {
         let socket = PlayersViewController.manager.defaultSocket
-        socket.emit("boardData", opponent, board)
+        socket.emit("boardData", opponent, board, gameID)
         PlayersViewController.shared.nc.post(name: .boardSent, object: nil)
     }
     @objc func opponentLost () {

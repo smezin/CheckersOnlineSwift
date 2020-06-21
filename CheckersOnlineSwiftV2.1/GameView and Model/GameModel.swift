@@ -17,7 +17,12 @@ class GameModel: NSObject, GameData {
     
     var board:[BoardSquare] = Array()
     var myOpponent:[String:Any] = [:]
+    var gameID:String
     let nc = NotificationCenter.default
+    
+    init (_ gameID:String) {
+        self.gameID = gameID
+    }
     
     func setBoardForNewGame(_ settings:GameSettings) -> [BoardSquare] {
         var topPiecesColor:Piece.PieceType?
@@ -250,7 +255,7 @@ class GameModel: NSObject, GameData {
         self.passTurnToServer(jsonBoard)
     }
     private func passTurnToServer (_ board:[String:Any]) {
-        PlayersViewController.shared.sendBoard(board, opponent: self.myOpponent)
+        PlayersViewController.shared.sendBoard(board, opponent: self.myOpponent, gameID)
     }
     
     
