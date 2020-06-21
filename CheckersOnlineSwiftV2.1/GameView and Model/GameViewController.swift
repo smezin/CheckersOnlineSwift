@@ -50,8 +50,8 @@ class GameViewController: UIViewController, SettingsData, GameData {
         nc.addObserver(self, selector: #selector(updateBoard(_:)), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(makeTurnPassSound), name: .boardReceived, object: nil)
         nc.addObserver(self, selector: #selector(endMyTurn(_:)), name: .boardSent, object: nil)
-        nc.addObserver(self, selector: #selector(playerWon(_:)), name: .showWinMessage, object: nil)
-        nc.addObserver(self, selector: #selector(playerLost(_:)), name: .showLostMessage, object: nil)
+        nc.addObserver(self, selector: #selector(playerWon(_:)), name: .playerWon, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost(_:)), name: .playerLost, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
     }

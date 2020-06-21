@@ -97,7 +97,7 @@ class GameModel: NSObject, GameData {
             coronate(piece: self.board[pieceLocation] as? Piece)
             if didIwin() {
                 self.nc.post(name: .iWon, object: nil, userInfo: ["gameID":self.gameID])
-                self.nc.post(name: .showWinMessage, object: nil, userInfo: ["gameID":self.gameID])
+                self.nc.post(name: .playerWon, object: nil, userInfo: ["gameID":self.gameID])
             } else {
                 switchPlayer()
             }

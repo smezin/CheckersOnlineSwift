@@ -156,11 +156,11 @@ extension PlayersViewController {
         }
         socket.on("youLost") {data, ack in
             let gameID:String = data[0] as! String
-            PlayersViewController.shared.nc.post(name: .showLostMessage, object: nil, userInfo: ["gameID":gameID])
+            PlayersViewController.shared.nc.post(name: .playerLost, object: nil, userInfo: ["gameID":gameID])
         }
         socket.on("youWon") {data, ack in
             let gameID:String = data[0] as! String
-            PlayersViewController.shared.nc.post(name: .showWinMessage, object: nil, userInfo: ["gameID":gameID])
+            PlayersViewController.shared.nc.post(name: .playerWon, object: nil, userInfo: ["gameID":gameID])
         }
         socket.connect()
     }
