@@ -17,6 +17,7 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         self.activeGamesTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTableView.delegate = self
         activeGamesTableView.dataSource = self
+        activeGamesTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background_active.jpg"))
         nc.addObserver(self, selector: #selector(closeActiveGame(_:)), name: .closeActiveGame, object: nil)
     }
     @objc func closeActiveGame (_ notification:NSNotification) {

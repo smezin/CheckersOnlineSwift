@@ -15,6 +15,9 @@ class GUISettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addObservers()
+    }
+    func addObservers () {
         nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .loginFailure, object: nil)
         nc.addObserver(self, selector: #selector(changeToLoginButton), name: .logout, object: nil)
