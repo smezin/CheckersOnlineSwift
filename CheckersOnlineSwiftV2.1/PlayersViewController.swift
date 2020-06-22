@@ -103,9 +103,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.myOpponent = self.myOpponent
         gameView.gameID = gameID
         let info:[String:Any] = ["gameID":gameID, "gameView":gameView, "opponentName":opponentName]
-        let vc = ActiveGamesViewController()
         ActiveGamesViewController.activeGames.append(info)
-        vc.modalPresentationStyle = .fullScreen
         performSegue(withIdentifier: "gotoActiveGames", sender: nil)
     }
     

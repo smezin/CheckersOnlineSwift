@@ -21,7 +21,7 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     }
     @objc func closeActiveGame (_ notification:NSNotification) {
         let gameID = notification.userInfo?["gameID"] as! String
-        for index in 0..<ActiveGamesViewController.activeGames.count {
+        for index in 0 ..< ActiveGamesViewController.activeGames.count {
             if ActiveGamesViewController.activeGames[index]["gameID"] as! String == gameID {
                 ActiveGamesViewController.activeGames.remove(at: index)
                 self.activeGamesTableView.reloadData()
@@ -34,8 +34,6 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        print("selected \(indexPath.row)")
         tableView.deselectRow(at: indexPath, animated: true)
         let gameInfo = ActiveGamesViewController.activeGames[indexPath.row]
         let gameView = gameInfo["gameView"] as! GameViewController
