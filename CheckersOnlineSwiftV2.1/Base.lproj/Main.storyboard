@@ -22,7 +22,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wr-t8-Gci">
                                 <rect key="frame" x="63" y="73" width="288" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="iGQ-Gd-WZy"/>
+                                    <constraint firstAttribute="height" constant="46" id="5JK-TH-bFz"/>
                                 </constraints>
                                 <state key="normal" image="enter_room"/>
                                 <connections>
@@ -30,58 +30,52 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stj-mh-Y6h">
-                                <rect key="frame" x="87" y="763" width="240" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="BlS-TN-MRf"/>
-                                </constraints>
+                                <rect key="frame" x="20" y="817" width="192" height="34"/>
                                 <state key="normal" image="leave_room"/>
                                 <connections>
                                     <action selector="leaveRoomButton:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="l0x-pL-uJ4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
-                                <rect key="frame" x="151" y="805" width="112" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZR-BD-Ehz">
+                                <rect key="frame" x="20" y="763" width="374" height="53"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="Mqx-7P-9g9"/>
+                                    <constraint firstAttribute="height" constant="53" id="nWc-1E-8WI"/>
+                                </constraints>
+                                <state key="normal" image="active_games"/>
+                                <connections>
+                                    <segue destination="EKn-PR-WIS" kind="presentation" identifier="gotoActiveGames" modalPresentationStyle="fullScreen" id="DDq-sd-ybC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exM-6e-hfi">
+                                <rect key="frame" x="282" y="817" width="112" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="H4c-U6-EUY"/>
+                                    <constraint firstAttribute="width" constant="112" id="MjB-nI-XVK"/>
                                 </constraints>
                                 <state key="normal" image="logout"/>
                                 <connections>
                                     <action selector="logoutButton:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="XKr-bq-Ve8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grs-dN-e7Q">
-                                <rect key="frame" x="335" y="756" width="77" height="30"/>
-                                <state key="normal" title="goto active"/>
-                                <connections>
-                                    <action selector="gotoGV:" destination="tX8-Q2-8xs" eventType="touchUpInside" id="c48-Id-Ndv"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZR-BD-Ehz">
-                                <rect key="frame" x="335" y="797" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="EKn-PR-WIS" kind="presentation" identifier="gotoActiveGames" modalPresentationStyle="fullScreen" id="DDq-sd-ybC"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.33330240849999998" green="0.33335375789999999" blue="0.3332862258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="4wr-t8-Gci" firstAttribute="top" secondItem="0Ku-eI-KFP" secondAttribute="top" constant="29" id="6gX-1J-aKH"/>
-                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="leading" secondItem="gz8-9g-S51" secondAttribute="leadingMargin" id="IZZ-F0-28N"/>
-                            <constraint firstItem="4wr-t8-Gci" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="63" id="Iht-h5-Y3i"/>
-                            <constraint firstItem="4wr-t8-Gci" firstAttribute="centerX" secondItem="y9W-Zr-hpj" secondAttribute="centerX" id="JWz-rx-jAX"/>
-                            <constraint firstItem="grs-dN-e7Q" firstAttribute="top" secondItem="y9W-Zr-hpj" secondAttribute="bottom" constant="1" id="Jsu-gQ-fpf"/>
-                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="WZR-BD-Ehz" secondAttribute="bottom" constant="35" id="LT7-cu-dA2"/>
-                            <constraint firstItem="Stj-mh-Y6h" firstAttribute="top" secondItem="y9W-Zr-hpj" secondAttribute="bottom" constant="8" symbolic="YES" id="SJy-Tr-KEX"/>
-                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="top" secondItem="4wr-t8-Gci" secondAttribute="bottom" constant="8" symbolic="YES" id="TIN-BC-SbQ"/>
-                            <constraint firstItem="exM-6e-hfi" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="151" id="a54-OS-H27"/>
-                            <constraint firstItem="exM-6e-hfi" firstAttribute="top" secondItem="Stj-mh-Y6h" secondAttribute="bottom" constant="8" symbolic="YES" id="cbM-6K-YcO"/>
-                            <constraint firstItem="Stj-mh-Y6h" firstAttribute="centerX" secondItem="exM-6e-hfi" secondAttribute="centerX" id="ejm-we-AOE"/>
-                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="centerX" secondItem="Stj-mh-Y6h" secondAttribute="centerX" id="gCP-YQ-HKG"/>
-                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="trailing" secondItem="WZR-BD-Ehz" secondAttribute="trailing" constant="33" id="lXg-jQ-oH6"/>
-                            <constraint firstItem="Stj-mh-Y6h" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="87" id="lxY-8r-5x7"/>
-                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="trailing" secondItem="gz8-9g-S51" secondAttribute="trailingMargin" id="mVe-yi-ZDv"/>
-                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="exM-6e-hfi" secondAttribute="bottom" constant="25" id="x2X-em-PDr"/>
+                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="Stj-mh-Y6h" secondAttribute="bottom" constant="11" id="2LA-RU-EV9"/>
+                            <constraint firstItem="WZR-BD-Ehz" firstAttribute="trailing" secondItem="exM-6e-hfi" secondAttribute="trailing" id="2YS-8q-Sx7"/>
+                            <constraint firstItem="4wr-t8-Gci" firstAttribute="leading" secondItem="0Ku-eI-KFP" secondAttribute="leading" constant="63" id="3HT-Db-i5H"/>
+                            <constraint firstItem="4wr-t8-Gci" firstAttribute="centerX" secondItem="y9W-Zr-hpj" secondAttribute="centerX" id="6cS-Us-0bv"/>
+                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="leading" secondItem="WZR-BD-Ehz" secondAttribute="leading" id="Po5-uP-tS9"/>
+                            <constraint firstItem="WZR-BD-Ehz" firstAttribute="leading" secondItem="Stj-mh-Y6h" secondAttribute="leading" id="RJK-AB-58I"/>
+                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="leading" secondItem="gz8-9g-S51" secondAttribute="leadingMargin" id="W44-La-TCW"/>
+                            <constraint firstItem="exM-6e-hfi" firstAttribute="leading" secondItem="Stj-mh-Y6h" secondAttribute="trailing" constant="70" id="WfB-Ma-nWS"/>
+                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="top" secondItem="4wr-t8-Gci" secondAttribute="bottom" constant="8" symbolic="YES" id="XYq-YY-por"/>
+                            <constraint firstItem="WZR-BD-Ehz" firstAttribute="top" secondItem="y9W-Zr-hpj" secondAttribute="bottom" constant="8" symbolic="YES" id="Y6Q-PT-uHy"/>
+                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="trailing" secondItem="gz8-9g-S51" secondAttribute="trailingMargin" id="alu-9h-99j"/>
+                            <constraint firstItem="Stj-mh-Y6h" firstAttribute="top" secondItem="exM-6e-hfi" secondAttribute="top" id="arc-p4-AaR"/>
+                            <constraint firstItem="0Ku-eI-KFP" firstAttribute="bottom" secondItem="exM-6e-hfi" secondAttribute="bottom" constant="13" id="ea4-BE-MG5"/>
+                            <constraint firstItem="Stj-mh-Y6h" firstAttribute="top" secondItem="WZR-BD-Ehz" secondAttribute="bottom" constant="1" id="fun-s9-K3q"/>
+                            <constraint firstItem="y9W-Zr-hpj" firstAttribute="trailing" secondItem="WZR-BD-Ehz" secondAttribute="trailing" id="iK7-dn-nvC"/>
+                            <constraint firstItem="4wr-t8-Gci" firstAttribute="top" secondItem="0Ku-eI-KFP" secondAttribute="top" constant="29" id="yXr-zo-Q0h"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0Ku-eI-KFP"/>
                     </view>
@@ -478,6 +472,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="active_games" width="631" height="101"/>
         <image name="checkers_online" width="457" height="184"/>
         <image name="connect" width="382" height="101"/>
         <image name="create_account" width="388" height="184"/>

@@ -52,6 +52,7 @@ class GameViewController: UIViewController, SettingsData, GameData {
         nc.addObserver(self, selector: #selector(endMyTurn(_:)), name: .boardSent, object: nil)
         nc.addObserver(self, selector: #selector(playerWon(_:)), name: .playerWon, object: nil)
         nc.addObserver(self, selector: #selector(playerLost(_:)), name: .playerLost, object: nil)
+        nc.addObserver(self, selector: #selector(playerLost(_:)), name: .playerResigned, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makeMoveSound, object: nil)
         nc.addObserver(self, selector: #selector(makeMoveSound), name: .makePickSound, object: nil)
     }
@@ -80,10 +81,18 @@ class GameViewController: UIViewController, SettingsData, GameData {
     
     //Handle game end scenarios
     @objc func playerWon (_ notification:NSNotification) {
+        let gameID = notification.userInfo?["gameID"] as! String
+        if self.gameID != gameID {
+            return
+        }
         nc.post(name: .closeActiveGame, object: nil, userInfo: ["gameID":gameID])
         self.showAlertMessage("YOU WON!!!", "Opponent lost or left the game")
     }
     @objc func playerLost (_ notification:NSNotification) {
+        let gameID = notification.userInfo?["gameID"] as! String
+        if self.gameID != gameID {
+            return
+        }
         nc.post(name: .closeActiveGame, object: nil, userInfo: ["gameID":gameID])
         self.showAlertMessage("YOU LOST", "You'll get better. probably")
     }
@@ -299,7 +308,8 @@ extension GameViewController: UICollectionViewDelegate
     }
     
     @objc func updateBoard (_ notification:NSNotification) {
-        if self.gameID != notification.userInfo?["gameID"] as! String {
+        let gameID = notification.userInfo?["gameID"] as! String
+        if self.gameID != gameID {
             return
         }
         self.board = notification.userInfo?["board"] as! [BoardSquare]
@@ -322,7 +332,8 @@ extension GameViewController: UICollectionViewDelegate
     }
     
     @objc func endMyTurn (_ notification:NSNotification) {
-        if self.gameID != notification.userInfo?["gameID"] as! String {
+        let gameID = notification.userInfo?["gameID"] as! String
+        if self.gameID != gameID {
             return
         }
         self.isMyTurn = false

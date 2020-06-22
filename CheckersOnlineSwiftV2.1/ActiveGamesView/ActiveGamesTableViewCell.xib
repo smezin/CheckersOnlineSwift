@@ -12,36 +12,31 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActiveGamesTableViewCell" id="KGk-i7-Jjw" customClass="ActiveGamesTableViewCell" customModule="CheckersOnlineSwiftV2_1" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="active_game_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Zed-M8-d6s">
-                        <rect key="frame" x="0.0" y="0.0" width="51" height="40"/>
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="51" id="39q-9s-ADO"/>
-                            <constraint firstAttribute="height" constant="40" id="S1I-qD-3Rs"/>
+                            <constraint firstAttribute="width" constant="50" id="aey-Gk-APf"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iC-LA-xTX">
-                        <rect key="frame" x="59" y="0.0" width="261" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="V9m-ax-r8A"/>
-                        </constraints>
+                        <rect key="frame" x="58" y="0.0" width="262" height="44"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="Zed-M8-d6s" secondAttribute="bottom" id="0dj-wv-rtb"/>
-                    <constraint firstItem="Zed-M8-d6s" firstAttribute="top" secondItem="4iC-LA-xTX" secondAttribute="top" id="1uM-91-tW0"/>
-                    <constraint firstItem="Zed-M8-d6s" firstAttribute="bottom" secondItem="4iC-LA-xTX" secondAttribute="bottom" id="7iI-z9-sGe"/>
-                    <constraint firstAttribute="bottom" secondItem="4iC-LA-xTX" secondAttribute="bottom" constant="4" id="BgF-Ha-Wcl"/>
-                    <constraint firstItem="Zed-M8-d6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PlW-1h-Esm"/>
-                    <constraint firstAttribute="trailing" secondItem="4iC-LA-xTX" secondAttribute="trailing" id="U6o-4S-xf1"/>
-                    <constraint firstItem="4iC-LA-xTX" firstAttribute="leading" secondItem="Zed-M8-d6s" secondAttribute="trailing" constant="8" id="c5R-BG-e3I"/>
-                    <constraint firstItem="Zed-M8-d6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="uWf-zP-0wb"/>
+                    <constraint firstItem="4iC-LA-xTX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3ft-ni-qPW"/>
+                    <constraint firstItem="Zed-M8-d6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="93T-bf-3ug"/>
+                    <constraint firstAttribute="trailing" secondItem="4iC-LA-xTX" secondAttribute="trailing" id="AuB-0x-VuW"/>
+                    <constraint firstAttribute="bottom" secondItem="Zed-M8-d6s" secondAttribute="bottom" id="fWL-C4-lkZ"/>
+                    <constraint firstAttribute="bottom" secondItem="4iC-LA-xTX" secondAttribute="bottom" id="kAJ-nv-7iI"/>
+                    <constraint firstItem="Zed-M8-d6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vzF-aN-ert"/>
+                    <constraint firstItem="4iC-LA-xTX" firstAttribute="leading" secondItem="Zed-M8-d6s" secondAttribute="trailing" constant="8" id="yEt-k1-unv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -52,6 +47,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="active_game_icon" width="1513" height="999"/>
+        <image name="active_game_icon" width="40" height="40"/>
     </resources>
 </document>

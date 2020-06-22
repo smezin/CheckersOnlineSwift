@@ -13,8 +13,6 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("lines: \(ActiveGamesViewController.activeGames.count)")
-        print(ActiveGamesViewController.activeGames[0])
         let nib = UINib(nibName: "ActiveGamesTableViewCell", bundle: nil)
         self.activeGamesTableView.register(nib, forCellReuseIdentifier: cellReuseIdentifier)
         activeGamesTableView.delegate = self

@@ -8,7 +8,7 @@ extension Notification.Name {
     static let boardSent = Notification.Name("boardSent")
     static let boardReceived = Notification.Name("boardReceived")
     static let iWon = Notification.Name("iWon")
-    static let iLost = Notification.Name("iLost")
+    static let playerResigned = Notification.Name("playerResigned")
     static let playerWon = Notification.Name("playerWon")
     static let playerLost = Notification.Name("playerLost")
     static let makePickSound = Notification.Name("makePickSound")

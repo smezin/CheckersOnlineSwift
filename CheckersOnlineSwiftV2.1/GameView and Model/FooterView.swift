@@ -12,7 +12,7 @@ class FooterView: UICollectionReusableView {
     }
     
     @IBAction func resignGameButton(_ sender: Any) {
-        self.nc.post(name: .iLost, object: nil, userInfo: ["gameID":self.gameID])
-        self.nc.post(name: .playerLost, object: nil, userInfo: ["gameID":self.gameID])
+        self.nc.post(name: .playerResigned, object: nil, userInfo: ["gameID":self.gameID])
+ //       self.nc.post(name: .playerLost, object: nil, userInfo: ["gameID":self.gameID])
     }
 }

@@ -45,14 +45,14 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.disconnect()
+        self.exitRoom()
     }
     
     private func addObservers () {
         nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
         nc.addObserver(self, selector: #selector(opponentLost(_:)), name: .iWon, object: nil)
-        nc.addObserver(self, selector: #selector(opponentWon(_:)), name: .iLost, object: nil)
+        nc.addObserver(self, selector: #selector(opponentWon(_:)), name: .playerResigned, object: nil)
         nc.addObserver(self, selector: #selector(appExit), name: .appExit, object: nil)
     }
     @objc func updateEnterChooseButton () {
@@ -63,7 +63,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         }
     }
     @objc func appExit () {
-        self.disconnect()
+        self.exitRoom()
     }
     
     @IBAction func enterRoomButton(_ sender: Any) {
@@ -75,7 +75,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func leaveRoomButton(_ sender: Any) {
-        self.disconnect()
+        self.exitRoom()
         self.updateEnterChooseButton()
     }
     
@@ -197,10 +197,10 @@ extension PlayersViewController {
         let socket = PlayersViewController.manager.defaultSocket
         socket.emit("gameDeclined", opponent)
     }
-    func disconnect () {
+    func exitRoom () {
         let socket = PlayersViewController.manager.defaultSocket
-        print("disconnected")
-        socket.emit("disconnect")
+        print("exitRoom")
+        socket.emit("exitRoom")
     }
     func sendBoard (_ board:[String:Any], opponent:[String:Any], _ gameID:String) {
         let socket = PlayersViewController.manager.defaultSocket
@@ -288,7 +288,7 @@ extension PlayersViewController {
     }
     
     func logout () {
-        self.disconnect()
+        self.exitRoom()
         PlayersViewController.shared.isLoggedIn = false
         let url = self.setURLWithPath(path: "/users/logout")
         var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
