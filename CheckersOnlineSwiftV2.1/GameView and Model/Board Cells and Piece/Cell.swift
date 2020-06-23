@@ -22,7 +22,7 @@ class Cell: UICollectionViewCell {
         let subviewTag = GameSettings().appSubviewsTag
         let subViews = self.subviews
         for subview in subViews {
-            if subview.tag == 1000 {
+            if subview.tag == subviewTag {
                 subview.removeFromSuperview()
             }
         }

@@ -20,7 +20,6 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         activeGamesTableView.dataSource = self
         activeGamesTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background_active.jpg"))
         nc.addObserver(self, selector: #selector(closeActiveGame(_:)), name: .closeActiveGame, object: nil)
-        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

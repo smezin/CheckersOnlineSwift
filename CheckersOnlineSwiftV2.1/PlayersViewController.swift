@@ -3,7 +3,6 @@ import UIKit
 import Foundation
 import SocketIO
 
-
 class PlayersViewController: UIViewController, UIActionSheetDelegate, SettingsData {
     
     static let shared = PlayersViewController()
@@ -114,7 +113,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate, SettingsDa
     }
     
 
-    func goToGamesView (isFirstTurnMine:Bool, _ gameID:String) {
+    func gotoGamesView (isFirstTurnMine:Bool, _ gameID:String) {
         let opponentName:String = self.convertPlayerToDisplayDescription(player: self.myOpponent)
         let gameView = GameViewController()
         gameView.isMyTurn = isFirstTurnMine
@@ -122,13 +121,13 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate, SettingsDa
         gameView.gameID = gameID
         let info:[String:Any] = ["gameID":gameID, "gameView":gameView, "opponentName":opponentName]
         ActiveGamesViewController.activeGames.append(info)
-        performSegue(withIdentifier: "gotoActiveGames", sender: "goToGamesView")
+        performSegue(withIdentifier: "gotoActiveGames", sender: "gotoGamesView")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if sender is String {
             let sender = sender as! String
-            if sender == "goToGamesView" {
+            if sender == "gotoGamesView" {
                 let destination = segue.destination as! ActiveGamesViewController
                 destination.initGame = true
             }

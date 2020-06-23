@@ -29,7 +29,7 @@ extension PlayersViewController {
         socket.on("startingGame") {data, ack in
             self.myOpponent = data[0] as! [String:Any]
             let gameID = data[1] as! String
-            self.goToGamesView(isFirstTurnMine: false, gameID)
+            self.gotoGamesView(isFirstTurnMine: false, gameID)
         }
         socket.on("noGame") {data, ack in
             let opponentName:String = self.convertPlayerToDisplayDescription(player: data[0] as! [String : Any])
@@ -85,7 +85,7 @@ extension PlayersViewController {
         self.myOpponent = opponent
         let gameID = UUID()
         socket.emit("gameAccepted", opponent, gameID.uuidString)
-        self.goToGamesView(isFirstTurnMine: true, gameID.uuidString)
+        self.gotoGamesView(isFirstTurnMine: true, gameID.uuidString)
     }
     func declineGame (_ opponent:[String:Any]) {
         let socket = PlayersViewController.manager.defaultSocket
@@ -93,7 +93,6 @@ extension PlayersViewController {
     }
     func exitRoom () {
         let socket = PlayersViewController.manager.defaultSocket
-        print("exitRoom")
         socket.emit("exitRoom")
     }
     func sendBoard (_ board:[String:Any], opponent:[String:Any], _ gameID:String) {
