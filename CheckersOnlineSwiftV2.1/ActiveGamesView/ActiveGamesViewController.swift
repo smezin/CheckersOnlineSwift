@@ -7,6 +7,7 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
     static let shared = ActiveGamesViewController()
   
     @IBOutlet weak var activeGamesTableView: UITableView!
+    var initGame:Bool = false
     let cellReuseIdentifier = "ActiveGamesTableViewCell"
     let nc = NotificationCenter.default
     static var activeGames:[[String:Any]] = []
@@ -19,6 +20,16 @@ class ActiveGamesViewController: UIViewController, UITableViewDelegate, UITableV
         activeGamesTableView.dataSource = self
         activeGamesTableView.backgroundView = UIImageView(image: UIImage(named: "tableview_background_active.jpg"))
         nc.addObserver(self, selector: #selector(closeActiveGame(_:)), name: .closeActiveGame, object: nil)
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if initGame {
+            initGame = false
+            let gameInfo = ActiveGamesViewController.activeGames[ActiveGamesViewController.activeGames.count-1]
+            let gameView = gameInfo["gameView"] as! GameViewController
+            self.present(gameView, animated: true, completion: nil)
+        }
     }
     @objc func closeActiveGame (_ notification:NSNotification) {
         let gameID = notification.userInfo?["gameID"] as! String

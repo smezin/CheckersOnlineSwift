@@ -4,9 +4,10 @@ import Foundation
 import SocketIO
 
 
-class PlayersViewController: UIViewController, UIActionSheetDelegate {
+class PlayersViewController: UIViewController, UIActionSheetDelegate, SettingsData {
     
     static let shared = PlayersViewController()
+    static var settings: GameSettings = GameSettings()
     @IBOutlet weak var enterChooseButton: UIButton!
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
@@ -125,15 +126,15 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let activatedBy = sender as? String
-        if activatedBy == "goToGamesView" {
- //           let destination = segue.destination as! ActiveGamesViewController
-            print("from goto")
+        if sender is String {
+            let sender = sender as! String
+            if sender == "goToGamesView" {
+                let destination = segue.destination as! ActiveGamesViewController
+                destination.initGame = true
+            }
         }
     }
-    
 }
-
 //Handle alerts
 extension PlayersViewController {
     func showAlertMessage (_ title:String, _ message:String) {
@@ -142,9 +143,7 @@ extension PlayersViewController {
         self.present(alert, animated: true)
     }
 }
-
-
-//Handle URL andrequests
+//Handle URL and requests
 extension PlayersViewController {
     func setURLWithPath (path:String) -> URL {
         var components = URLComponents()
@@ -164,8 +163,5 @@ extension PlayersViewController {
     }
 }
 
-extension PlayersViewController:SettingsData {
-    static var settings: GameSettings = GameSettings()
-}
 
 

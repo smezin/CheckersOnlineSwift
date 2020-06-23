@@ -37,6 +37,8 @@
 		E1D0556424A20EB50097BE3F /* PlayersVC+DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0556324A20EB50097BE3F /* PlayersVC+DBManager.swift */; };
 		E1D0556624A210600097BE3F /* PlayersVC+TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0556524A210600097BE3F /* PlayersVC+TableViewManager.swift */; };
 		E1D0556824A211440097BE3F /* PlayersVC+UtilityFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0556724A211440097BE3F /* PlayersVC+UtilityFuncs.swift */; };
+		E1D0556A24A216DE0097BE3F /* GameVC+RenderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0556924A216DE0097BE3F /* GameVC+RenderBoard.swift */; };
+		E1D0556C24A217340097BE3F /* GameVC+Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0556B24A217340097BE3F /* GameVC+Sounds.swift */; };
 		E1DC2143245AE4C20099F382 /* BoardSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2142245AE4C20099F382 /* BoardSquare.swift */; };
 		E1DC214A245CDA570099F382 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2148245CDA570099F382 /* HeaderView.swift */; };
 		E1DC214B245CDA570099F382 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DC2149245CDA570099F382 /* HeaderView.xib */; };
@@ -78,6 +80,8 @@
 		E1D0556324A20EB50097BE3F /* PlayersVC+DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayersVC+DBManager.swift"; sourceTree = "<group>"; };
 		E1D0556524A210600097BE3F /* PlayersVC+TableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayersVC+TableViewManager.swift"; sourceTree = "<group>"; };
 		E1D0556724A211440097BE3F /* PlayersVC+UtilityFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayersVC+UtilityFuncs.swift"; sourceTree = "<group>"; };
+		E1D0556924A216DE0097BE3F /* GameVC+RenderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+RenderBoard.swift"; sourceTree = "<group>"; };
+		E1D0556B24A217340097BE3F /* GameVC+Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+Sounds.swift"; sourceTree = "<group>"; };
 		E1DC2142245AE4C20099F382 /* BoardSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSquare.swift; sourceTree = "<group>"; };
 		E1DC2148245CDA570099F382 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E1DC2149245CDA570099F382 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 				E1D0555924A2092B0097BE3F /* GameVC+DataSource.swift */,
 				E1D0555B24A20BD20097BE3F /* GameVC+FlowLayout.swift */,
 				E1D0555D24A20C6B0097BE3F /* GameVC+CollectionViewDelegate.swift */,
+				E1D0556924A216DE0097BE3F /* GameVC+RenderBoard.swift */,
+				E1D0556B24A217340097BE3F /* GameVC+Sounds.swift */,
 			);
 			path = "GameViewController+EXT";
 			sourceTree = "<group>";
@@ -373,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1D05525249A42BC0097BE3F /* ActiveGamesViewController.swift in Sources */,
+				E1D0556A24A216DE0097BE3F /* GameVC+RenderBoard.swift in Sources */,
 				E1D0555E24A20C6B0097BE3F /* GameVC+CollectionViewDelegate.swift in Sources */,
 				E1884CBD2454C0B600D08EA6 /* AppDelegate.swift in Sources */,
 				E1884CC52456114600D08EA6 /* Piece.swift in Sources */,
@@ -390,6 +397,7 @@
 				E1D0552C249E54F50097BE3F /* ActiveGamesTableViewCell.swift in Sources */,
 				E1D0556824A211440097BE3F /* PlayersVC+UtilityFuncs.swift in Sources */,
 				E1C7C674247CEC01007DEA95 /* SignupViewController.swift in Sources */,
+				E1D0556C24A217340097BE3F /* GameVC+Sounds.swift in Sources */,
 				E1884CAC245439C700D08EA6 /* GameViewController.swift in Sources */,
 				E1D0556624A210600097BE3F /* PlayersVC+TableViewManager.swift in Sources */,
 				E1C7C671247C3AAC007DEA95 /* PlayersTableViewCell.swift in Sources */,

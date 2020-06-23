@@ -15,6 +15,7 @@ class GameSettings: NSObject {
     var sideMarginConstraint: Int
     var topMarginConstraint: Int
     var bounceHeight: Int
+    var appSubviewsTag: Int
     var soundOn: Bool
     var playWhites: Bool
     var playBottom: Bool
@@ -40,6 +41,7 @@ class GameSettings: NSObject {
         self.playWhites = true
         self.playBottom = true
         self.showPaths = true
+        self.appSubviewsTag = 1000
         self.darkSquareImageName = "wood_dark"
         self.lightSquareImageName = "wood_light"
         self.pathMarkImageName = "path_mark"
