@@ -57,6 +57,14 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>serverURL</key>
+	<string>127.0.0.1</string>
+	<key>serverPORT</key>
+	<integer>3000</integer>
+	<key>productionServerURL</key>
+	<string>134.122.110.154</string>
+	<key>productionServerPORT</key>
+	<integer>3000</integer>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

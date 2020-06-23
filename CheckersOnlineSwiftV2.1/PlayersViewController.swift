@@ -10,10 +10,6 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var enterChooseButton: UIButton!
     @IBOutlet weak var playersTableView: UITableView!
     let cellReuseIdentifier = "PlayersTableCell"
-    let scheme = "http"
-    let port = 3000
-    let host = "127.0.0.1"
-    //let host = "134.122.110.154"
     let defaults = UserDefaults.standard
     var me:[String: Any] = [:]
     var myOpponent:[String:Any] = [:]
@@ -22,9 +18,10 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     var playersAtDispalyFormat:[String] = []
     var isLoggedIn:Bool = false
     var isInRoom = false
+    var serverAddress:URL? = nil
     let nc = NotificationCenter.default
     
-    static let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
+  //  static let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +43,28 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.exitRoom()
+    }
+    func getHostFromPList () -> String {
+        var resourceFileDictionary: NSDictionary?
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+            resourceFileDictionary = NSDictionary(contentsOfFile: path)
+        }
+        if let resourceFileDictionaryContent = resourceFileDictionary {
+            let serverURL = resourceFileDictionaryContent.object(forKey: "serverURL") as! String
+            return serverURL
+        }
+        return "could not find server URL in Plist"
+    }
+    func getPortFromPList () -> Int {
+        var resourceFileDictionary: NSDictionary?
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+            resourceFileDictionary = NSDictionary(contentsOfFile: path)
+        }
+        if let resourceFileDictionaryContent = resourceFileDictionary {
+            let serverPORT = resourceFileDictionaryContent.object(forKey: "serverPORT") as! Int
+            return serverPORT
+        }
+        return -1
     }
     
     private func addObservers () {
@@ -104,13 +123,23 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate {
         gameView.gameID = gameID
         let info:[String:Any] = ["gameID":gameID, "gameView":gameView, "opponentName":opponentName]
         ActiveGamesViewController.activeGames.append(info)
-        performSegue(withIdentifier: "gotoActiveGames", sender: nil)
+        performSegue(withIdentifier: "gotoActiveGames", sender: "goToGamesView")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let activatedBy = sender as? String
+        if activatedBy == "goToGamesView" {
+ //           let destination = segue.destination as! ActiveGamesViewController
+            print("from goto")
+        }
     }
     
 }
 //Handle sockets events listen and emit
 //Listen
 extension PlayersViewController {
+    static let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
+    
     func socketConnect () {
         let socket = PlayersViewController.manager.defaultSocket
         socket.on("connect") {data, ack in
@@ -404,10 +433,11 @@ extension PlayersViewController {
 extension PlayersViewController {
     func setURLWithPath (path:String) -> URL {
         var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        components.port = port
+        components.scheme = "http"
+        components.host = self.getHostFromPList()
+        components.port = self.getPortFromPList()
         components.path = path
+        self.serverAddress = components.url!
         return components.url!
     }
     func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
