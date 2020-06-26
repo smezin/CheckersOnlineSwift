@@ -61,7 +61,6 @@ extension PlayersViewController {
         }
         socket.connect()
     }
-    
     //Emit events
     @objc func connectRoom () {
         let socket = PlayersViewController.manager.defaultSocket
