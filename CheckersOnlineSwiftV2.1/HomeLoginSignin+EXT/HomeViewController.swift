@@ -1,7 +1,7 @@
 
 import UIKit
 
-class GUISettingsViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     @IBOutlet weak var loginPlayButton: UIButton!
     @IBOutlet weak var soundSwitch: UISwitch!
@@ -16,6 +16,7 @@ class GUISettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addObservers()
+        self.updateURLAddress()
     }
     func addObservers () {
         nc.addObserver(self, selector: #selector(changeToPlayButton), name: .loginSuccess, object: nil)
@@ -43,7 +44,6 @@ class GUISettingsViewController: UIViewController {
             self.playBottomSwitch.setOn(defaults.bool(forKey: "playBottom"), animated: true)
         }
     }
-    
     @objc func changeToPlayButton () {
         self.isLoggedin = true
         DispatchQueue.main.async {
@@ -56,17 +56,22 @@ class GUISettingsViewController: UIViewController {
             self.loginPlayButton.setImage(UIImage(named: "login"), for: .normal)
         }
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         self.updatePlayerPreferences()
     }
-    
     func updatePlayerPreferences () {
         defaults.set(soundSwitch.isOn as Bool, forKey: "soundOn")
         defaults.set(playWhitesSwitch.isOn as Bool, forKey: "playWhites")
         defaults.set(showPathsSwitch.isOn as Bool, forKey: "showPaths")
         defaults.set(playBottomSwitch.isOn as Bool, forKey: "playBottom")
+    }
+    func updateURLAddress () {
+        let host = self.getHostFromPList()
+        let port = self.getPortFromPList()
+        if host != nil && port != nil {
+            self.setURLToDefaults(host!, port!)
+        }
     }
     
     
@@ -81,6 +86,5 @@ class GUISettingsViewController: UIViewController {
             loginView.modalPresentationStyle = .fullScreen
             self.present(loginView, animated: true, completion: nil)
         }
-        
     }
 }

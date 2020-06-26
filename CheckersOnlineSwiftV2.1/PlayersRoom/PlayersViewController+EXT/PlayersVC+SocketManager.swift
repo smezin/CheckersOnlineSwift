@@ -5,7 +5,7 @@ import SocketIO
 //Handle sockets events listen and emit
 //Listen
 extension PlayersViewController {
-    static let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
+    static let manager = SocketManager(socketURL: URL(string: UserDefaults.standard.object(forKey: "serverURLString") as! String)!, config: [.log(false), .compress])
     
     func socketConnect () {
         let socket = PlayersViewController.manager.defaultSocket
@@ -55,6 +55,9 @@ extension PlayersViewController {
         socket.on("youWon") {data, ack in
             let gameID:String = data[0] as! String
             PlayersViewController.shared.nc.post(name: .playerWon, object: nil, userInfo: ["gameID":gameID])
+        }
+        socket.on("disconnect") {data, ack in
+            self.exitRoom()
         }
         socket.connect()
     }

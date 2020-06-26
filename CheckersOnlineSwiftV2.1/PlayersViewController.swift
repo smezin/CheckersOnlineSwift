@@ -42,29 +42,7 @@ class PlayersViewController: UIViewController, UIActionSheetDelegate, SettingsDa
         super.viewWillDisappear(animated)
         self.exitRoom()
     }
-    func getHostFromPList () -> String {
-        var resourceFileDictionary: NSDictionary?
-        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
-            resourceFileDictionary = NSDictionary(contentsOfFile: path)
-        }
-        if let resourceFileDictionaryContent = resourceFileDictionary {
-            let serverURL = resourceFileDictionaryContent.object(forKey: "serverURL") as! String
-            return serverURL
-        }
-        return "could not find server URL in Plist"
-    }
-    func getPortFromPList () -> Int {
-        var resourceFileDictionary: NSDictionary?
-        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
-            resourceFileDictionary = NSDictionary(contentsOfFile: path)
-        }
-        if let resourceFileDictionaryContent = resourceFileDictionary {
-            let serverPORT = resourceFileDictionaryContent.object(forKey: "serverPORT") as! Int
-            return serverPORT
-        }
-        return -1
-    }
-    
+ 
     private func addObservers () {
         nc.addObserver(self, selector: #selector(connectRoom), name: .loginSuccess, object: nil)
         nc.addObserver(self, selector: #selector(updateEnterChooseButton), name: .enteredRoom, object: nil)
@@ -147,10 +125,9 @@ extension PlayersViewController {
     func setURLWithPath (path:String) -> URL {
         var components = URLComponents()
         components.scheme = "http"
-        components.host = self.getHostFromPList()
-        components.port = self.getPortFromPList()
+        components.host = (defaults.object(forKey: "host") as! String)
+        components.port = (defaults.object(forKey: "port") as! Int)
         components.path = path
-        self.serverAddress = components.url!
         return components.url!
     }
     func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
